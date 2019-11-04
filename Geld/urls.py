@@ -14,21 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView,PasswordResetConfirmView,\
-    PasswordResetCompleteView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView, LogoutView
 from django.contrib import admin
 from django.urls import path
-from account.views import home, logout
-from account.resource import Level2p
 
-amat = Level2p()
+from Geld import settings
+
+
 
 urlpatterns = [
-    path('', home, name='home'),
     path('admin/', admin.site.urls),
-    path('logout/', logout, name='logout'),
-    path('api/', include('account.urls')),
-    url(r'^api/', include(amat.urls)),
+    path('wallet.api/', include('wallet.urls')),
+    path(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('password/reset', PasswordResetView.as_view(), name='password_reset'),
     path('password/reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('password/reset/confirm', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
