@@ -11,7 +11,7 @@ class Investor(AbstractUser):
     balance = models.DecimalField(max_digits=6, decimal_places=4, default=0.0000)
     deposit_address = models.CharField(max_length=50, default=None, null=True)
     investment_count = models.IntegerField(default=0)
-    referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+    referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
 
     def percentage(self):
         return self.investment_count / (pow(self.level, 2))
