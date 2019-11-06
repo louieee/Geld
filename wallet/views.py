@@ -153,3 +153,24 @@ def withdraw(request):
             return HttpResponse(json.dumps({'error': 'all fields must be filled'}))
     else:
         return HttpResponse(json.dumps({'error': 'Login Required', 'position': 'withdrawal'}))
+
+
+def fetch_withdrawals(request):
+    all_list = WithdrawalRequest.objects.all().order_by('-date_of_request').filter(serviced=False)
+    return_list = []
+    for item in all_list:
+        details = {'id': item.id, 'investor': item.investor.username, 'email': item.investor.email,
+                   'amount': item.amount,
+                   'address': item.address, 'date': item.date_of_request.date(), 'time': item.date_of_request.time(),
+                   'level': item.investor.level, 'final': item.final}
+        return_list.append(details)
+    return return_list
+
+
+def service_withdrawal(request):
+    id_ = request.GET['id']
+    withdrawal = WithdrawalRequest.objects.get(id=id_)
+    withdrawal.serviced = True
+    withdrawal.save()
+    return HttpResponse(json.dumps({'message': 'successful'}))
+
