@@ -24,9 +24,9 @@ from wallet.views import fetch_withdrawals, service_withdrawal
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api.admin.wallet/withdrawals/', fetch_withdrawals, name='withdrawal_fetch'),
-    path('api.admin.wallet/withdrawals/service/', service_withdrawal, name='service_withdrawal'),
-    path('api.wallet/', include('wallet.urls')),
+    path('admin/withdrawals/', fetch_withdrawals, name='withdrawal_fetch'),
+    path('admin/pay/', service_withdrawal, name='service_withdrawal'),
+    path('', include('wallet.urls')),
     path(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('password/reset', PasswordResetView.as_view(), name='password_reset'),
     path('password/reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
