@@ -1,0 +1,1 @@
+web: gunicorn Geld.wsgi --log-file -

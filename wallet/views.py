@@ -2,7 +2,7 @@ import requests
 from django.contrib import auth
 from django.db.models import F
 
-from .models import Investor, WithdrawalRequest
+from .models import Investor, WithdrawalRequest, Wallet
 import json
 from django.shortcuts import HttpResponse
 import decimal
@@ -170,7 +170,20 @@ def fetch_withdrawals(request):
 def service_withdrawal(request):
     id_ = request.GET['id']
     withdrawal = WithdrawalRequest.objects.get(id=id_)
-    withdrawal.serviced = True
+    if pay_investor(withdrawal.address, withdrawal.amount) is True:
+        withdrawal.serviced = True
     withdrawal.save()
+
     return HttpResponse(json.dumps({'message': 'successful'}))
 
+
+def pay_investor(address, amount):
+    payer = Wallet.objects.get(id=1)
+    pay = requests.request('GET',
+                           'http://localhost:3000/merchant/' + payer.guid + '/payment?password='
+                           + payer.password + '&to=' + address + '&amount=' + (amount / 100000000))
+    response = json.loads(pay.text).get('message').split(' ')
+    if response[0] == 'Sent' and (response[1] == amount) and (response[4] == address):
+        return True
+    else:
+        return False

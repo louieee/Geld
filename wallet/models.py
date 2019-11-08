@@ -6,13 +6,19 @@ from django.conf import settings
 from django.db.models import F
 
 
+class Wallet(models.Model):
+    guid = models.CharField(max_length=255)
+    api_key = models.CharField(max_length=255)
+    password = models.CharField(max_length=50)
+    xpub = models.CharField(max_length=255, default=None, null=True)
+
+
 class Investor(AbstractUser):
     level = models.IntegerField(default=0)
     balance = models.DecimalField(max_digits=6, decimal_places=4, default=0.0000)
     deposit_address = models.CharField(max_length=50, default=None, null=True)
     investment_count = models.IntegerField(default=0)
     referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
-
     def percentage(self):
         return self.investment_count / (pow(self.level, 2))
 
