@@ -49,8 +49,8 @@ def login(request):
     if request.method == 'GET':
         return HttpResponse(json.dumps({'message': 'welcome to the login page'}))
     elif request.method == 'POST':
-        username = str(request.GET['username'])
-        password = str(request.GET['password'])
+        username = str(request.POST['username'])
+        password = str(request.POST['password'])
         if username and password:
             investor = auth.authenticate(username=username, password=password)
             if investor is not None:
@@ -133,24 +133,29 @@ def verify_payment(request):
 def withdraw(request):
     amount = decimal.Decimal(request.POST['amount'])
     address = str(request.POST['address'])
+    password = str(request.POST['password'])
     if request.user.is_authenticated:
         investor = Investor.objects.get(id=request.user.id)
-        if amount and address:
-            fee = amount * (2 / 100)
-            total_amount = amount + fee
-            if investor.balance > total_amount:
-                withdrawal_request = WithdrawalRequest()
-                withdrawal_request.investor = investor
-                withdrawal_request.amount = amount
-                withdrawal_request.address = address
-                withdrawal_request.date_of_request = d.now()
-                withdrawal_request.save()
-                return HttpResponse(
-                    json.dumps({'message': 'Your withdrawal request will be serviced within the next 24 hrs'}))
+        user = auth.authenticate(username=investor.username, password=password)
+        if user is not None:
+            if amount and address:
+                fee = amount * (2 / 100)
+                total_amount = amount + fee
+                if investor.balance > total_amount:
+                    withdrawal_request = WithdrawalRequest()
+                    withdrawal_request.investor = investor
+                    withdrawal_request.amount = amount
+                    withdrawal_request.address = address
+                    withdrawal_request.date_of_request = d.now()
+                    withdrawal_request.save()
+                    return HttpResponse(
+                        json.dumps({'message': 'Your withdrawal request will be serviced within the next 24 hrs'}))
+                else:
+                    return HttpResponse(json.dumps({'error': 'Insufficient Balance'}))
             else:
-                return HttpResponse(json.dumps({'error': 'Insufficient Balance'}))
+                return HttpResponse(json.dumps({'error': 'all fields must be filled'}))
         else:
-            return HttpResponse(json.dumps({'error': 'all fields must be filled'}))
+            return HttpResponse(json.dumps({'error': 'Your password is incorrect'}))
     else:
         return HttpResponse(json.dumps({'error': 'Login Required', 'position': 'withdrawal'}))
 
