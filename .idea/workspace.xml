@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c25c0c85-1916-48fa-b1f7-1013e1df336a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wallet/migrations/0005_auto_20191114_1140.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wallet/templates/wallet/admin_withdraw.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wallet/templates/wallet/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wallet/templates/wallet/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Geld/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Geld/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Geld/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Geld/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/staticfiles.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/staticfiles.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wallet/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wallet/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -439,8 +425,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.23600605" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
