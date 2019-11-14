@@ -52,13 +52,13 @@ def signup(request):
 
                         new_investor.save()
                         invest(new_investor)
-                        return redirect('http://127.0.0.1:8000/login/')
+                        return redirect('/login/')
         else:
             return render(request, 'wallet/home.html',
                           {'message': 'All Fields Must Be Filled', 'status': 'danger'})
     else:
         if request.user.is_authenticated:
-            return redirect('http://127.0.0.1:8000/dashboard/')
+            return redirect('/dashboard/')
         else:
             return render(request, 'wallet/home.html')
 
@@ -71,14 +71,14 @@ def login(request):
             investor = auth.authenticate(username=username, password=password)
             if investor is not None:
                 auth.login(request, investor)
-                return redirect('http://127.0.0.1:8000/dashboard/')
+                return redirect('/dashboard/')
             else:
                 return render(request, 'wallet/login.html', {'message': 'authentication failed', 'status': 'danger'})
         else:
             return render(request, 'wallet/login.html', {'message': 'All fields must be filled', 'status': 'danger'})
     else:
         if request.user.is_authenticated:
-            return redirect('http://127.0.0.1:8000/dashboard/')
+            return redirect('/dashboard/')
         else:
             return render(request, 'wallet/login.html')
 
@@ -243,5 +243,5 @@ def admin_withdrawal(request):
         return render(request, 'wallet/admin_withdraw.html', {'the_list': list_})
     elif request.method == 'POST' and request.user.is_authenticated and request.user.is_staff:
         id_ = request.POST.get('id_')
-        success = service_withdrawal(id_)
-        return redirect('http://127.0.0.1:8000/admin/withdrawals')
+        service_withdrawal(id_)
+        return redirect('/admin/withdrawals')

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c25c0c85-1916-48fa-b1f7-1013e1df336a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,14 +81,14 @@
           <entry key="Procfile" value="4" />
           <entry key="gitignore" value="23" />
           <entry key="html" value="1601" />
-          <entry key="py" value="22689" />
+          <entry key="py" value="22692" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="1601" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Python" value="23519" />
+          <entry key="Python" value="23522" />
         </counts>
       </usages-collector>
     </session>
@@ -104,24 +104,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="177" column="68" selection-start-line="177" selection-start-column="68" selection-end-line="177" selection-end-column="68" />
+            <state relative-caret-position="253">
+              <caret line="187" column="34" lean-forward="true" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#2934#3563#0" />
                 <element signature="e#3659#4041#0" />
-                <marker date="1573729789893" expanded="true" signature="9586:9588" ph="..." />
-                <marker date="1573729789893" expanded="true" signature="9904:9913" ph="..." />
-                <marker date="1573729789893" expanded="true" signature="11551:11817" ph="..." />
+                <marker date="1573741040840" expanded="true" signature="9502:9504" ph="..." />
+                <marker date="1573741040840" expanded="true" signature="9820:9829" ph="..." />
+                <marker date="1573741040840" expanded="true" signature="11467:11733" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/admin_withdraw.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -159,8 +158,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="12" column="84" selection-start-line="12" selection-start-column="84" selection-end-line="12" selection-end-column="84" />
+            <state relative-caret-position="133">
+              <caret line="61" column="43" lean-forward="true" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -177,8 +176,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="12" column="84" selection-start-line="12" selection-start-column="84" selection-end-line="12" selection-end-column="84" />
+            <state relative-caret-position="30">
+              <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -266,14 +265,14 @@
         <option value="$PROJECT_DIR$/wallet/urls.py" />
         <option value="$PROJECT_DIR$/Geld/urls.py" />
         <option value="$PROJECT_DIR$/wallet/models.py" />
-        <option value="$PROJECT_DIR$/wallet/views.py" />
         <option value="$PROJECT_DIR$/Geld/settings.py" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/admin_withdraw.html" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" />
-        <option value="$PROJECT_DIR$/wallet/templates/wallet/home.html" />
-        <option value="$PROJECT_DIR$/wallet/templates/wallet/login.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/wallet/templates/wallet/login.html" />
+        <option value="$PROJECT_DIR$/wallet/templates/wallet/home.html" />
+        <option value="$PROJECT_DIR$/wallet/views.py" />
       </list>
     </option>
   </component>
@@ -320,6 +319,11 @@
               <item name="Geld" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="vendor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="wallet" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
@@ -402,8 +406,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23600605" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23600605" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -417,7 +422,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32879046" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3850085" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3850085" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.3270869" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -593,21 +598,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="177" column="68" selection-start-line="177" selection-start-column="68" selection-end-line="177" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#2934#3563#0" />
-            <element signature="e#3659#4041#0" />
-            <marker date="1573729789893" expanded="true" signature="9586:9588" ph="..." />
-            <marker date="1573729789893" expanded="true" signature="9904:9913" ph="..." />
-            <marker date="1573729789893" expanded="true" signature="11551:11817" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Geld/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -619,30 +609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="86" selection-start-line="12" selection-start-column="86" selection-end-line="12" selection-end-column="86" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="12" column="84" selection-start-line="12" selection-start-column="84" selection-end-line="12" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="12" column="84" selection-start-line="12" selection-start-column="84" selection-end-line="12" selection-end-column="84" />
         </state>
       </provider>
     </entry>
@@ -672,6 +638,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="157" column="40" lean-forward="true" selection-start-line="157" selection-start-column="40" selection-end-line="157" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="61" column="43" lean-forward="true" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="86" selection-start-line="12" selection-start-column="86" selection-end-line="12" selection-end-column="86" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="187" column="34" lean-forward="true" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#3659#4041#0" />
+            <marker date="1573741040840" expanded="true" signature="9502:9504" ph="..." />
+            <marker date="1573741040840" expanded="true" signature="9820:9829" ph="..." />
+            <marker date="1573741040840" expanded="true" signature="11467:11733" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

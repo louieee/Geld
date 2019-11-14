@@ -25,7 +25,7 @@ SECRET_KEY = 'u(6=25%0ji!95+au-*j25)1ikjjxxy7j9647q29#ih()!d5blp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['geldbaum.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['geldbaum.herokuapp.com']
 
 
 # Application definition
