@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-
 # Create your models here.
 from django.db.models import F
 
@@ -19,15 +18,23 @@ class Investor(AbstractUser):
     deposit_address = models.CharField(max_length=50, default=None, null=True)
     investment_count = models.IntegerField(default=0)
     referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
+
+    def level_details(self):
+        level_data = {0: 'Novice', 1: 'Newbie', 2: 'Intermediate', 3: 'Senior', 4: 'Professional', 5: 'Veteran',
+                      6: 'Master', 7: 'Grand Master'}
+        return level_data[self.level]
+
     def percentage(self):
-        return self.investment_count / (pow(self.level, 2))
+        try:
+            return self.investment_count / (pow(self.level, 2))
+        except ZeroDivisionError:
+            return 0
 
     def direct_downliners(self):
-        downliners = Investor.objects.all().filter(referer_id=self.id)
+        downliners = Investor.objects.all().filter(referer_id=self.id)[:2]
         its_list = []
         for investor in downliners:
-            detail = {'username': investor.username, 'level': investor.level, 'email': investor.email}
-            its_list.append(detail)
+            its_list.append(investor)
         return its_list
 
     def upgrade_investor(self):
@@ -136,26 +143,16 @@ class Investor(AbstractUser):
         return result
 
     def pending_withdrawals(self):
-        all_withdrawals = []
-        for item in WithdrawalRequest.objects.all().order_by('-date_of_request').filter(investor_id=self.id).filter \
-                    (serviced=False):
-            detail = {'id': item.id, 'amount': item.amount, 'date': item.date_of_request.date(),
-                      'time': item.date_of_request.time(), 'address': item.address}
-            all_withdrawals.append(detail)
-        return all_withdrawals
+        return WithdrawalRequest.objects.all().order_by('-date_of_request').filter(investor_id=self.id).filter \
+                    (serviced=False)
 
     def withdrawals(self):
-        all_withdrawals = []
-        for item in WithdrawalRequest.objects.all().order_by('-date_of_request').filter(investor_id=self.id).filter \
-                    (serviced=True):
-            detail = {'id': item.id, 'amount': item.amount, 'date': item.date_of_request.date(),
-                      'time': item.date_of_request.time(), 'address': item.address}
-            all_withdrawals.append(detail)
-        return all_withdrawals
+        return WithdrawalRequest.objects.all().order_by('-date_of_request').filter(investor_id=self.id).filter \
+                    (serviced=True)
 
 
 class WithdrawalRequest(models.Model):
-    amount = models.DecimalField(max_digits=6, decimal_places=4, default=0.0000)
+    amount = models.DecimalField(max_digits=9, decimal_places=6, default=0.0000)
     date_of_request = models.DateTimeField()
     final = models.BooleanField(default=False)
     investor = models.ForeignKey(Investor, on_delete=models.CASCADE)

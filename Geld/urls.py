@@ -20,14 +20,13 @@ from django.contrib import admin
 from django.urls import path
 
 from Geld import settings
-from wallet.views import fetch_withdrawals, service_withdrawal
-
+from wallet.views import admin_withdrawal, signup
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin/withdrawals/', fetch_withdrawals, name='withdrawal_fetch'),
-    path('admin/pay/', service_withdrawal, name='service_withdrawal'),
+    path('admin/withdrawals', admin_withdrawal, name='admin_withdrawal'),
     path('', include('wallet.urls')),
-    path(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+    path('', signup, name='home'),
+    path('logout', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('password/reset', PasswordResetView.as_view(), name='password_reset'),
     path('password/reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('password/reset/confirm', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
