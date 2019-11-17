@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c25c0c85-1916-48fa-b1f7-1013e1df336a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Geld/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Geld/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Geld/static/css/sb-admin-2.css" beforeDir="false" afterPath="$PROJECT_DIR$/Geld/static/css/sb-admin-2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/sb-admin-2.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/sb-admin-2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,6 +42,7 @@
           <entry key="project.open.time.113" value="1" />
           <entry key="project.open.time.119" value="1" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.131" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.167" value="1" />
@@ -57,41 +61,43 @@
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.90" value="1" />
           <entry key="project.open.time.96" value="1" />
-          <entry key="project.opened" value="27" />
+          <entry key="project.opened" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="Procfile" value="1" />
-          <entry key="css" value="2" />
+          <entry key="css" value="7" />
           <entry key="gitignore" value="2" />
           <entry key="html" value="7" />
-          <entry key="py" value="25" />
+          <entry key="py" value="26" />
           <entry key="txt" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="2" />
+          <entry key="CSS" value="7" />
           <entry key="HTML" value="7" />
           <entry key="PLAIN_TEXT" value="6" />
-          <entry key="Python" value="25" />
+          <entry key="Python" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Django Console" value="949" />
           <entry key="Procfile" value="4" />
+          <entry key="css" value="12" />
           <entry key="gitignore" value="23" />
-          <entry key="html" value="1601" />
-          <entry key="py" value="23846" />
+          <entry key="html" value="1620" />
+          <entry key="py" value="23882" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="1601" />
+          <entry key="CSS" value="12" />
+          <entry key="HTML" value="1620" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Python" value="24795" />
+          <entry key="Python" value="24831" />
         </counts>
       </usages-collector>
     </session>
@@ -99,10 +105,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Geld/settings.py">
+        <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="150">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+              <folding>
+                <element signature="n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,59 +119,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="102" column="23" lean-forward="true" selection-start-line="102" selection-start-column="23" selection-end-line="102" selection-end-column="23" />
+            <state relative-caret-position="253">
+              <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#324#2937#0" />
-                <element signature="e#2964#3774#0" />
-                <element signature="e#7213#7892#0" />
-                <element signature="e#7145#7362#0" />
-                <element signature="e#10503#11260#0" />
-                <element signature="e#11653#11760#0" />
-                <marker date="1573998041772" expanded="true" signature="10563:10565" ph="..." />
-                <marker date="1573998041772" expanded="true" signature="10915:10919" ph="..." />
+                <marker date="1574015438029" expanded="true" signature="10563:10565" ph="..." />
+                <marker date="1574015438029" expanded="true" signature="10915:10919" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/admin_withdraw.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4710">
-              <caret line="157" column="40" selection-start-line="157" selection-start-column="40" selection-end-line="157" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7530">
-              <caret line="251" selection-start-line="251" selection-end-line="251" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
-              <caret line="61" column="43" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -175,8 +138,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1680">
-              <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
+            <state relative-caret-position="30">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="26" selection-end-column="18" />
+              <folding>
+                <element signature="n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -184,11 +150,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2160">
+            <state relative-caret-position="253">
               <caret line="76" selection-start-line="76" selection-end-line="76" />
               <folding>
-                <element signature="e#0#28#0" expanded="true" />
-                <element signature="e#206#408#0" />
                 <marker date="1573728015321" expanded="true" signature="201:411" ph="..." />
                 <marker date="1573728015321" expanded="true" signature="826:1037" ph="..." />
               </folding>
@@ -199,10 +163,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="12" column="86" selection-start-line="12" selection-start-column="86" selection-end-line="12" selection-end-column="86" />
+            <state relative-caret-position="120">
+              <caret line="97" column="18" lean-forward="true" selection-start-line="86" selection-start-column="12" selection-end-line="97" selection-end-column="18" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#nav#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
               </folding>
             </state>
           </provider>
@@ -229,6 +193,8 @@
       <find>js&quot;&gt;&lt;/script&gt;</find>
       <find>src=&quot;js</find>
       <find>'error':</find>
+      <find>KdeqA3aTnBY</find>
+      <find>Mv9hjnEUHR4</find>
     </findStrings>
     <replaceStrings>
       <replace>user__username</replace>
@@ -238,6 +204,7 @@
       <replace>js'%}&quot;&gt;&lt;/script&gt;</replace>
       <replace>src=&quot;{% static 'js</replace>
       <replace>'message':</replace>
+      <replace>KdeqA3aTnBY</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -268,9 +235,12 @@
         <option value="$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/wallet/templates/wallet/login.html" />
-        <option value="$PROJECT_DIR$/wallet/templates/wallet/home.html" />
         <option value="$PROJECT_DIR$/Geld/settings.py" />
+        <option value="$PROJECT_DIR$/static/css/sb-admin-2.css" />
+        <option value="$PROJECT_DIR$/Geld/static/css/sb-admin-2.min.css" />
+        <option value="$PROJECT_DIR$/Geld/static/css/sb-admin-2.css" />
+        <option value="$PROJECT_DIR$/wallet/templates/wallet/home.html" />
+        <option value="$PROJECT_DIR$/wallet/templates/wallet/login.html" />
         <option value="$PROJECT_DIR$/wallet/views.py" />
       </list>
     </option>
@@ -293,13 +263,46 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
               <item name="Geld" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="my_venv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
@@ -314,6 +317,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -388,7 +392,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2397882" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24357034" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -518,12 +522,6 @@
     <entry file="file://$PROJECT_DIR$/wallet/serializer.py" />
     <entry file="file://$PROJECT_DIR$/wallet/api.py" />
     <entry file="file://$PROJECT_DIR$/wallet/viewset.py" />
-    <entry file="file://$PROJECT_DIR$/static/css/sb-admin-2.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Geld/static/css/sb-admin-2.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/wallet/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="59">
@@ -545,6 +543,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Geld/settings.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7530">
@@ -563,30 +564,61 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1830">
-          <caret line="61" column="43" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
+    <entry file="file://$PROJECT_DIR$/static/css/sb-admin-2.min.4769616daee2.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Geld/static/css/sb-admin-2.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
+        <state relative-caret-position="85">
+          <caret line="11595" lean-forward="true" selection-start-line="11595" selection-end-line="11595" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/sb-admin-2.a9415fbe1f2f.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="30" column="21" lean-forward="true" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/sb-admin-2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="11595" lean-forward="true" selection-start-line="11595" selection-end-line="11595" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Geld/static/css/sb-admin-2.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="9" column="190604" lean-forward="true" selection-start-line="9" selection-start-column="190604" selection-end-line="9" selection-end-column="190615" />
+          <folding>
+            <element signature="e#29793#30027#2" expanded="true" />
+            <element signature="e#30884#31037#1" expanded="true" />
+            <element signature="e#31077#31311#1" expanded="true" />
+            <element signature="e#34476#34752#2" expanded="true" />
+            <element signature="e#35635#35788#1" expanded="true" />
+            <element signature="e#35828#36104#1" expanded="true" />
+            <element signature="e#68674#68861#2" expanded="true" />
+            <element signature="e#69090#69226#2" expanded="true" />
+            <element signature="e#69631#69764#2" expanded="true" />
+            <element signature="e#71470#71623#1" expanded="true" />
+            <element signature="e#86538#86768#2" expanded="true" />
+            <element signature="e#87635#87871#2" expanded="true" />
+            <element signature="e#120284#120461#2" expanded="true" />
+            <element signature="e#120507#120684#2" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
+        <state relative-caret-position="253">
           <caret line="76" selection-start-line="76" selection-end-line="76" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#206#408#0" />
             <marker date="1573728015321" expanded="true" signature="201:411" ph="..." />
             <marker date="1573728015321" expanded="true" signature="826:1037" ph="..." />
           </folding>
@@ -595,35 +627,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="12" column="86" selection-start-line="12" selection-start-column="86" selection-end-line="12" selection-end-column="86" />
+        <state relative-caret-position="120">
+          <caret line="97" column="18" lean-forward="true" selection-start-line="86" selection-start-column="12" selection-end-line="97" selection-end-column="18" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#nav#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Geld/settings.py">
+    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="30">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="26" selection-end-column="18" />
+          <folding>
+            <element signature="n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="102" column="23" lean-forward="true" selection-start-line="102" selection-start-column="23" selection-end-line="102" selection-end-column="23" />
+        <state relative-caret-position="253">
+          <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#324#2937#0" />
-            <element signature="e#2964#3774#0" />
-            <element signature="e#7213#7892#0" />
-            <element signature="e#7145#7362#0" />
-            <element signature="e#10503#11260#0" />
-            <element signature="e#11653#11760#0" />
-            <marker date="1573998041772" expanded="true" signature="10563:10565" ph="..." />
-            <marker date="1573998041772" expanded="true" signature="10915:10919" ph="..." />
+            <marker date="1574015438029" expanded="true" signature="10563:10565" ph="..." />
+            <marker date="1574015438029" expanded="true" signature="10915:10919" ph="..." />
           </folding>
         </state>
       </provider>

@@ -233,6 +233,10 @@ def dashboard(request):
                      'deposit_address': investor_.deposit_address
                      }
         return render(request, 'wallet/dashboard.html', user_data)
+    else:
+        return redirect ('/')
+
+
 
 
 def admin_withdrawal(request):
