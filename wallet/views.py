@@ -6,9 +6,11 @@ import json
 from django.shortcuts import HttpResponse, render, redirect
 import decimal
 from django.utils.timezone import datetime as d
+from coinpayments import CoinPaymentsAPI
 
+api = CoinPaymentsAPI(public_key='e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893',
+                      private_key='c62678DC6bfcfaf7f031665E343a3463a0B488a5d74fDf4D2050FEdd95808616')
 
-# Create your views here.
 
 def signup(request):
     if request.method == 'POST':
@@ -83,13 +85,9 @@ def login(request):
             return render(request, 'wallet/login.html')
 
 
-def generate_address(id_):
-    xpub = ''
-    call_back_url = 'https://bitdouble.com?invoice_id=' + str(id_)
-    key = ''
-    gen = requests.request('GET',
-                           'https://api.blockchain.info/v2/receive?xpub=' + xpub + '&callback=' + call_back_url + '&key=' + key)
-    response = json.loads(gen.text).get('address')
+def generate_address(username):
+    the_api = api.get_callback_address(label=username)
+    response = json.loads(the_api).get('result').get('address')
     if response is None:
         return None
     else:
@@ -98,7 +96,7 @@ def generate_address(id_):
 
 def invest(investor):
     if investor.deposit_address is None:
-        address = generate_address(investor.id)
+        address = generate_address(investor.username)
         if address is not None:
             investor.deposit_address = address
             investor.save()
@@ -108,50 +106,58 @@ def invest(investor):
 
 
 def verify_payment(request):
-    if request.method == 'GET':
-        invoice_id = request.GET['invoice_id']
-        transaction_hash = request.GET['transaction_hash']
-        value_in_satoshi = request.GET['value']
-        confirmation = request.GET['confirmations']
-        if invoice_id and transaction_hash and value_in_satoshi and confirmation:
-            value_in_btc = float(value_in_satoshi) / 100000000
-            if int(confirmation) >= 4:
-                investor = Investor.objects.get(id=invoice_id)
-                if value_in_btc >= 0.001:
-                    investor.level = 1
-                    investor.save()
-                    if investor.referer is None:
-                        try:
-                            referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                            referer.investment_count = F(referer.investment_count) + 1
-                            if referer.investment_count % 2 or referer.investment_count > 2:
-                                referer.balance = F(referer.balance) + 0.001
-                            if referer.investment_count == 2:
-                                referer.upgrade_investor()
-                            referer.save()
-                        except IndexError:
-                            pass
-                    else:
-                        referer = Investor.objects.get(id=investor.referer_id)
-                        if referer.level > 1:
-                            try:
-                                referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                                referer.investment_count = F(referer.investment_count) + 1
-                                if referer.investment_count % 2 or referer.investment_count > 2:
-                                    referer.balance = F(referer.balance) + 0.001
-                                if referer.investment_count == 2:
-                                    referer.upgrade_investor()
-                                referer.save()
-                            except IndexError:
-                                pass
-                        else:
-                            referer.investment_count = F(referer.investment_count) + 1
-                            if referer.investment_count % 2 or referer.investment_count > 2:
-                                referer.balance = F(referer.balance) + 0.001
-                            if referer.investment_count == 2:
-                                referer.upgrade_investor()
-                            referer.save()
-            return HttpResponse('*ok*')
+    if request.method == 'POST':
+        my_merchant_id = ''
+        my_ipn_secret = ''
+        if request.POST['ipn_mode'] == 'hmac':
+            if request.POST['merchant'] == my_merchant_id:
+                address = request.POST['address']
+                currency = request.POST['currency']
+                total_amount = request.POST['amount']
+                deduct_fee = request.POST['fee']
+                confirmation = request.POST['status']
+                if api.check_signature(request.headers['HTTP_HMAC'], my_ipn_secret):
+                    if currency == 'NGN':
+                        if decimal.Decimal(total_amount) - decimal.Decimal(deduct_fee) >= 0.001:
+                            if confirmation >= 100 or confirmation == 2:
+                                try:
+                                    investor = Investor.objects.get(deposit_address=address, level=0)
+                                    investor.level = 1
+                                    investor.save()
+                                    if investor.referer is None:
+                                        try:
+                                            referer = Investor.objects.all().order_by('id').filter(level=1)[0]
+                                            referer.investment_count = F(referer.investment_count) + 1
+                                            if referer.investment_count % 2 or referer.investment_count > 2:
+                                                referer.balance = F(referer.balance) + 0.001
+                                            if referer.investment_count == 2:
+                                                referer.upgrade_investor()
+                                            referer.save()
+                                        except IndexError:
+                                            pass
+                                    else:
+                                        referer = Investor.objects.get(id=investor.referer_id)
+                                        if referer.level > 1:
+                                            try:
+                                                referer = Investor.objects.all().order_by('id').filter(level=1)[0]
+                                                referer.investment_count = F(referer.investment_count) + 1
+                                                if referer.investment_count % 2 or referer.investment_count > 2:
+                                                    referer.balance = F(referer.balance) + 0.001
+                                                if referer.investment_count == 2:
+                                                    referer.upgrade_investor()
+                                                referer.save()
+                                            except IndexError:
+                                                pass
+                                        else:
+                                            referer.investment_count = F(referer.investment_count) + 1
+                                            if referer.investment_count % 2 or referer.investment_count > 2:
+                                                referer.balance = F(referer.balance) + 0.001
+                                            if referer.investment_count == 2:
+                                                referer.upgrade_investor()
+                                            referer.save()
+                                    return HttpResponse('*IPN OK*')
+                                except Investor.DoesNotExist:
+                                    pass
 
 
 def withdraw(request):
@@ -206,19 +212,11 @@ def service_withdrawal(id_):
 
 
 def pay_investor(address, amount):
-    payer = Wallet.objects.get(id=1)
-    try:
-        pay = requests.request('GET',
-                               'http://localhost:3000/merchant/' + payer.guid + '/payment?password='
-                               + payer.password + '&to=' + address + '&amount=' + str((amount / 100000000)))
-        response = json.loads(pay.text).get('message').split(' ')
-        if response[0] == 'Sent' and (response[1] == amount) and (response[4] == address):
-            return True
-        else:
-            return False
-    except ConnectionRefusedError:
-        return False
-    except requests.ConnectionError:
+    pay = api.create_withdrawal(amount=amount, currency='BTC', address=address)
+    response = json.loads(pay).get('error')
+    if response == 'ok':
+        return True
+    else:
         return False
 
 
