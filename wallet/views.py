@@ -1,4 +1,3 @@
-import requests
 from django.contrib import auth
 from django.db.models import F
 from .models import Investor, WithdrawalRequest, Wallet
@@ -7,9 +6,11 @@ from django.shortcuts import HttpResponse, render, redirect
 import decimal
 from django.utils.timezone import datetime as d
 from coinpayments import CoinPaymentsAPI
+from django.core.mail import send_mail
+from django.conf import settings
 
-api = CoinPaymentsAPI(public_key='e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893',
-                      private_key='c62678DC6bfcfaf7f031665E343a3463a0B488a5d74fDf4D2050FEdd95808616')
+api = CoinPaymentsAPI(public_key=settings.PUBLIC_KEY,
+                      private_key=settings.PRIVATE_KEY)
 
 
 def signup(request):
@@ -54,6 +55,21 @@ def signup(request):
 
                         new_investor.save()
                         invest(new_investor)
+                        send_mail('Successful Signup: Welcome to Geld',
+                                  'Dear ' + new_investor.username + ', You are welcome'
+                                                                    'to Geld. This is a networking platform where we '
+                                                                    'put in money to grow our wealth. Now That youre '
+                                                                    'registered, '
+                                                                    'all you need to do is to fund your wallet with '
+                                                                    '0.001 Btc, then ensure that 2 friends also join '
+                                                                    'the platform and then you will be refunded your '
+                                                                    'investment then you will be promoted to a new '
+                                                                    'level. '
+                                                                    'At this level, Your machine of wealth will begin '
+                                                                    'its operation. '
+                                                                    'We congratulate you in advance.',
+                                  'info@geld.com', [new_investor.email]
+                                  )
                         return redirect('/login/')
         else:
             return render(request, 'wallet/home.html',
@@ -132,6 +148,12 @@ def verify_payment(request):
                                                 referer.balance = F(referer.balance) + 0.001
                                             if referer.investment_count == 2:
                                                 referer.upgrade_investor()
+                                            send_mail('Successful wallet Funding',
+                                                      'Dear ' + investor.username + ', You '
+                                                                                    'have '
+                                                                                    'successfully funded your wallet '
+                                                                                    'with 0.001 Btc',
+                                                      'info@geld.com', [investor.email])
                                             referer.save()
                                         except IndexError:
                                             pass
@@ -146,6 +168,13 @@ def verify_payment(request):
                                                 if referer.investment_count == 2:
                                                     referer.upgrade_investor()
                                                 referer.save()
+                                                send_mail('Successful wallet Funding',
+                                                          'Dear ' + investor.username + ', You '
+                                                                                        'have '
+                                                                                        'successfully funded your wallet '
+                                                                                        'with 0.001 Btc',
+                                                          'info@geld.com', [investor.email])
+
                                             except IndexError:
                                                 pass
                                         else:
@@ -155,6 +184,13 @@ def verify_payment(request):
                                             if referer.investment_count == 2:
                                                 referer.upgrade_investor()
                                             referer.save()
+                                            send_mail('Successful wallet Funding',
+                                                      'Dear ' + investor.username + ', You '
+                                                                                    'have '
+                                                                                    'successfully funded your wallet '
+                                                                                    'with 0.001 Btc',
+                                                      'info@geld.com', [investor.email])
+
                                     return HttpResponse('*IPN OK*')
                                 except Investor.DoesNotExist:
                                     pass
@@ -183,6 +219,14 @@ def withdraw(request):
                         withdrawal_request.address = address
                         withdrawal_request.date_of_request = d.now()
                         withdrawal_request.save()
+                        send_mail('Withdrawal request',
+                                  'Dear ' + investor.username + ', You '
+                                                                'just '
+                                                                'requested to withdraw ' + withdrawal_request.amount +
+                                  'BTC to this address: '
+                                  + withdrawal_request.address,
+                                  'info@geld.com', [investor.email])
+
                         return redirect('http://127.0.0.1:8000/withdraw/')
                     else:
                         return render(request, 'wallet/withdrawal.html',
@@ -206,6 +250,12 @@ def service_withdrawal(id_):
     if pay_investor(withdrawal.address, withdrawal.amount) is True:
         withdrawal.serviced = True
         withdrawal.save()
+        send_mail('Successful Withdrawal',
+                  'Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount + 'BTC has been paid to the address'
+                                                                                      ' you specified : ' +
+                  withdrawal.address + ', Thank you for working with us',
+                  'info@geld.com', [withdrawal.investor.email])
+
         return True
     else:
         return False
@@ -234,9 +284,7 @@ def dashboard(request):
                      }
         return render(request, 'wallet/dashboard.html', user_data)
     else:
-        return redirect ('/')
-
-
+        return redirect('/')
 
 
 def admin_withdrawal(request):

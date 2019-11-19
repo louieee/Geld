@@ -146,3 +146,11 @@ import dj_database_url
 
 prod_db = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+
+EMAIL_HOST = 'smpt.sendergrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'parsifal_app'
+EMAIL_HOST_PASSWORD = 'mys3cr3tp4sswOrd'
+EMAIL_USE_TLS = True
+PUBLIC_KEY= 'e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893'
+PRIVATE_KEY = 'c62678DC6bfcfaf7f031665E343a3463a0B488a5d74fDf4D2050FEdd95808616'
