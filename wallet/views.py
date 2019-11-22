@@ -1,5 +1,11 @@
 from django.contrib import auth
+from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import F
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
+from wallet.extra import account_activation_token
 from .models import Investor, WithdrawalRequest
 import json
 from django.shortcuts import HttpResponse, render, redirect
@@ -52,25 +58,19 @@ def signup(request):
                                 new_investor.referer = referer
                             except IndexError:
                                 pass
-
+                        new_investor.is_active = False
                         new_investor.save()
-                        invest(new_investor)
-                        send_mail('Successful Signup: Welcome to Geld',
-                                  'Dear ' + new_investor.username + ', You are welcome'
-                                                                    'to Geld. This is a networking platform where we '
-                                                                    'put in money to grow our wealth. Now That youre '
-                                                                    'registered, '
-                                                                    'all you need to do is to fund your wallet with '
-                                                                    '0.001 Btc, then ensure that 2 friends also join '
-                                                                    'the platform and then you will be refunded your '
-                                                                    'investment then you will be promoted to a new '
-                                                                    'level. '
-                                                                    'At this level, Your machine of wealth will begin '
-                                                                    'its operation. '
-                                                                    'We congratulate you in advance.',
-                                  'info@geld.com', [new_investor.email]
+                        current_site = get_current_site(request)
+                        mail_subject = 'Activate your Geld account.'
+                        message = render_to_string('registration/activate_email.html', {
+                            'user': new_investor.username,
+                            'domain': current_site.domain,
+                            'uid': urlsafe_base64_encode(force_bytes(new_investor.id)),
+                            'token': account_activation_token.make_token(new_investor),
+                        })
+                        send_mail(mail_subject, message, 'info@geld.com', [new_investor.email]
                                   )
-                        return redirect('/login/')
+                        return redirect('/')
         else:
             return render(request, 'wallet/home.html',
                           {'message': 'All Fields Must Be Filled', 'status': 'danger'})
@@ -103,10 +103,11 @@ def login(request):
 
 def generate_address(username):
     the_api = api.get_callback_address(label=username)
-    response = json.loads(the_api).get('result').get('address')
-    if response is None:
-        return None
-    else:
+    try:
+        response = json.dumps(the_api['result']['address'])
+        return response
+    except TypeError:
+        response = None
         return response
 
 
@@ -307,7 +308,26 @@ def contact_us(request):
             send_mail(str(subject), str(body), request.user.email, ['info@geld.com'])
             return redirect('/contact')
         except BadHeaderError:
-            return render(request, 'wallet/contact_us.html', {'error': 'Bad Header Error', 'status':'danger'})
+            return render(request, 'wallet/contact_us.html', {'error': 'Bad Header Error', 'status': 'danger'})
         except ValueError:
             return render(request, 'wallet/contact_us.html', {'error': 'Value Error', 'status': 'danger'})
 
+
+def activate(request, uidb64, token):
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        print('UID: '+str(uid))
+        user = Investor.objects.get(id=int(uid))
+        print('Username: '+str(user.username))
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            invest(user)
+            return redirect('/login')
+        else:
+            user.delete()
+            return render(request, 'wallet/home.html', {'message': 'Your Email was invalid, Therefore Your Account Has '
+                                                                   'been deleted', 'status': 'danger'})
+    except Investor.DoesNotExist:
+        return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
