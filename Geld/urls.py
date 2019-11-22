@@ -18,7 +18,6 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
     PasswordResetCompleteView, LogoutView
 from django.contrib import admin
 from django.urls import path
-
 from Geld import settings
 from wallet.views import admin_withdrawal, signup
 urlpatterns = [

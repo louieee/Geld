@@ -1,12 +1,12 @@
 from django.contrib import auth
 from django.db.models import F
-from .models import Investor, WithdrawalRequest, Wallet
+from .models import Investor, WithdrawalRequest
 import json
 from django.shortcuts import HttpResponse, render, redirect
 import decimal
 from django.utils.timezone import datetime as d
 from coinpayments import CoinPaymentsAPI
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 
 api = CoinPaymentsAPI(public_key=settings.PUBLIC_KEY,
@@ -295,3 +295,19 @@ def admin_withdrawal(request):
         id_ = request.POST.get('id_')
         service_withdrawal(id_)
         return redirect('/admin/withdrawals')
+
+
+def contact_us(request):
+    if request.method == 'GET':
+        return render(request, 'wallet/contact_us.html')
+    elif request.method == 'POST':
+        subject = request.POST.get('subject')
+        body = request.POST.get('body')
+        try:
+            send_mail(str(subject), str(body), request.user.email, ['info@geld.com'])
+            return redirect('/contact')
+        except BadHeaderError:
+            return render(request, 'wallet/contact_us.html', {'error': 'Bad Header Error', 'status':'danger'})
+        except ValueError:
+            return render(request, 'wallet/contact_us.html', {'error': 'Value Error', 'status': 'danger'})
+

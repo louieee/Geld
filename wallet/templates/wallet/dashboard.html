@@ -86,15 +86,12 @@
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Sidebar Toggle (Topbar) -->
-
-
-                <!-- Topbar Search --><!-- Topbar Navbar -->
                 <a class="text-secondary  navbar-brand" href="{%url 'dashboard'%}"><h1 class="font-weight-bold ">GE<span class="text-warning">LD</span></h1></a>
                 {%if level != 'Novice' %}
-                    <a href="{%url 'withdraw'%}" class="ml-auto  btn btn-sm btn-success shadow-sm">Withdraw <i class="fas fa-dollar-sign fa-sm text-white-50"></i></a>
-                {% endif %}
-                <a href="#" data-toggle="modal"  data-target="#logoutModal"  class="ml-auto btn btn-sm btn-danger shadow-sm">Sign Out</a>
+                     <a href="{%url 'withdraw'%}" class="ml-auto  btn-sm btn-success shadow-sm">Withdraw <i class="fas fa-dollar-sign fa-sm text-white-50"></i></a>
+                 {% endif %}
+
+                <a href="{%url 'email'%}" class="ml-auto  btn btn-sm btn-info shadow-sm">Contact Us <i class="fas fa-dollar-sign fa-sm text-white-50"></i></a>
             </nav>
             <!-- End of Topbar -->
 
@@ -108,9 +105,14 @@
                         <div id="dashboard_alert" class="col-sm-12 alert alert-{{ status }} text-center">{{ message }}</div>
                     </div>
                     {%endif%}
-
+  <div class="row">
 <h1 id="user_username" class="h3 mb-3 text-info">{{ username }}</h1>
+    <div class="ml-auto">
+    <a href="#" data-toggle="modal"  data-target="#logoutModal"  class="ml-auto btn btn-sm btn-danger shadow-sm">Sign Out</a>
 
+    </div>
+
+  </div>
 
                 </div>
 
