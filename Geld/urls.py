@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import include
+from django.conf.urls import include, url
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView, LogoutView
 from django.contrib import admin
@@ -27,7 +27,7 @@ urlpatterns = [
     path('', signup, name='home'),
     path('logout', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('password/reset', PasswordResetView.as_view(), name='password_reset'),
-    path('password/reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('password/reset/confirm', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    url(r'^password/reset/done/$', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password/reset/complete', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
