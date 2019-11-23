@@ -25,7 +25,7 @@ SECRET_KEY = 'u(6=25%0ji!95+au-*j25)1ikjjxxy7j9647q29#ih()!d5blp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['geldbaum.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['geldbaum.herokuapp.com', '127.0.0.1', 'www.geldbaum.tk']
 
 
 # Application definition
@@ -147,11 +147,14 @@ import dj_database_url
 prod_db = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
 
-EMAIL_HOST = 'smpt.sendergrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'parsifal_app'
-EMAIL_HOST_PASSWORD = 'mys3cr3tp4sswOrd'
+
+SENDGRID_API_KEY = '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'
+
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'louis.paul9095@gmail.com'
+EMAIL_HOST_PASSWORD = 'MONKEYSex'
 PUBLIC_KEY= 'e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893'
 PRIVATE_KEY = 'c62678DC6bfcfaf7f031665E343a3463a0B488a5d74fDf4D2050FEdd95808616'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
