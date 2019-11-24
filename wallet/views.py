@@ -72,7 +72,7 @@ def signup(request):
                             'uid': urlsafe_base64_encode(force_bytes(new_investor.id)),
                             'token': account_activation_token.make_token(new_investor),
                         })
-                        message_ = Mail(from_email=settings.EMAIL_HOST_USER,
+                        message_ = Mail(from_email=settings.EMAIL,
                                         to_emails=new_investor.email,
                                         subject=mail_subject, html_content=message)
                         try:
@@ -164,7 +164,7 @@ def verify_payment(request):
                                                 referer.balance = F(referer.balance) + 0.001
                                             if referer.investment_count == 2:
                                                 referer.upgrade_investor()
-                                                message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                                message = Mail(from_email=settings.EMAIL,
                                                                to_emails=investor.email,
                                                                subject='Successful wallet Funding',
                                                                plain_text_content='Dear ' + investor.username + ', You '
@@ -188,7 +188,7 @@ def verify_payment(request):
                                                 if referer.investment_count == 2:
                                                     referer.upgrade_investor()
                                                 referer.save()
-                                                message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                                message = Mail(from_email=settings.EMAIL,
                                                                to_emails=investor.email,
                                                                subject='Successful wallet Funding',
                                                                plain_text_content='Dear ' + investor.username + ', You '
@@ -207,7 +207,7 @@ def verify_payment(request):
                                             if referer.investment_count == 2:
                                                 referer.upgrade_investor()
                                             referer.save()
-                                            Message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                            Message = Mail(from_email=settings.EMAIL,
                                                            to_emails=investor.email,
                                                            subject='Successful wallet Funding',
                                                            plain_text_content='Dear ' + investor.username + ', You '
@@ -245,7 +245,7 @@ def withdraw(request):
                         withdrawal_request.address = address
                         withdrawal_request.date_of_request = d.now()
                         withdrawal_request.save()
-                        message = Mail(from_email=settings.EMAIL_HOST_USER,
+                        message = Mail(from_email=settings.EMAIL,
                                        to_emails=investor.email, subject='Withdrawal request',
                                        plain_text_content='Dear ' + investor.username + ', You '
                                                                                         'just requested to withdraw '
@@ -276,7 +276,7 @@ def service_withdrawal(id_):
     if pay_investor(withdrawal.address, withdrawal.amount) is True:
         withdrawal.serviced = True
         withdrawal.save()
-        message = Mail(from_email=settings.EMAIL_HOST_USER,
+        message = Mail(from_email=settings.EMAIL,
                        to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
                        plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
                                           'BTC has been paid to the address you specified : ' +
@@ -330,7 +330,7 @@ def contact_us(request):
     elif request.method == 'POST':
         subject = request.POST.get('subject')
         body = request.POST.get('body')
-        message = Mail(to_emails=settings.EMAIL_HOST_USER,
+        message = Mail(to_emails=settings.EMAIL,
                        from_email=request.user.email, subject=subject,
                        plain_text_content=body)
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
