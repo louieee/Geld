@@ -147,14 +147,13 @@ import dj_database_url
 prod_db = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
 
-
-SENDGRID_API_KEY = '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'
-
+SENDGRID_API_KEY = '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'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'louis.paul9095@gmail.com'
+EMAIL_HOST_USER = 'mail.geldbaum@gmail.com'
 EMAIL_HOST_PASSWORD = 'MONKEYSex'
 PUBLIC_KEY= 'e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893'
 PRIVATE_KEY = 'c62678DC6bfcfaf7f031665E343a3463a0B488a5d74fDf4D2050FEdd95808616'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+

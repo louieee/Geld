@@ -1,3 +1,5 @@
+import urllib
+
 from django.contrib import auth
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import F
@@ -14,6 +16,8 @@ from django.utils.timezone import datetime as d
 from coinpayments import CoinPaymentsAPI
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 api = CoinPaymentsAPI(public_key=settings.PUBLIC_KEY,
                       private_key=settings.PRIVATE_KEY)
@@ -59,7 +63,7 @@ def signup(request):
                             except IndexError:
                                 pass
                         new_investor.is_active = False
-                        new_investor.save()
+
                         current_site = get_current_site(request)
                         mail_subject = 'Activate your Geld account.'
                         message = render_to_string('registration/activate_email.html', {
@@ -68,13 +72,28 @@ def signup(request):
                             'uid': urlsafe_base64_encode(force_bytes(new_investor.id)),
                             'token': account_activation_token.make_token(new_investor),
                         })
-                        send_mail(mail_subject, message, 'info@geld.com', [new_investor.email]
-                                  )
-                        return redirect('/')
+                        message_ = Mail(from_email=settings.EMAIL_HOST_USER,
+                                        to_emails=new_investor.email,
+                                        subject=mail_subject, html_content=message)
+                        try:
+                            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                            response = sg.send(message_)
+                            if response._status_code == 200:
+                                new_investor.save()
+                                return render(request, 'wallet/home.html', {'message': 'check your e-mail '
+                                                                                       'inbox or spam folder for the email '
+                                                                                       'verification', 'status': 'info'})
+                            else:
+                                return redirect('/')
+                        except Exception as e:
+                            print(e.__str__())
+                            return redirect('/')
+
         else:
             return render(request, 'wallet/home.html',
                           {'message': 'All Fields Must Be Filled', 'status': 'danger'})
     else:
+        print(request.headers['HOST'])
         if request.user.is_authenticated:
             return redirect('/dashboard/')
         else:
@@ -149,12 +168,16 @@ def verify_payment(request):
                                                 referer.balance = F(referer.balance) + 0.001
                                             if referer.investment_count == 2:
                                                 referer.upgrade_investor()
-                                            send_mail('Successful wallet Funding',
-                                                      'Dear ' + investor.username + ', You '
-                                                                                    'have '
-                                                                                    'successfully funded your wallet '
-                                                                                    'with 0.001 Btc',
-                                                      'info@geld.com', [investor.email])
+                                                message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                                               to_emails=investor.email,
+                                                               subject='Successful wallet Funding',
+                                                               plain_text_content='Dear ' + investor.username + ', You '
+                                                                                                                'have '
+                                                                                                                'successfully funded your wallet '
+                                                                                                                'with 0.001 Btc'
+                                                               )
+                                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                                                response = sg.send(message)
                                             referer.save()
                                         except IndexError:
                                             pass
@@ -169,13 +192,16 @@ def verify_payment(request):
                                                 if referer.investment_count == 2:
                                                     referer.upgrade_investor()
                                                 referer.save()
-                                                send_mail('Successful wallet Funding',
-                                                          'Dear ' + investor.username + ', You '
-                                                                                        'have '
-                                                                                        'successfully funded your wallet '
-                                                                                        'with 0.001 Btc',
-                                                          'info@geld.com', [investor.email])
-
+                                                message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                                               to_emails=investor.email,
+                                                               subject='Successful wallet Funding',
+                                                               plain_text_content='Dear ' + investor.username + ', You '
+                                                                                                                'have '
+                                                                                                                'successfully funded your wallet '
+                                                                                                                'with 0.001 Btc'
+                                                               )
+                                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                                                response = sg.send(message)
                                             except IndexError:
                                                 pass
                                         else:
@@ -185,13 +211,16 @@ def verify_payment(request):
                                             if referer.investment_count == 2:
                                                 referer.upgrade_investor()
                                             referer.save()
-                                            send_mail('Successful wallet Funding',
-                                                      'Dear ' + investor.username + ', You '
-                                                                                    'have '
-                                                                                    'successfully funded your wallet '
-                                                                                    'with 0.001 Btc',
-                                                      'info@geld.com', [investor.email])
-
+                                            Message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                                           to_emails=investor.email,
+                                                           subject='Successful wallet Funding',
+                                                           plain_text_content='Dear ' + investor.username + ', You '
+                                                                                                            'have '
+                                                                                                            'successfully funded your wallet '
+                                                                                                            'with 0.001 Btc'
+                                                           )
+                                            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                                            response = sg.send(Message)
                                     return HttpResponse('*IPN OK*')
                                 except Investor.DoesNotExist:
                                     pass
@@ -220,14 +249,14 @@ def withdraw(request):
                         withdrawal_request.address = address
                         withdrawal_request.date_of_request = d.now()
                         withdrawal_request.save()
-                        send_mail('Withdrawal request',
-                                  'Dear ' + investor.username + ', You '
-                                                                'just '
-                                                                'requested to withdraw ' + withdrawal_request.amount +
-                                  'BTC to this address: '
-                                  + withdrawal_request.address,
-                                  'info@geld.com', [investor.email])
-
+                        message = Mail(from_email=settings.EMAIL_HOST_USER,
+                                       to_emails=investor.email, subject='Withdrawal request',
+                                       plain_text_content='Dear ' + investor.username + ', You '
+                                                                                        'just requested to withdraw '
+                                                          + withdrawal_request.amount +
+                                                          'BTC to this address: ' + withdrawal_request.address)
+                        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                        response = sg.send(message)
                         return redirect('http://127.0.0.1:8000/withdraw/')
                     else:
                         return render(request, 'wallet/withdrawal.html',
@@ -251,12 +280,13 @@ def service_withdrawal(id_):
     if pay_investor(withdrawal.address, withdrawal.amount) is True:
         withdrawal.serviced = True
         withdrawal.save()
-        send_mail('Successful Withdrawal',
-                  'Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount + 'BTC has been paid to the address'
-                                                                                      ' you specified : ' +
-                  withdrawal.address + ', Thank you for working with us',
-                  'info@geld.com', [withdrawal.investor.email])
-
+        message = Mail(from_email=settings.EMAIL_HOST_USER,
+                       to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
+                       plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
+                                          'BTC has been paid to the address you specified : ' +
+                                          withdrawal.address + ', Thank you for working with us')
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
         return True
     else:
         return False
@@ -304,22 +334,27 @@ def contact_us(request):
     elif request.method == 'POST':
         subject = request.POST.get('subject')
         body = request.POST.get('body')
-        try:
-            send_mail(str(subject), str(body), request.user.email, ['info@geld.com'])
-            return redirect('/contact')
-        except BadHeaderError:
-            return render(request, 'wallet/contact_us.html', {'error': 'Bad Header Error', 'status': 'danger'})
-        except ValueError:
-            return render(request, 'wallet/contact_us.html', {'error': 'Value Error', 'status': 'danger'})
+        message = Mail(to_emails=settings.EMAIL_HOST_USER,
+                       from_email=request.user.email, subject=subject,
+                       plain_text_content=body)
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        if response._status_code == 202:
+            redirect('/contact')
+            return render(request, 'wallet/contact_us.html', {'message': 'message was sent successfully',
+                                                              'status': 'success'})
+        else:
+            redirect('/contact')
+            return render(request, 'wallet/contact_us.html', {'message': 'message was not sent',
+                                                              'status': 'danger'})
 
 
 def activate(request, uidb64, token):
-
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        print('UID: '+str(uid))
+        print('UID: ' + str(uid))
         user = Investor.objects.get(id=int(uid))
-        print('Username: '+str(user.username))
+        print('Username: ' + str(user.username))
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
