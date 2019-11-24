@@ -90,7 +90,6 @@ def signup(request):
             return render(request, 'wallet/home.html',
                           {'message': 'All Fields Must Be Filled', 'status': 'danger'})
     else:
-        print(request.headers['HOST'])
         if request.user.is_authenticated:
             return redirect('/dashboard/')
         else:
@@ -352,7 +351,7 @@ def activate(request, uidb64, token):
         print('UID: ' + str(uid))
         user = Investor.objects.get(id=int(uid))
         print('Username: ' + str(user.username))
-        if user is not None and account_activation_token.check_token(user, token):
+        if account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
             invest(user)
