@@ -4,11 +4,14 @@ coinpayments-py==0.1.0
 dj-database-url==0.5.0
 Django==2.2.4
 django-cors-headers==3.1.1
+django-sendgrid-webhook==0.3.0
 gunicorn==19.9.0
 idna==2.8
 psycopg2==2.8.3
+python-http-client==3.2.1
 pytz==2019.2
 requests==2.22.0
+sendgrid==6.1.0
 six==1.13.0
 sqlparse==0.3.0
 urllib3==1.25.6
