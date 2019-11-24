@@ -78,13 +78,10 @@ def signup(request):
                         try:
                             sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                             response = sg.send(message_)
-                            if response._status_code == 200:
-                                new_investor.save()
-                                return render(request, 'wallet/home.html', {'message': 'check your e-mail '
-                                                                                       'inbox or spam folder for the email '
-                                                                                       'verification', 'status': 'info'})
-                            else:
-                                return redirect('/')
+                            new_investor.save()
+                            return render(request, 'wallet/home.html', {'message': 'check your e-mail '
+                                                                                   'inbox or spam folder for the email '
+                                                                                   'verification', 'status': 'info'})
                         except Exception as e:
                             print(e.__str__())
                             return redirect('/')
