@@ -359,7 +359,9 @@ def activate(request, uidb64, token):
         else:
             if user.is_active is False:
                 user.delete()
-            return render(request, 'wallet/home.html', {'message': 'Your Email was invalid, Therefore Your Account Has '
+                return render(request, 'wallet/home.html', {'message': 'Your Email was invalid, Therefore Your Account Has '
                                                                    'been deleted', 'status': 'danger'})
+            else:
+                return redirect('/')
     except Investor.DoesNotExist:
         return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
