@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'u(6=25%0ji!95+au-*j25)1ikjjxxy7j9647q29#ih()!d5blp'
 DEBUG = True
 
 ALLOWED_HOSTS = ['geldbaum.herokuapp.com', '127.0.0.1', 'www.geldbaum.tk']
-
 
 # Application definition
 
@@ -39,8 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wallet',
     'corsheaders'
-
-
 
 ]
 
@@ -79,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Geld.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -89,7 +84,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -109,7 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -123,14 +116,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
 AUTH_USER_MODEL = 'wallet.Investor'
-
 
 LOGOUT_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
@@ -153,8 +143,12 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL= 'mail.geldbaum@gmail.com'
+EMAIL = 'mail.geldbaum@gmail.com'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-PUBLIC_KEY= 'e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893'
+PUBLIC_KEY = 'e47e68a3dbfc10c3af8b699c2d91a4fbb8daec4f0e2e064716e675cd6b947893'
 PRIVATE_KEY = 'c62678DC6bfcfaf7f031665E343a3463a0B488a5d74fDf4D2050FEdd95808616'
 
+BLOCKCHAIN_API_KEY = '5141a55b-d1eb-497a-b277-c07a2f9873c9'
+BLOCKCHAIN_GUID = 'bd6b8788-2cf0-468b-9109-b443f70c796d'
+BLOCKCHAIN_XPUB = 'xpub6BnYXhB7SHxRGqAd1mCvgeghcQW1BHGVKM6KDCnRqNYUVuMDWCDHayYLmtyuRPbYeDmZbockEWzDLSLab7W84BknKQVt4fCfa1cr6ipf1t9'
+BLOCKCHAIN_PASSWORD = 'MONKEYSex'

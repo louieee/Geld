@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c25c0c85-1916-48fa-b1f7-1013e1df336a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Geld/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Geld/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/registration/activate_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/activate_email.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
     </list>
@@ -32,14 +34,17 @@
     <session id="1649821634">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="24" />
+          <entry key="project.closed" value="28" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.109" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.113" value="1" />
+          <entry key="project.open.time.116" value="1" />
           <entry key="project.open.time.119" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.131" value="1" />
+          <entry key="project.open.time.133" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.167" value="1" />
           <entry key="project.open.time.184" value="1" />
@@ -52,13 +57,15 @@
           <entry key="project.open.time.309" value="1" />
           <entry key="project.open.time.39" value="2" />
           <entry key="project.open.time.4" value="2" />
+          <entry key="project.open.time.47" value="1" />
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.65" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.8" value="3" />
+          <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.90" value="1" />
           <entry key="project.open.time.96" value="1" />
-          <entry key="project.opened" value="29" />
+          <entry key="project.opened" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -67,7 +74,7 @@
           <entry key="css" value="7" />
           <entry key="gitignore" value="2" />
           <entry key="html" value="20" />
-          <entry key="py" value="38" />
+          <entry key="py" value="45" />
           <entry key="txt" value="4" />
           <entry key="xhtml" value="3" />
         </counts>
@@ -77,7 +84,7 @@
           <entry key="CSS" value="7" />
           <entry key="HTML" value="20" />
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="38" />
+          <entry key="Python" value="45" />
           <entry key="XHTML" value="3" />
         </counts>
       </usages-collector>
@@ -88,7 +95,7 @@
           <entry key="css" value="12" />
           <entry key="gitignore" value="23" />
           <entry key="html" value="2758" />
-          <entry key="py" value="27840" />
+          <entry key="py" value="28247" />
           <entry key="txt" value="63" />
         </counts>
       </usages-collector>
@@ -97,7 +104,7 @@
           <entry key="CSS" value="12" />
           <entry key="HTML" value="2758" />
           <entry key="PLAIN_TEXT" value="90" />
-          <entry key="Python" value="29467" />
+          <entry key="Python" value="29874" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -108,30 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Geld/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="154" column="26" lean-forward="true" selection-start-line="154" selection-start-column="26" selection-end-line="154" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/wallet/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="364" column="34" selection-start-line="364" selection-start-column="34" selection-end-line="364" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <marker date="1574562168239" expanded="true" signature="876:877" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="163">
+              <caret line="150" column="59" lean-forward="true" selection-start-line="150" selection-start-column="59" selection-end-line="150" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -140,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/Geld/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="133">
-              <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+              <caret line="24" column="43" lean-forward="true" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
               <folding>
                 <element signature="e#628#669#0" expanded="true" />
               </folding>
@@ -148,11 +133,40 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Louisoft/my_venv/Lib/site-packages/django/contrib/auth/views.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="214" column="31" lean-forward="true" selection-start-line="214" selection-start-column="31" selection-end-line="214" selection-end-column="31" />
+            <state relative-caret-position="203">
+              <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
+              <folding>
+                <element signature="e#714#1104#0" />
+                <element signature="e#902#4894#0" />
+                <element signature="e#939#4730#0" />
+                <element signature="e#4749#4894#0" />
+                <element signature="e#4921#5731#0" />
+                <element signature="e#5977#6388#0" />
+                <element signature="e#6308#12964#0" />
+                <element signature="e#12994#16058#0" />
+                <element signature="e#13912#14814#0" />
+                <element signature="e#14721#15307#0" />
+                <element signature="e#17133#17999#0" />
+                <element signature="e#17203#17960#0" />
+                <element signature="e#18037#18499#0" />
+                <element signature="e#18531#19489#0" />
+                <element signature="e#19534#20418#0" />
+                <marker date="1574789447714" expanded="true" signature="1133:1136" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="vcs://wallet/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -160,8 +174,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/registration/activate_email.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+            <state relative-caret-position="60">
+              <caret line="2" column="62" selection-start-line="2" selection-start-column="62" selection-end-line="2" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wallet/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -169,8 +194,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="7" column="43" lean-forward="true" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+            <state relative-caret-position="150">
+              <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -186,8 +211,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+            <state relative-caret-position="2760">
+              <caret line="92" selection-start-line="92" selection-end-line="92" />
             </state>
           </provider>
         </entry>
@@ -195,8 +220,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/registration/password_reset_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1">
-              <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+            <state relative-caret-position="240">
+              <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -290,8 +315,8 @@
         <option value="$PROJECT_DIR$/Geld/urls.py" />
         <option value="$PROJECT_DIR$/wallet/urls.py" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" />
-        <option value="$PROJECT_DIR$/Geld/settings.py" />
         <option value="$PROJECT_DIR$/templates/registration/activate_email.html" />
+        <option value="$PROJECT_DIR$/Geld/settings.py" />
         <option value="$PROJECT_DIR$/wallet/views.py" />
       </list>
     </option>
@@ -304,7 +329,8 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
-    <option name="width" value="480" />
+    <option name="y" value="-8" />
+    <option name="width" value="749" />
     <option name="height" value="692" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -313,6 +339,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -328,30 +355,6 @@
             <path>
               <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
               <item name="Geld" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geld" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="registration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geld" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geld" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geld" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="wallet" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -362,7 +365,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -439,7 +441,8 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2473525" />
+      <window_info id="Repositories" show_stripe_button="false" weight="0.32980332" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2700454" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -450,10 +453,10 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32879046" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49924356" weight="0.32879046" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50226927" side_tool="true" visible="true" weight="0.3850085" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4977307" visible="true" weight="0.3850085" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50075644" side_tool="true" weight="0.32879046" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" visible="true" weight="0.3850085" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49848714" weight="0.3270869" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -462,9 +465,10 @@
       <window_info anchor="right" id="Database" order="4" weight="0.32980332" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2473525" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Repositories" order="0" weight="0.32980332" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.2700454" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32879046" />
@@ -473,11 +477,11 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32879046" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49924356" weight="0.32879046" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3850085" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3270869" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50075644" side_tool="true" weight="0.32879046" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" visible="true" weight="0.3850085" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49848714" weight="0.3270869" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -580,14 +584,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7530">
           <caret line="251" selection-start-line="251" selection-end-line="251" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -629,20 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="23" selection-start-line="23" selection-end-line="26" selection-end-column="18" />
-          <folding>
-            <element signature="n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-            <marker date="1573728015321" expanded="true" signature="201:411" ph="..." />
-            <marker date="1573728015321" expanded="true" signature="826:1037" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -650,14 +632,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
           <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#src#0;n#img#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -665,10 +639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="40" selection-end-column="60" />
-          <folding>
-            <element signature="n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#form#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -676,9 +646,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="97" column="73" selection-start-line="97" selection-start-column="73" selection-end-line="97" selection-end-column="73" />
-          <folding>
-            <element signature="n#nav#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -686,10 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="15" column="12" lean-forward="true" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
-          <folding>
-            <element signature="e#481#1484#0#HTML" expanded="true" />
-            <element signature="e#1926#2929#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -742,78 +705,101 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/apps.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/registration/password_reset_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
+        <state relative-caret-position="450">
           <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/urls.py">
+    <entry file="file://$PROJECT_DIR$/../Louisoft/my_venv/Lib/site-packages/django/contrib/auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="7" column="43" lean-forward="true" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+        <state relative-caret-position="5670">
+          <caret line="214" column="31" selection-start-line="214" selection-start-column="31" selection-end-line="214" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration/activate_email.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="2" column="62" selection-start-line="2" selection-start-column="62" selection-end-line="2" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/apps.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2760">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration/password_reset_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Geld/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
-          <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+          <caret line="24" column="43" lean-forward="true" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
           <folding>
             <element signature="e#628#669#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Louisoft/my_venv/Lib/site-packages/django/contrib/auth/views.py">
+    <entry file="file://$PROJECT_DIR$/wallet/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="214" column="31" lean-forward="true" selection-start-line="214" selection-start-column="31" selection-end-line="214" selection-end-column="31" />
+        <state relative-caret-position="150">
+          <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Geld/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="154" column="26" lean-forward="true" selection-start-line="154" selection-start-column="26" selection-end-line="154" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/registration/activate_email.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        <state relative-caret-position="163">
+          <caret line="150" column="59" lean-forward="true" selection-start-line="150" selection-start-column="59" selection-end-line="150" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="364" column="34" selection-start-line="364" selection-start-column="34" selection-end-line="364" selection-end-column="34" />
+        <state relative-caret-position="203">
+          <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <marker date="1574562168239" expanded="true" signature="876:877" ph="..." />
+            <element signature="e#714#1104#0" />
+            <element signature="e#902#4894#0" />
+            <element signature="e#939#4730#0" />
+            <element signature="e#4749#4894#0" />
+            <element signature="e#4921#5731#0" />
+            <element signature="e#5977#6388#0" />
+            <element signature="e#6308#12964#0" />
+            <element signature="e#12994#16058#0" />
+            <element signature="e#13912#14814#0" />
+            <element signature="e#14721#15307#0" />
+            <element signature="e#17133#17999#0" />
+            <element signature="e#17203#17960#0" />
+            <element signature="e#18037#18499#0" />
+            <element signature="e#18531#19489#0" />
+            <element signature="e#19534#20418#0" />
+            <marker date="1574789447714" expanded="true" signature="1133:1136" ph="..." />
           </folding>
         </state>
       </provider>

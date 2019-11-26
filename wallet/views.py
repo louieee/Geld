@@ -1,5 +1,4 @@
-import urllib
-
+import requests
 from django.contrib import auth
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import F
@@ -8,19 +7,26 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from wallet.extra import account_activation_token
-from .models import Investor, WithdrawalRequest
+from .models import Investor, WithdrawalRequest, Wallet
 import json
 from django.shortcuts import HttpResponse, render, redirect
 import decimal
 from django.utils.timezone import datetime as d
-from coinpayments import CoinPaymentsAPI
-from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-api = CoinPaymentsAPI(public_key=settings.PUBLIC_KEY,
-                      private_key=settings.PRIVATE_KEY)
+
+def generate_address(id_):
+    call_back_url = 'http://geldbaum.tk?invoice_id=' + str(id_)
+    gen = requests.request('GET',
+                           'https://api.blockchain.info/v2/receive?xpub=' + settings.BLOCKCHAIN_XPUB + '&callback='
+                           + call_back_url + '&key=' + settings.BLOCKCHAIN_API_KEY)
+    response = json.loads(gen.text).get('address')
+    if response is None:
+        return None
+    else:
+        return response
 
 
 def signup(request):
@@ -116,110 +122,84 @@ def login(request):
             return render(request, 'wallet/login.html')
 
 
-def generate_address(username):
-    the_api = api.get_callback_address(label=username)
-    try:
-        response = json.dumps(the_api['result']['address'])
-        return response
-    except TypeError:
-        response = None
-        return response
-
-
-def invest(investor):
-    if investor.deposit_address is None:
-        address = generate_address(investor.username)
-        if address is not None:
-            investor.deposit_address = address
-            investor.save()
-            return True
-        else:
-            return False
+def invest(request):
+    if request.method == 'POST':
+        investor = Investor.objects.get(id=request.user.id)
+        if investor.deposit_address is None:
+            address = generate_address(investor.id)
+            if address is not None:
+                investor.deposit_address = address
+                investor.save()
+                return True
+            else:
+                return False
 
 
 def verify_payment(request):
-    if request.method == 'POST':
-        my_merchant_id = ''
-        my_ipn_secret = ''
-        if request.POST['ipn_mode'] == 'hmac':
-            if request.POST['merchant'] == my_merchant_id:
-                address = request.POST['address']
-                currency = request.POST['currency']
-                total_amount = request.POST['amount']
-                deduct_fee = request.POST['fee']
-                confirmation = request.POST['status']
-                if api.check_signature(request.headers['HTTP_HMAC'], my_ipn_secret):
-                    if currency == 'NGN':
-                        if decimal.Decimal(total_amount) - decimal.Decimal(deduct_fee) >= 0.001:
-                            if confirmation >= 100 or confirmation == 2:
-                                try:
-                                    investor = Investor.objects.get(deposit_address=address, level=0)
-                                    investor.level = 1
-                                    investor.save()
-                                    if investor.referer is None:
-                                        try:
-                                            referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                                            referer.investment_count = F(referer.investment_count) + 1
-                                            if referer.investment_count % 2 or referer.investment_count > 2:
-                                                referer.balance = F(referer.balance) + 0.001
-                                            if referer.investment_count == 2:
-                                                referer.upgrade_investor()
-                                                message = Mail(from_email=settings.EMAIL,
-                                                               to_emails=investor.email,
-                                                               subject='Successful wallet Funding',
-                                                               plain_text_content='Dear ' + investor.username + ', You '
-                                                                                                                'have '
-                                                                                                                'successfully funded your wallet '
-                                                                                                                'with 0.001 Btc'
-                                                               )
-                                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                                                response = sg.send(message)
-                                            referer.save()
-                                        except IndexError:
-                                            pass
-                                    else:
-                                        referer = Investor.objects.get(id=investor.referer_id)
-                                        if referer.level > 1:
-                                            try:
-                                                referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                                                referer.investment_count = F(referer.investment_count) + 1
-                                                if referer.investment_count % 2 or referer.investment_count > 2:
-                                                    referer.balance = F(referer.balance) + 0.001
-                                                if referer.investment_count == 2:
-                                                    referer.upgrade_investor()
-                                                referer.save()
-                                                message = Mail(from_email=settings.EMAIL,
-                                                               to_emails=investor.email,
-                                                               subject='Successful wallet Funding',
-                                                               plain_text_content='Dear ' + investor.username + ', You '
-                                                                                                                'have '
-                                                                                                                'successfully funded your wallet '
-                                                                                                                'with 0.001 Btc'
-                                                               )
-                                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                                                response = sg.send(message)
-                                            except IndexError:
-                                                pass
-                                        else:
-                                            referer.investment_count = F(referer.investment_count) + 1
-                                            if referer.investment_count % 2 or referer.investment_count > 2:
-                                                referer.balance = F(referer.balance) + 0.001
-                                            if referer.investment_count == 2:
-                                                referer.upgrade_investor()
-                                            referer.save()
-                                            Message = Mail(from_email=settings.EMAIL,
-                                                           to_emails=investor.email,
-                                                           subject='Successful wallet Funding',
-                                                           plain_text_content='Dear ' + investor.username + ', You '
-                                                                                                            'have '
-                                                                                                            'successfully funded your wallet '
-                                                                                                            'with 0.001 Btc'
-                                                           )
-                                            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                                            response = sg.send(Message)
-                                    return HttpResponse('*IPN OK*')
-                                except Investor.DoesNotExist:
-                                    pass
+    if request.method == 'GET':
+        invoice_id = request.GET['invoice_id']
+        transaction_hash = request.GET['transaction_hash']
+        value_in_satoshi = request.GET['value']
+        confirmation = request.GET['confirmations']
+        if invoice_id and transaction_hash and value_in_satoshi and confirmation:
+            value_in_btc = float(value_in_satoshi) / 100000000
+            if int(confirmation) >= 4 and value_in_btc >= 0.001:
+                try:
+                    investor = Investor.objects.get(id=invoice_id, level=0)
+                    investor.level = 1
+                    investor.save()
+                    if investor.referer is None:
+                        try:
+                            referer = Investor.objects.all().order_by('id').filter(level=1)[0]
+                            referer.investment_count = F(referer.investment_count) + 1
+                            if referer.investment_count % 2 or referer.investment_count > 2:
+                                referer.balance = F(referer.balance) + 0.001
+                            if referer.investment_count == 2:
+                                referer.upgrade_investor()
+                                message = Mail(from_email=settings.EMAIL, to_emails=investor.email,
+                                               subject='Successful wallet Funding', plain_text_content='Dear ' +
+                                                                                                       investor.username + ', You have successfully funded your wallet with'
+                                                                                                                           ' 0.001 Btc')
+                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                                response = sg.send(message)
+                            referer.save()
+                        except IndexError:
+                            pass
+                    else:
+                        referer = Investor.objects.get(id=investor.referer_id)
+                        if referer.level > 1:
+                            try:
+                                referer = Investor.objects.all().order_by('id').filter(level=1)[0]
+                                referer.investment_count = F(referer.investment_count) + 1
+                                if referer.investment_count % 2 or referer.investment_count > 2:
+                                    referer.balance = F(referer.balance) + 0.001
+                                if referer.investment_count == 2:
+                                    referer.upgrade_investor()
+                                referer.save()
+                                message = Mail(from_email=settings.EMAIL, to_emails=investor.email,
+                                               subject='Successful wallet Funding', plain_text_content='Dear ' +
+                                               investor.username + ', You have successfully funded your wallet '
+                                               'with 0.001 Btc')
+                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                                response = sg.send(message)
+                            except IndexError:
+                                pass
+                        else:
+                            referer.investment_count = F(referer.investment_count) + 1
+                            if referer.investment_count % 2 or referer.investment_count > 2:
+                                referer.balance = F(referer.balance) + 0.001
+                            if referer.investment_count == 2:
+                                referer.upgrade_investor()
+                            referer.save()
+                            Message = Mail(from_email=settings.EMAIL,
+                                           to_emails=investor.email, subject='Successful wallet Funding',
+                                           plain_text_content='Dear ' + investor.username + ', You '
+                                           'have successfully funded your wallet with 0.001 Btc')
+                            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                            response = sg.send(Message)
+                    return HttpResponse('*OK*')
+                except Investor.DoesNotExist:
+                    pass
 
 
 def withdraw(request):
@@ -248,7 +228,7 @@ def withdraw(request):
                         message = Mail(from_email=settings.EMAIL,
                                        to_emails=investor.email, subject='Withdrawal request',
                                        plain_text_content='Dear ' + investor.username + ', You '
-                                                                                        'just requested to withdraw '
+                                                          'just requested to withdraw '
                                                           + withdrawal_request.amount +
                                                           'BTC to this address: ' + withdrawal_request.address)
                         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
@@ -271,29 +251,38 @@ def withdraw(request):
                           {'message': 'Authentication Failed', 'status': 'danger'})
 
 
-def service_withdrawal(id_):
-    withdrawal = WithdrawalRequest.objects.get(id=id_)
-    if pay_investor(withdrawal.address, withdrawal.amount) is True:
-        withdrawal.serviced = True
-        withdrawal.save()
-        message = Mail(from_email=settings.EMAIL,
-                       to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
-                       plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
-                                          'BTC has been paid to the address you specified : ' +
-                                          withdrawal.address + ', Thank you for working with us')
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sg.send(message)
-        return True
-    else:
-        return False
+def service_withdrawal(request):
+    if request.method == 'POST':
+        id_ = request.POST.get('id')
+        withdrawal = WithdrawalRequest.objects.get(id=int(id_))
+        if pay_investor(withdrawal.address, withdrawal.amount) is True:
+            withdrawal.serviced = True
+            withdrawal.save()
+            message = Mail(from_email=settings.EMAIL,
+                           to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
+                           plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
+                                              'BTC has been paid to the address you specified : ' +
+                                              withdrawal.address + ', Thank you for working with us')
+            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            response = sg.send(message)
+            return True
+        else:
+            return False
 
 
 def pay_investor(address, amount):
-    pay = api.create_withdrawal(amount=amount, currency='BTC', address=address)
-    response = json.loads(pay).get('error')
-    if response == 'ok':
-        return True
-    else:
+    try:
+        pay = requests.request('GET',
+                               'http://localhost:3000/merchant/' + settings.BLOCKCHAIN_GUID + '/payment?password='
+                               + settings.BLOCKCHAIN_PASSWORD + '&to=' + address + '&amount=' + str((amount / 100000000)))
+        response = json.loads(pay.text).get('message').split(' ')
+        if response[0] == 'Sent' and (response[1] == amount) and (response[4] == address):
+            return True
+        else:
+            return False
+    except ConnectionRefusedError:
+        return False
+    except requests.ConnectionError:
         return False
 
 
@@ -359,8 +348,9 @@ def activate(request, uidb64, token):
         else:
             if user.is_active is False:
                 user.delete()
-                return render(request, 'wallet/home.html', {'message': 'Your Email was invalid, Therefore Your Account Has '
-                                                                   'been deleted', 'status': 'danger'})
+                return render(request, 'wallet/home.html',
+                              {'message': 'Your Email was invalid, Therefore Your Account Has '
+                                          'been deleted', 'status': 'danger'})
             else:
                 return redirect('/')
     except Investor.DoesNotExist:
