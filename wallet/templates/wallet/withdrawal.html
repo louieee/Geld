@@ -31,20 +31,15 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
-      <div id="content">
+      <div id="content" class="bg-gray-300">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-          <!-- Sidebar Toggle (Topbar) -->
-
-
-          <!-- Topbar Search --><!-- Topbar Navbar -->
-<a class="text-secondary navbar-brand" href="{%url 'dashboard'%}"><h1 class="font-weight-bold ">GE<span class="text-warning">LD</span></h1></a>
+        <nav class="navbar navbar-expand navbar-light bg-secondary m-4 shadow rounded">
+<a class="text-secondary  navbar-brand" href="{%url 'dashboard'%}"><h4 class="font-weight-bold text-white ">GE<span class="text-warning">LD</span></h4></a>
             {%if request.user.is_staff %}
     <a href="{%url 'admin_withdrawal'%}" class="ml-auto btn btn-sm btn-info shadow-sm"> Admin</a>
             {%endif %}
-    <a href="{%url 'logout'%}" class="ml-auto btn btn-sm btn-danger shadow-sm"> Sign Out</a>
+    <a href="#" data-toggle="modal"  data-target="#logoutModal"  class="ml-auto btn btn-sm btn-danger shadow-sm">Sign Out</a>
 
 
 
@@ -52,7 +47,7 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container">
 
           <!-- Page Heading -->
           <div>
@@ -61,13 +56,13 @@
                         <div  class="col-sm-12 alert alert-{{ status }} text-center">{{ message }}</div>
                     </div>
                     {%endif%}
-        <h1 class="h3  font-weight-bold mb-3 text-success">Withdraw</h1>
+        <h1 class="h3  font-weight-bold mb-3 text-gray-800">Withdraw</h1>
 
 
           </div>
 
           <!-- Content Row -->
-          <div class="row"><div class="col-lg-12">
+          <div class="row mb-3"><div class="col-lg-12 bg-white m-3 p-3 rounded">
                 <div class="block">
 
                   <div class="block-body">
@@ -223,21 +218,21 @@
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header p-1 bg-info">
+                <h5 class="modal-title p-2 text-white" id="exampleModalLabel">Sign Out</h5>
+                <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are You Sure You Want To Sign Out?</div>
+            <div class="modal-footer bg-light">
+                <a class="btn btn-sm btn-danger px-3 text-center" href="#"  data-dismiss="modal">No</a>
+                <a class="btn btn-sm btn-success px-3 text-center" href="{% url 'logout'%}">Yes</a>
+            </div>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
  <!-- Bootstrap core JavaScript-->
 <script src="{% static 'js/index.js'%}"></script>
