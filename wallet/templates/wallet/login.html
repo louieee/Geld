@@ -23,7 +23,7 @@
   <div class="container">
    <div class="navbar navbar-expand navbar-dark bg-secondary shadow mt-4  rounded">
                 <a class="text-secondary  navbar-brand" href="{%url 'dashboard'%}"><h4 class="text-white">GELD<span class="text-warning">BAUM</span></h4></a>
-
+                <a class="card-link text-success btn btn-sm btn-outline-light ml-auto" href="{%url 'email'%}"><h5 class="text-success">About Us</h5></a>
             </div>
       <!-- Outer Row -->
     <div class="row justify-content-center">
@@ -54,13 +54,18 @@
                     <div class="form-group">
                       <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
+                      <div class="form-group">
+                      <input type="number" class="form-control" name="otp" placeholder="OTP">
+                    </div>
+
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
                     </div>
-                    <input type="submit" class="btn btn-warning btn-block" value="Log In"/>
+                    <a class="btn btn-sm btn-block btn-warning" href="#">Send OTP</a>
+                    <input type="submit" class="btn btn-sm btn-warning btn-block" value="Log In"/>
                     <hr>
 
                   </form>
@@ -84,6 +89,7 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'js/custom.js' %}"></script>
   <script src="{% static 'js/index.js'%}"></script>
   <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>

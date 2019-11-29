@@ -26,15 +26,18 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
-      <div id="content" class="bg-gray-300">
+      <div id="content" class="bg-gray-200">
 
         <nav class="navbar navbar-expand navbar-light bg-secondary m-4 shadow rounded">
                 <a class="text-secondary  navbar-brand" href="{%url 'dashboard'%}"><h4 class="font-weight-bold text-white ">GE<span class="text-warning">LD</span></h4></a>
 
-
+    {% if user.is_authenticated %}
+        {% if user.is_superuser%}
     <a href="{% url 'withdraw' %}" class="ml-auto btn btn-sm btn-info shadow-sm"> Admin</a>
+            {% endif %}
 
     <a href="#" data-toggle="modal" data-target="#logoutModal" class="ml-auto btn btn-sm btn-danger shadow-sm"> Sign Out</a>
+            {% endif %}
 
 
 
@@ -44,19 +47,33 @@
         <!-- Begin Page Content -->
         <div class="container">
 
-          <!-- Page Heading -->
-          <div>
+            <div class="row">
+                <div class="col-sm-12">
+                <h3 class="text-info">About Us</h3>
+                <div  class="bg-white p-3 rounded text-dark">
+                    <article>Steps to amassing wealth with Geld</article>
+                    <div>
+                    <ul class="list-group p-3">
+                        <li >Fill up your details and sign up.</li>
+                        <li>Fill in your username and password and login.</li>
+                        <li>Deposit 0.001 BTC into your account address.</li>
+                        <li>After the deposit is confirmed, you will be promoted to a new level.</li>
+                        <li>Get two of your friends to join you in Geld</li>
+                        <li> Once they have made their deposit, you will be promoted to another level.</li>
+                        <li>Then you can sit back and watch your wealth tree grow.</li>
 
-        <h1 class="h3  font-weight-bold mb-3 text-gray-800">Contact Us</h1>
-
-
-          </div>
+                    </ul>
+                        </div>
+                </div>
+                    </div>
+            </div>
 
           <!-- Content Row -->
-          <div class="row"><div class="col-lg-12">
+          <div class="row mt-5 mb-3">
+              <div class="col-lg-12">
                 <div class="block">
-
-                  <div class="block-body">
+                <h3 class="text-info">Contact Us</h3>
+                  <div class="block-body bg-white rounded p-3">
                     <form class="user" action="{% url 'email' %}" method="post">
                         {% csrf_token %}
                         <div class="form-group">
@@ -79,7 +96,7 @@
         </div>
 
       </div>
-      <footer class="sticky-footer fixed-bottom bg-white">
+      <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
             <span>Copyright © Your Website 2019</span>
@@ -119,6 +136,7 @@
 </div>
 
  <!-- Bootstrap core JavaScript-->
+<script src="{% static 'js/custom.js' %}"></script>
 <script src="{% static 'js/index.js' %}"></script>
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -128,4 +146,4 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-<div id="__lpform_address" style="max-height: 16px; vertical-align: top; position: absolute; top: 368px; left: 318px; z-index: 21;"><img id="__lpform_address_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAjZJREFUWAntV7vKIlEMPt5dOy/NID9WIoKKCAsiWIqFFmLra4j2IoKPsL24YKWFD7Ai+ASClY2yNioWgjckfzLrCeN46XSKNXDmJPkyyWdOZnCE+CdfuP3G9RcXvHhRDapFNVUhZYXr1YX1+anmlwUvv3D9xPVu+YEFFRNeqCXKu6tf6i2IALXGMDEbVvlS+EPg/+tAuVwWmUyGR+/tHSgUCiKdThtHgCs/egosFouIRCIiEAjoY9n2+XwikUgIp9PJPq1itVpFLBYTfr9f636o8zs6GAzCeDwGKb1eD1wuF+OYARqNBpzPZzVkuVxCNpu9wuPxOEynU5kCWq0W2Gw2jhkOh1Cr1dgmVmyMRiO+USrNZpNxPD/p5n29XoPb7VZjTCYTTCYTxqRSqVQ4h54AD6HX6xXJZPKmTblcjn35fJ51qWBxkUqlVBM7KEKhkIR41+Zg50VhAofDQSBjPS72+z37tDo7Udntdqopdy1G+qP7CGMC2+1WdLtd8l0JniHb7Xb7hiSet8CjU2Nms5kYDAYcLxVtDunT7nw+Ho8HOp0OYDdgs9lAvV4Hs9nMON4EpVIJ5vO5Oog0M+Fw+ApXFAX6/T4cj0dYrVZQrVavcP0MEJGrALJpammg7mHS53A4nuJ2u/0uridgxYQ3cjqdbnx6B83MM8EOPIMZ4xlgjwHK3VYhj5f4i8UiRKNRzv35S2b4DHwIUAcWBjx5suSCCPyRlgG7WtvQj1P5o4kEfTK//fP8G/4x2UymA12DAAAAAElFTkSuQmCC" height="16" style="opacity: 0.6; vertical-align: top;" width="16"></div></body></html>
+</body></html>
