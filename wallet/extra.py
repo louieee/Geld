@@ -11,3 +11,16 @@ class TokenGenerator(PasswordResetTokenGenerator):
 
 
 account_activation_token = TokenGenerator()
+
+questions = [
+    'What was the name of the primary school you attended ?',
+    "What is your mother's maiden name ?",
+    "When is your spouse's birthday ?",
+    "In which city where you born ?",
+    "What is the surname of your best friend ?",
+    "What is the name of your father's company ?",
+    "Where did you first meet your spouse ?",
+    "What is the name of your best TV program ?",
+    "In which city did you meet your spouse ?",
+    "What is the name of the high school you attended ?"
+]

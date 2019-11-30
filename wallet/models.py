@@ -21,6 +21,11 @@ class Investor(AbstractUser):
     investment_count = models.IntegerField(default=0)
     referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     login_retries = models.IntegerField(default=0)
+    login_code = models.CharField(max_length=100, default='')
+    secret_question1 = models.CharField(max_length=255, default='')
+    secret_question2 = models.CharField(max_length=255, default='')
+    secret_answer1 = models.CharField(max_length=255, default='')
+    secret_answer2 = models.CharField(max_length=255, default='')
     otp_sent = models.BooleanField(default=True)
 
     def level_details(self):

@@ -5,9 +5,8 @@ from django.db.models import F
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
 from wallet.extra import account_activation_token
-from .models import Investor, WithdrawalRequest, Wallet
+from .models import Investor, WithdrawalRequest
 import json
 from django.shortcuts import HttpResponse, render, redirect
 import decimal
@@ -15,6 +14,8 @@ from django.utils.timezone import datetime as d
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from .extra import questions
+import secrets
 
 
 def generate_address(id_):
@@ -38,7 +39,7 @@ def signup(request):
         if username and password1 and password2 and email:
             if password1 != password2:
                 return render(request, 'wallet/home.html',
-                              {'message': 'The two passwords do not match', 'status': 'danger'})
+                              {'message': 'The two passwords do not match', 'status': 'danger', 'secret': questions})
             else:
                 try:
                     Investor.objects.get(username=username)
@@ -48,7 +49,8 @@ def signup(request):
                     try:
                         Investor.objects.get(email=email)
                         return render(request, 'wallet/home.html',
-                                      {'message': 'This email is already in use', 'status': 'danger'})
+                                      {'message': 'This email is already in use', 'status': 'danger',
+                                       'secret': questions})
                     except Investor.DoesNotExist:
                         new_investor = Investor.objects.create_user(username, email, password1)
                         if request.GET.get('ref_id') is not None:
@@ -87,19 +89,20 @@ def signup(request):
                             new_investor.save()
                             return render(request, 'wallet/home.html', {'message': 'check your e-mail '
                                                                                    'inbox or spam folder for the email '
-                                                                                   'verification', 'status': 'info'})
+                                                                                   'verification', 'status': 'info'
+                                , 'secret': questions})
                         except Exception as e:
                             print(e.__str__())
                             return redirect('/')
 
         else:
             return render(request, 'wallet/home.html',
-                          {'message': 'All Fields Must Be Filled', 'status': 'danger'})
+                          {'message': 'All Fields Must Be Filled', 'status': 'danger', 'secret': questions})
     else:
         if request.user.is_authenticated:
             return redirect('/dashboard/')
         else:
-            return render(request, 'wallet/home.html')
+            return render(request, 'wallet/home.html', {'secret': questions})
 
 
 def login(request):
@@ -109,6 +112,10 @@ def login(request):
 
         if username and password:
             investor = auth.authenticate(username=username, password=password)
+            if not investor.is_active:
+                return render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
+                                                                       'Contact us for help', 'status': 'danger'})
+
             if investor is not None:
                 # send otp. if otp is correct
                 auth.login(request, investor)
@@ -119,13 +126,9 @@ def login(request):
                     loginer.login_retries = F(loginer.login_retries) + 1
                     loginer.save()
                     if loginer.login_retries >= 3:
-                        loginer.is_active = False
+                        loginer.login_code = str(hex(secrets.randbits(100)))
                         loginer.save()
-                        return render(request, 'wallet/login.html',
-                                      {
-                                          'message': 'Your Account has been deactivated. please contact the '
-                                                     'admin.',
-                                          'status': 'danger'})
+                        login2(request, loginer.login_code)
                     else:
                         return render(request, 'wallet/login.html',
                                       {
@@ -146,6 +149,47 @@ def login(request):
             return redirect('/dashboard/')
         else:
             return render(request, 'wallet/login.html')
+
+
+def login2(request, code):
+    client = Investor.objects.get(login_code=code)
+    if request.method == 'GET':
+        return render(request, 'wallet/login2.html', {'que1': client.secret_question1,
+                                                      'que2': client.secret_question2,
+                                                      'ans1': client.secret_answer1,
+                                                      'ans2': client.secret_answer2})
+    elif request.method == 'POST':
+        if request.POST.get('otp'):
+            ans1 = request.POST.get('ans1')
+            ans2 = request.POST.get('ans2')
+            if ans1 and ans2:
+                if client.secret_answer1 == ans1 and client.secret_answer2 == ans2:
+                    # send otp
+                    return render(request, 'wallet/login2.html', {'ans1': ans1, 'ans2': ans2,
+                                                                  'message':'A one time password has been '
+                                                                            'sent to your email',
+                                                                  'status':'info'})
+
+                else:
+                    client.is_active = False
+                    client.save()
+                    return  render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
+                                                                            'Contact us for help', 'status': 'danger'})
+        elif request.POST.get('login'):
+            otp = request.POST.get('otp')
+            if otp:
+                pass
+                # check otp
+                if otp == '':
+                    client.is_active = False
+                    client.save()
+                    return render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
+                                                                           'Contact us for help', 'status': 'danger'})
+                else:
+                    client.is_active = True
+                    client.is_authenticated = True
+                    client.save()
+                    return redirect('/dashboard')
 
 
 def invest(request):
@@ -333,5 +377,3 @@ def activate(request, uidb64, token):
                 return redirect('/')
     except Investor.DoesNotExist:
         return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
-
-
