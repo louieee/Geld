@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import F
 from sendgrid import Mail, SendGridAPIClient
 from django.utils.datetime_safe import datetime
+from django.utils.timezone import timedelta as td, timezone as tz
 
 
 class Wallet(models.Model):
@@ -21,12 +22,46 @@ class Investor(AbstractUser):
     investment_count = models.IntegerField(default=0)
     referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     login_retries = models.IntegerField(default=0)
-    login_code = models.CharField(max_length=100, default='')
-    secret_question1 = models.CharField(max_length=255, default='')
-    secret_question2 = models.CharField(max_length=255, default='')
-    secret_answer1 = models.CharField(max_length=255, default='')
-    secret_answer2 = models.CharField(max_length=255, default='')
-    otp_sent = models.BooleanField(default=True)
+    pass_phrase = models.CharField(max_length=255, default='')
+    timer = models.DateTimeField(default=None, null=True)
+    timer_no = models.IntegerField(default=0)
+    timer_on = models.BooleanField(default=False)
+
+    def reset_parameters(self):
+        self.timer_no = 0
+        self.timer = None
+        self.login_retries = 0
+        self.save()
+
+    def increment_login_retries(self):
+        self.login_retries = F(self.login_retries) + 1
+        self.save()
+
+    def activate_security(self):
+        if self.login_retries == 3:
+            self.increment_timer()
+        elif self.login_retries < 3:
+            self.increment_login_retries()
+        elif self.timer_no == 6 and self.login_retries == 3:
+            self.login_retries = 0
+            self.timer_no = 0
+            self.is_active = False
+        elif self.timer_no < 6 and self.login_retries == 3:
+            self.increment_timer()
+
+    def check_timer(self):
+        if datetime.now() > self.timer:
+            self.timer_on = False
+            self.save()
+
+    def set_timer(self, number):
+        self.timer = datetime.now() + td(minutes=int(number))
+        self.timer_on = True
+        self.save()
+
+    def increment_timer(self):
+        self.timer_no = F(self.timer_no) + 1
+        self.set_timer(int(self.timer_no * 10))
 
     def level_details(self):
         level_data = {0: 'Novice', 1: 'Newbie', 2: 'Intermediate', 3: 'Senior', 4: 'Professional', 5: 'Veteran',

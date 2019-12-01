@@ -49,31 +49,6 @@
                   <div class="form-group">
                   <input type="email" class="form-control " required name="email" id="email" placeholder="Email Address">
                 </div>
-                  <div class="form-group">
-                  <select class="form-control"  required name="secret_que1" >
-                  <option selected> Select First Secret Question </option>
-                      {% for question in secret %}
-                          <option value="{{ question }}">{{ question }}</option>
-                      {% endfor %}
-                  </select>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control " required name="secret_ans1"  placeholder="First Secret Answer">
-                </div>
-                  <div class="form-group">
-                      <select class="form-control"  required name="secret_que2" >
-                      <option selected> Select Second Secret Question </option>
-                          {% for question in secret %}
-                              <option value="{{ question }}">{{ question }}</option>
-                          {% endfor %}
-                      </select>
-                    </div>
-              <div class="form-group">
-                    <input type="text" class="form-control " required name="secret_ans2"  placeholder="Second Secret Answer">
-                </div>
-
-
-
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input type="password" required minlength="8" class="form-control" name="password1" id="password1" placeholder="Password">

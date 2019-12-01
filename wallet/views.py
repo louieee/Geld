@@ -71,7 +71,8 @@ def signup(request):
                             except IndexError:
                                 pass
                         new_investor.is_active = False
-
+                        # get a new passphrase
+                        new_investor.passphrase = ''
                         current_site = get_current_site(request)
                         mail_subject = 'Activate your Geld account.'
                         message = render_to_string('registration/activate_email.html', {
@@ -109,39 +110,33 @@ def login(request):
     if request.method == 'POST':
         username = str(request.POST.get('username'))
         password = str(request.POST.get('password'))
+        phrase = str(request.POST.get('phrase'))
 
-        if username and password:
+        if username and password and phrase:
             investor = auth.authenticate(username=username, password=password)
-            if not investor.is_active:
-                return render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
-                                                                       'Contact us for help', 'status': 'danger'})
 
             if investor is not None:
-                # send otp. if otp is correct
-                auth.login(request, investor)
-                return redirect('/dashboard/')
+                investor.check_timer()
+                if not investor.is_active:
+                    return render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
+                                                                           'Contact us for help', 'status': 'danger'})
+                if investor.timer_on:
+                    return redirect('/login')
+                else:
+                    if investor.pass_phrase == phrase:
+                        auth.login(request, investor)
+                        investor.reset_parameters()
+                        return redirect('/dashboard/')
+                    else:
+                        investor.activate_security()
+                        return redirect('/login')
             else:
                 try:
-                    loginer = Investor.objects.get(username=username)
-                    loginer.login_retries = F(loginer.login_retries) + 1
-                    loginer.save()
-                    if loginer.login_retries >= 3:
-                        loginer.login_code = str(hex(secrets.randbits(100)))
-                        loginer.save()
-                        login2(request, loginer.login_code)
-                    else:
-                        return render(request, 'wallet/login.html',
-                                      {
-                                          'message': 'You have ' + str(3 - int(loginer.login_retries)) + 'login '
-                                                                                                         'retries '
-                                                                                                         'left.',
-                                          'status': 'info'})
-
+                    inv = Investor.objects.get(username=username)
+                    inv.activate_security()
+                    return redirect('/login')
                 except Investor.DoesNotExist:
-                    pass
-                    return render(request, 'wallet/login.html',
-                                  {'message': 'authentication failed', 'status': 'danger'})
-
+                    return redirect('/login')
         else:
             return render(request, 'wallet/login.html', {'message': 'All fields must be filled', 'status': 'danger'})
     else:
@@ -149,47 +144,6 @@ def login(request):
             return redirect('/dashboard/')
         else:
             return render(request, 'wallet/login.html')
-
-
-def login2(request, code):
-    client = Investor.objects.get(login_code=code)
-    if request.method == 'GET':
-        return render(request, 'wallet/login2.html', {'que1': client.secret_question1,
-                                                      'que2': client.secret_question2,
-                                                      'ans1': client.secret_answer1,
-                                                      'ans2': client.secret_answer2})
-    elif request.method == 'POST':
-        if request.POST.get('otp'):
-            ans1 = request.POST.get('ans1')
-            ans2 = request.POST.get('ans2')
-            if ans1 and ans2:
-                if client.secret_answer1 == ans1 and client.secret_answer2 == ans2:
-                    # send otp
-                    return render(request, 'wallet/login2.html', {'ans1': ans1, 'ans2': ans2,
-                                                                  'message':'A one time password has been '
-                                                                            'sent to your email',
-                                                                  'status':'info'})
-
-                else:
-                    client.is_active = False
-                    client.save()
-                    return  render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
-                                                                            'Contact us for help', 'status': 'danger'})
-        elif request.POST.get('login'):
-            otp = request.POST.get('otp')
-            if otp:
-                pass
-                # check otp
-                if otp == '':
-                    client.is_active = False
-                    client.save()
-                    return render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
-                                                                           'Contact us for help', 'status': 'danger'})
-                else:
-                    client.is_active = True
-                    client.is_authenticated = True
-                    client.save()
-                    return redirect('/dashboard')
 
 
 def invest(request):
@@ -232,11 +186,12 @@ def withdraw(request):
         amount = decimal.Decimal(request.POST['amount'])
         address = str(request.POST['address'])
         password = str(request.POST['password'])
+        passphrase = str(request.POST.get('phrase'))
         if request.user.is_authenticated:
             investor = Investor.objects.get(id=request.user.id)
             user = auth.authenticate(username=investor.username, password=password)
-            if user is not None:
-                if amount and address:
+            if user is not None and user.pass_phrase == passphrase:
+                if amount and address :
                     fee = amount * decimal.Decimal(2 / 100)
                     total_amount = amount + fee
                     if investor.balance > total_amount:
@@ -264,9 +219,7 @@ def withdraw(request):
                                   {'message': 'All Fields Must Be Filled', 'status': 'danger',
                                    'pending': investor.pending_withdrawals(), 'serviced': investor.withdrawals()})
             else:
-                return render(request, 'wallet/withdrawal.html',
-                              {'message': 'Your Password Is Incorrect', 'status': 'danger',
-                               'pending': investor.pending_withdrawals(), 'serviced': investor.withdrawals()})
+                return redirect ('logout')
         else:
             return render(request, 'wallet/login.html',
                           {'message': 'Authentication Failed', 'status': 'danger'})
