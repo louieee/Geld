@@ -122,4 +122,4 @@ def get_phrase():
             count = count + 1
         except Exception:
             pass
-    return phrase[:int(phrase.__len__()) - 1]
+    return phrase[:int(phrase.__len__()) - 1].lower()

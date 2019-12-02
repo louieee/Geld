@@ -16,7 +16,6 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 
-
 def generate_address(id_):
     call_back_url = 'http://geldbaum.tk?invoice_id=' + str(id_)
     gen = requests.request('GET',
@@ -36,24 +35,24 @@ def signup(request):
         password2 = str(request.POST['password2'])
         email = str(request.POST['email'])
         if username and password1 and password2 and email:
-            request.META['username'] = username
-            request.META['email'] = email
+            request.session['username'] = username
+            request.session['email'] = email
 
             if password1 != password2:
-                request.META['message'] = 'The two passwords do not match'
-                request.META['status'] = 'danger'
+                request.session['message'] = 'The two passwords do not match'
+                request.session['status'] = 'danger'
                 return redirect('home')
             else:
                 try:
                     Investor.objects.get(username=username)
-                    request.META['message'] = 'This username is already in use'
-                    request.META['status'] = 'danger'
+                    request.session['message'] = 'This username is already in use'
+                    request.session['status'] = 'danger'
                     return redirect('home')
                 except Investor.DoesNotExist:
                     try:
                         Investor.objects.get(email=email)
-                        request.META['message'] = 'This email address is already in use'
-                        request.META['status'] = 'danger'
+                        request.session['message'] = 'This email address is already in use'
+                        request.session['status'] = 'danger'
                         return redirect('home')
                     except Investor.DoesNotExist:
                         new_investor = Investor.objects.create_user(username, email, password1)
@@ -90,14 +89,14 @@ def signup(request):
                             sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                             response = sg.send(message_)
                             new_investor.save()
-                            request.META['message'] = 'check your e-mail inbox or spam folder for the email ' \
+                            request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
                                                          'verification '
-                            request.META['status'] = 'info'
+                            request.session['status'] = 'info'
                             return redirect('home')
                         except Exception as e:
                             print(e.__str__())
-                            request.META['message'] = 'Connection Failed'
-                            request.META['status'] = 'danger'
+                            request.session['message'] = 'Connection Failed'
+                            request.session['status'] = 'danger'
                             return redirect('home')
 
         else:
@@ -108,15 +107,15 @@ def signup(request):
             return redirect('/dashboard/')
         else:
             try:
-                message = request.META['message']
-                status = request.META['status']
-                del request.META['message']
-                del request.META['status']
+                message = request.session['message']
+                status = request.session['status']
+                del request.session['message']
+                del request.session['status']
                 try:
-                    email = request.META['email']
-                    username = request.META['username']
-                    del request.META['email']
-                    del request.META['username']
+                    email = request.session['email']
+                    username = request.session['username']
+                    del request.session['email']
+                    del request.session['username']
                     return render(request, 'wallet/home.html',
                                   {'message': message, 'status': status, 'email': email, 'username': username})
                 except KeyError:
@@ -124,10 +123,10 @@ def signup(request):
                                   {'message': message, 'status': status})
             except KeyError:
                 try:
-                    email = request.META['email']
-                    username = request.META['username']
-                    del request.META['email']
-                    del request.META['username']
+                    email = request.session['email']
+                    username = request.session['username']
+                    del request.session['email']
+                    del request.session['username']
                     return render(request, 'wallet/home.html',
                                   {'email': email, 'username': username})
                 except KeyError:
@@ -146,9 +145,14 @@ def login(request):
             if investor is not None:
                 investor.check_timer()
                 if not investor.is_active:
-                    return render(request, 'wallet/home.html', {'message': 'Your Account has been deactivated. '
-                                                                           'Contact us for help', 'status': 'danger'})
+                    request.session['message'] = 'Your Account has been deactivated. '
+                    request.session['status'] = 'info'
+                    return redirect('home')
                 if investor.timer_on:
+                    request.session['message'] = 'You can login after ' + \
+                                                 str(int((
+                                                                 investor.timer.timestamp() - d.now().timestamp()) / 60) - 60) + ' minutes'
+                    request.session['status'] = 'info'
                     return redirect('/login')
                 else:
                     if investor.pass_phrase == phrase:
@@ -157,21 +161,61 @@ def login(request):
                         return redirect('/dashboard/')
                     else:
                         investor.activate_security()
+                        request.session['message'] = 'Wrong Passphrase'
+                        request.session['status'] = 'danger'
+                        request.session['username'] = username
+                        request.session['passphrase'] = phrase
                         return redirect('/login')
             else:
                 try:
                     inv = Investor.objects.get(username=username)
                     inv.activate_security()
+                    request.session['message'] = 'Incorrect Password'
+                    request.session['status'] = 'danger'
+                    request.session['username'] = username
+                    request.session['passphrase'] = phrase
                     return redirect('/login')
                 except Investor.DoesNotExist:
+                    request.session['message'] = 'This User does not exist'
+                    request.session['status'] = 'danger'
+                    request.session['username'] = username
+                    request.session['passphrase'] = phrase
                     return redirect('/login')
         else:
-            return render(request, 'wallet/login.html', {'message': 'All fields must be filled', 'status': 'danger'})
+            request.session['message'] = 'All fields must be filled'
+            request.session['status'] = 'danger'
+            request.session['username'] = username
+            request.session['passphrase'] = phrase
+            return redirect('login')
     else:
         if request.user.is_authenticated:
             return redirect('/dashboard/')
         else:
-            return render(request, 'wallet/login.html')
+            try:
+                message = request.session['message']
+                status = request.session['status']
+                del request.session['message']
+                del request.session['status']
+                try:
+                    passphrase = request.session['passphrase']
+                    username = request.session['username']
+                    del request.session['passphrase']
+                    del request.session['username']
+                    return render(request, 'wallet/login.html',
+                                  {'message': message, 'status': status, 'phrase': passphrase, 'username': username})
+                except KeyError:
+                    return render(request, 'wallet/login.html',
+                                  {'message': message, 'status': status})
+            except KeyError:
+                try:
+                    passphrase = request.session['passphrase']
+                    username = request.session['username']
+                    del request.session['passphrase']
+                    del request.session['username']
+                    return render(request, 'wallet/login.html',
+                                  {'phrase': passphrase, 'username': username})
+                except KeyError:
+                    return render(request, 'wallet/login.html')
 
 
 def invest(request):
@@ -207,11 +251,46 @@ def verify_payment(request):
 
 def withdraw(request):
     if request.method == 'GET':
-        investor = Investor.objects.get(id=request.user.id)
-        the_data = {'pending': investor.pending_withdrawals(), 'serviced': investor.withdrawals()}
-        return render(request, 'wallet/withdrawal.html', the_data)
+        if request.user.is_authenticated:
+            investor = Investor.objects.get(id=request.user.id)
+            try:
+                message = request.session['message']
+                status = request.session['status']
+                del request.session['message']
+                del request.session['status']
+                try:
+                    passphrase = request.session['passphrase']
+                    amount = request.session['amount']
+                    address = request.session['address']
+                    del request.session['passphrase']
+                    del request.session['amount']
+                    del request.session['address']
+                    return render(request, 'wallet/withdrawal.html',
+                                  {'message': message, 'status': status, 'phrase': passphrase, 'amount': amount,
+                                   'address': address, 'pending': investor.pending_withdrawals(),
+                                   'serviced': investor.withdrawals()})
+                except KeyError:
+                    return render(request, 'wallet/withdrawal.html',
+                                  {'message': message, 'status': status, 'pending': investor.pending_withdrawals(),
+                                   'serviced': investor.withdrawals()})
+            except KeyError:
+                try:
+                    passphrase = request.session['passphrase']
+                    amount = request.session['amount']
+                    address = request.session['address']
+                    del request.session['passphrase']
+                    del request.session['amount']
+                    del request.session['address']
+                    return render(request, 'wallet/withdrawal.html',
+                                  {'phrase': passphrase, 'amount': amount,
+                                   'address': address, 'pending': investor.pending_withdrawals(),
+                                   'serviced': investor.withdrawals()})
+                except KeyError:
+                    return render(request, 'wallet/withdrawal.html',
+                                  {'pending': investor.pending_withdrawals(),
+                                   'serviced': investor.withdrawals()})
     elif request.method == 'POST':
-        amount = decimal.Decimal(request.POST['amount'])
+        amount = decimal.Decimal(request.POST.get('amount'))
         address = str(request.POST['address'])
         password = str(request.POST['password'])
         passphrase = str(request.POST.get('phrase'))
@@ -219,7 +298,7 @@ def withdraw(request):
             investor = Investor.objects.get(id=request.user.id)
             user = auth.authenticate(username=investor.username, password=password)
             if user is not None and user.pass_phrase == passphrase:
-                if amount and address :
+                if amount and address:
                     fee = amount * decimal.Decimal(2 / 100)
                     total_amount = amount + fee
                     if investor.balance > total_amount:
@@ -233,43 +312,55 @@ def withdraw(request):
                                        to_emails=investor.email, subject='Withdrawal request',
                                        plain_text_content='Dear ' + investor.username + ', You '
                                                                                         'just requested to withdraw '
-                                                          + withdrawal_request.amount +
+                                                          + str(withdrawal_request.amount) +
                                                           'BTC to this address: ' + withdrawal_request.address)
                         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                         response = sg.send(message)
-                        return redirect('http://127.0.0.1:8000/withdraw/')
+                        request.session['message'] = 'Your Withdrawal request has been sent Successfully'
+                        request.session['status'] = 'success'
+                        return redirect('/withdraw/')
                     else:
-                        return render(request, 'wallet/withdrawal.html',
-                                      {'message': 'Insufficient Balance', 'status': 'danger',
-                                       'pending': investor.pending_withdrawals(), 'serviced': investor.withdrawals()})
+                        request.session['message'] = 'Your Balance is Insufficient'
+                        request.session['status'] = 'danger'
+                        request.session['amount'] = str(amount)
+                        request.session['address'] = address
+                        request.session['passphrase'] = passphrase
+
+                        return redirect('withdraw')
+
                 else:
-                    return render(request, 'wallet/withdrawal.html',
-                                  {'message': 'All Fields Must Be Filled', 'status': 'danger',
-                                   'pending': investor.pending_withdrawals(), 'serviced': investor.withdrawals()})
+                    request.session['message'] = 'All Fields Must Be Filled'
+                    request.session['status'] = 'danger'
+                    request.session['amount'] = str(amount)
+                    request.session['address'] = address
+                    request.session['passphrase'] = passphrase
+
+                    return redirect('withdraw')
             else:
-                return redirect ('logout')
+                request.session['message'] = 'Withdrawal Authentication Failed '
+                request.session['status'] = 'danger'
+                return redirect('logout')
         else:
-            return render(request, 'wallet/login.html',
-                          {'message': 'Authentication Failed', 'status': 'danger'})
+            request.session['message'] = 'You Need to be Logged In'
+            request.session['status'] = 'info'
+            return redirect('login')
 
 
-def service_withdrawal(request):
-    if request.method == 'POST':
-        id_ = request.POST.get('id')
-        withdrawal = WithdrawalRequest.objects.get(id=int(id_))
-        if pay_investor(withdrawal.address, withdrawal.amount) is True:
-            withdrawal.serviced = True
-            withdrawal.save()
-            message = Mail(from_email=settings.EMAIL,
-                           to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
-                           plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
-                                              'BTC has been paid to the address you specified : ' +
-                                              withdrawal.address + ', Thank you for working with us')
-            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-            response = sg.send(message)
-            return True
-        else:
-            return False
+def service_withdrawal(id_):
+    withdrawal = WithdrawalRequest.objects.get(id=int(id_))
+    if pay_investor(withdrawal.address, withdrawal.amount) is True:
+        withdrawal.serviced = True
+        withdrawal.save()
+        message = Mail(from_email=settings.EMAIL,
+                       to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
+                       plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
+                                          'BTC has been paid to the address you specified : ' +
+                                          withdrawal.address + ', Thank you for working with us')
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        return True
+    else:
+        return False
 
 
 def pay_investor(address, amount):
@@ -309,16 +400,37 @@ def dashboard(request):
 def admin_withdrawal(request):
     list_ = WithdrawalRequest.objects.all().order_by('id').filter(serviced=False)
     if request.method == 'GET' and request.user.is_authenticated and request.user.is_staff:
-        return render(request, 'wallet/admin_withdraw.html', {'the_list': list_})
+        try:
+            message = request.session['message']
+            status = request.session['status']
+            del request.session['message']
+            del request.session['status']
+            return render(request, 'wallet/admin_withdraw.html',
+                          {'the_list': list_, 'message': message, 'status': status})
+        except KeyError:
+            return render(request, 'wallet/admin_withdraw.html', {'the_list': list_})
     elif request.method == 'POST' and request.user.is_authenticated and request.user.is_staff:
         id_ = request.POST.get('id_')
-        service_withdrawal(id_)
+        stat = service_withdrawal(id_)
+        if stat is True:
+            request.session['message'] = 'Payout Successful'
+            request.session['status'] = 'success'
+        else:
+            request.session['message'] = 'Payout was not Successful'
+            request.session['status'] = 'danger'
         return redirect('/admin/withdrawals')
 
 
 def contact_us(request):
     if request.method == 'GET':
-        return render(request, 'wallet/contact_us.html')
+        try:
+            message = request.session['message']
+            status = request.session['status']
+            del request.session['message']
+            del request.session['status']
+            return render(request, 'wallet/contact_us.html', {'message': message, 'status': status})
+        except KeyError:
+            return render(request, 'wallet/contact_us.html')
     elif request.method == 'POST':
         subject = request.POST.get('subject')
         body = request.POST.get('body')
@@ -328,13 +440,13 @@ def contact_us(request):
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sg.send(message)
         if response._status_code == 202:
-            redirect('/contact')
-            return render(request, 'wallet/contact_us.html', {'message': 'message was sent successfully',
-                                                              'status': 'success'})
+            request.session['message'] = 'We have received your message. We will get back to you'
+            request.session['status'] = 'success'
+            return redirect('/contact')
         else:
+            request.session['message'] = 'Your Message was not sent.'
+            request.session['status'] = 'danger'
             redirect('/contact')
-            return render(request, 'wallet/contact_us.html', {'message': 'message was not sent',
-                                                              'status': 'danger'})
 
 
 def activate(request, uidb64, token):
@@ -362,17 +474,16 @@ def activate(request, uidb64, token):
                 sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                 response = sg.send(message_)
                 user.save()
-                request.META['message'] = 'check your e-mail inbox or spam folder for the email ' \
-                                          'verification '
-                request.META['status'] = 'info'
-                return redirect('home')
+                request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
+                                             'verification '
+                request.session['status'] = 'info'
+                return redirect('login')
             except Exception as e:
                 print(e.__str__())
-                request.META['message'] = 'Connection Failed'
-                request.META['status'] = 'danger'
+                request.session['message'] = 'Connection Failed'
+                request.session['status'] = 'danger'
                 return redirect('home')
 
-            return redirect('/login')
         else:
             if user.is_active is False:
                 user.delete()

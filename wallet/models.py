@@ -7,7 +7,6 @@ from sendgrid import Mail, SendGridAPIClient
 from django.utils.datetime_safe import datetime
 from django.utils.timezone import timedelta as td, timezone as tz
 
-
 class Wallet(models.Model):
     guid = models.CharField(max_length=255)
     api_key = models.CharField(max_length=255)
@@ -34,25 +33,26 @@ class Investor(AbstractUser):
         self.save()
 
     def increment_login_retries(self):
-        self.login_retries = F(self.login_retries) + 1
+        self.login_retries = self.login_retries + 1
         self.save()
 
     def activate_security(self):
-        if self.login_retries == 3:
+        if self.login_retries == 3 and self.timer_no < 6 and self.timer_no == 0:
             self.increment_timer()
-        elif self.login_retries < 3:
+        elif self.login_retries < 3 and self.timer_no == 0:
             self.increment_login_retries()
         elif self.timer_no == 6 and self.login_retries == 3:
             self.login_retries = 0
             self.timer_no = 0
             self.is_active = False
-        elif self.timer_no < 6 and self.login_retries == 3:
-            self.increment_timer()
 
     def check_timer(self):
-        if datetime.now() > self.timer:
-            self.timer_on = False
-            self.save()
+        try:
+            if (int((self.timer.timestamp() - datetime.now().timestamp()) / 60) - 60) <= 0:
+                self.timer_on = False
+                self.save()
+        except AttributeError:
+            pass
 
     def set_timer(self, number):
         self.timer = datetime.now() + td(minutes=int(number))
@@ -60,7 +60,7 @@ class Investor(AbstractUser):
         self.save()
 
     def increment_timer(self):
-        self.timer_no = F(self.timer_no) + 1
+        self.timer_no = self.timer_no + 1
         self.set_timer(int(self.timer_no * 10))
 
     def level_details(self):
