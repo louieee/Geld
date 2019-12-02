@@ -1,11 +1,11 @@
 import requests
 from django.contrib import auth
 from django.contrib.sites.shortcuts import get_current_site
-from django.db.models import F
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from wallet.extra import account_activation_token
+
+from wallet.extra import account_activation_token, get_phrase
 from .models import Investor, WithdrawalRequest
 import json
 from django.shortcuts import HttpResponse, render, redirect
@@ -14,8 +14,7 @@ from django.utils.timezone import datetime as d
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from .extra import questions
-import secrets
+
 
 
 def generate_address(id_):
@@ -37,20 +36,25 @@ def signup(request):
         password2 = str(request.POST['password2'])
         email = str(request.POST['email'])
         if username and password1 and password2 and email:
+            request.META['username'] = username
+            request.META['email'] = email
+
             if password1 != password2:
-                return render(request, 'wallet/home.html',
-                              {'message': 'The two passwords do not match', 'status': 'danger', 'secret': questions})
+                request.META['message'] = 'The two passwords do not match'
+                request.META['status'] = 'danger'
+                return redirect('home')
             else:
                 try:
                     Investor.objects.get(username=username)
-                    return render(request, 'wallet/home.html',
-                                  {'message': 'This username is already in use', 'status': 'danger'})
+                    request.META['message'] = 'This username is already in use'
+                    request.META['status'] = 'danger'
+                    return redirect('home')
                 except Investor.DoesNotExist:
                     try:
                         Investor.objects.get(email=email)
-                        return render(request, 'wallet/home.html',
-                                      {'message': 'This email is already in use', 'status': 'danger',
-                                       'secret': questions})
+                        request.META['message'] = 'This email address is already in use'
+                        request.META['status'] = 'danger'
+                        return redirect('home')
                     except Investor.DoesNotExist:
                         new_investor = Investor.objects.create_user(username, email, password1)
                         if request.GET.get('ref_id') is not None:
@@ -71,8 +75,6 @@ def signup(request):
                             except IndexError:
                                 pass
                         new_investor.is_active = False
-                        # get a new passphrase
-                        new_investor.passphrase = ''
                         current_site = get_current_site(request)
                         mail_subject = 'Activate your Geld account.'
                         message = render_to_string('registration/activate_email.html', {
@@ -88,22 +90,48 @@ def signup(request):
                             sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                             response = sg.send(message_)
                             new_investor.save()
-                            return render(request, 'wallet/home.html', {'message': 'check your e-mail '
-                                                                                   'inbox or spam folder for the email '
-                                                                                   'verification', 'status': 'info'
-                                , 'secret': questions})
+                            request.META['message'] = 'check your e-mail inbox or spam folder for the email ' \
+                                                         'verification '
+                            request.META['status'] = 'info'
+                            return redirect('home')
                         except Exception as e:
                             print(e.__str__())
-                            return redirect('/')
+                            request.META['message'] = 'Connection Failed'
+                            request.META['status'] = 'danger'
+                            return redirect('home')
 
         else:
             return render(request, 'wallet/home.html',
-                          {'message': 'All Fields Must Be Filled', 'status': 'danger', 'secret': questions})
+                          {'message': 'All Fields Must Be Filled', 'status': 'danger'})
     else:
         if request.user.is_authenticated:
             return redirect('/dashboard/')
         else:
-            return render(request, 'wallet/home.html', {'secret': questions})
+            try:
+                message = request.META['message']
+                status = request.META['status']
+                del request.META['message']
+                del request.META['status']
+                try:
+                    email = request.META['email']
+                    username = request.META['username']
+                    del request.META['email']
+                    del request.META['username']
+                    return render(request, 'wallet/home.html',
+                                  {'message': message, 'status': status, 'email': email, 'username': username})
+                except KeyError:
+                    return render(request, 'wallet/home.html',
+                                  {'message': message, 'status': status})
+            except KeyError:
+                try:
+                    email = request.META['email']
+                    username = request.META['username']
+                    del request.META['email']
+                    del request.META['username']
+                    return render(request, 'wallet/home.html',
+                                  {'email': email, 'username': username})
+                except KeyError:
+                    return render(request, 'wallet/home.html')
 
 
 def login(request):
@@ -317,8 +345,33 @@ def activate(request, uidb64, token):
         print('Username: ' + str(user.username))
         if account_activation_token.check_token(user, token):
             user.is_active = True
+            user.pass_phrase = get_phrase()
             user.save()
             invest(user)
+            current_site = get_current_site(request)
+            mail_subject = 'Your Geld Account Details.'
+            message = render_to_string('registration/activate_email.html', {
+                'user': user.username,
+                'passphrase': user.pass_phrase,
+                'Wallet_address': user.deposit_address
+            })
+            message_ = Mail(from_email=settings.EMAIL,
+                            to_emails=user.email,
+                            subject=mail_subject, html_content=message)
+            try:
+                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                response = sg.send(message_)
+                user.save()
+                request.META['message'] = 'check your e-mail inbox or spam folder for the email ' \
+                                          'verification '
+                request.META['status'] = 'info'
+                return redirect('home')
+            except Exception as e:
+                print(e.__str__())
+                request.META['message'] = 'Connection Failed'
+                request.META['status'] = 'danger'
+                return redirect('home')
+
             return redirect('/login')
         else:
             if user.is_active is False:

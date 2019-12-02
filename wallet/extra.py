@@ -5,6 +5,8 @@ from django_otp.util import random_hex
 from unittest import mock
 import time
 
+from random_word import RandomWords
+
 
 class TokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
@@ -107,3 +109,17 @@ if __name__ == '__main__':
               " Current Time is: ", time.time())
         token = int(input("Enter token: "))
         print(phone1.verify_token(token, tolerance=1))
+
+
+def get_phrase():
+    r = RandomWords()
+    count = 0
+    phrase = ''
+    while count < 7:
+        try:
+            phrase = phrase + r.get_random_word(hasDictionaryDef="true", includePartOfSpeech="noun,verb",
+                                                minLength=5, maxLength=7) + "-"
+            count = count + 1
+        except Exception:
+            pass
+    return phrase[:int(phrase.__len__()) - 1]
