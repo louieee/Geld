@@ -49,7 +49,16 @@
 
             <div class="row  {% if not user.is_authenticated %}mb-3{% endif %}">
                 <div class="col-sm-12">
+                   <div class="d-flex justify-content-between">
+
                 <h3 class="text-info">About Us</h3>
+                       {% if not user.is_authenticated %}
+                       <div>
+                       <a href="mailto:geldbaum@gmail.com" class="btn btn-sm btn-warning ml-auto">Contact Us</a>
+                           </div>
+                       {% endif%}
+
+                       </div>
                 <div  class="bg-white p-3 rounded text-dark">
                     <article>Steps to amassing wealth with Geld</article>
                     <div>
@@ -69,7 +78,7 @@
             </div>
 
           <!-- Content Row -->
-
+            {% if user.is_authenticated %}
           <div class="row mt-5 mb-3">
               <div class="col-lg-12">
                 <div class="block">
@@ -94,6 +103,7 @@
                 </div>
               </div>
           </div>
+            {% endif %}
         </div>
 
       </div>

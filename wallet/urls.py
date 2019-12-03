@@ -8,6 +8,7 @@ urlpatterns = [
     path('invest/', invest, name='invest'),
     path('withdraw/', withdraw, name='withdraw'),
     path('dashboard/', dashboard, name='dashboard'),
-    path('contact/', contact_us, name='email')
+    path('contact/', contact_us, name='email'),
+    path('about_us/', contact_us, name='about')
     ]
 
