@@ -20,23 +20,10 @@ from django.contrib import admin
 from django.urls import path
 from Geld import settings
 from wallet.views import admin_withdrawal, signup, activate
-from django_otp.admin import OTPAdminSite
 
-
-class OTPAdmin(OTPAdminSite):
-    pass
-
-
-from wallet.models import Investor
-from django_otp.plugins.otp_totp.models import TOTPDevice
-
-admin_site = OTPAdmin(name='OTPAdmin')
-admin_site.register(Investor)
-admin_site.register(TOTPDevice)
 
 urlpatterns = [
-    url(r'^admin/', admin_site.urls),
-    url(r'^banana/', admin.site.urls),
+    url(r'^monkeysex/', admin.site.urls),
     path('admin/withdrawals', admin_withdrawal, name='admin_withdrawal'),
     path('', include('wallet.urls')),
     path('', signup, name='home'),
