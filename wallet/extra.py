@@ -24,7 +24,7 @@ def get_phrase():
     while count < 7:
         try:
             phrase = phrase + r.get_random_word(hasDictionaryDef="true", includePartOfSpeech="noun,verb",
-                                                minLength=5, maxLength=7) + "-"
+                                                minLength=5, maxLength=5) + "-"
             count = count + 1
         except Exception:
             pass

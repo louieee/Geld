@@ -55,7 +55,7 @@
                       <input type="password" required class="form-control" name="password" placeholder="Password">
                     </div>
                       <div class="form-group">
-                      <input type="text" {% if phrase%}value="{{ phrase }}"{%endif%}  required class="form-control" name="phrase" placeholder="Enter Your Passphrase">
+                      <input type="text" onkeyup="addhyphen(this)" {% if phrase%}value="{{ phrase }}"{%endif%}  required class="form-control" id="passphrase" name="phrase" placeholder="Enter Your Passphrase">
                     </div>
                     <input type="submit" class="btn btn-sm btn-warning btn-block" value="Log In"/>
                     <hr>
@@ -81,8 +81,14 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'js/custom.js' %}"></script>
-  <script src="{% static 'js/index.js'%}"></script>
+<script type="text/javascript">
+    const addhyphen =(element)=> {
+    const ele = document.getElementById(element.id);
+    ele.value = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
+    document.getElementById(element.id).value = ele.value.match(/.{1,5}/g).join('-');
+}
+</script>
+
   <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 
@@ -95,4 +101,6 @@
 
 
 
-</body></html>
+
+</body>
+</html>

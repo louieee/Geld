@@ -16,8 +16,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 
-def generate_address(id_):
-    call_back_url = 'http://geldbaum.tk?invoice_id=' + str(id_)
+def generate_address(call_back_url):
     gen = requests.request('GET',
                            'https://api.blockchain.info/v2/receive?xpub=' + settings.BLOCKCHAIN_XPUB + '&callback='
                            + call_back_url + '&key=' + settings.BLOCKCHAIN_API_KEY)
@@ -222,7 +221,7 @@ def invest(request):
     if request.method == 'POST':
         investor = Investor.objects.get(id=request.user.id)
         if investor.deposit_address is None:
-            address = generate_address(investor.id)
+            address = generate_address(investor.get_call_back(request))
             if address is not None:
                 investor.deposit_address = address
                 investor.save()
@@ -231,7 +230,32 @@ def invest(request):
                 return False
 
 
-def verify_payment(request):
+def verify_payment(request, id_):
+    if request.method == 'GET':
+        try:
+            investor = Investor.objects.get(callback_id=id_, level=0)
+            invoice_id = request.GET['invoice_id']
+            transaction_hash = request.GET['transaction_hash']
+            value_in_satoshi = request.GET['value']
+            confirmation = request.GET['confirmations']
+            if invoice_id and transaction_hash and value_in_satoshi and confirmation:
+                value_in_btc = float(value_in_satoshi) / 100000000
+                if int(confirmation) >= 4 and value_in_btc >= 0.001:
+                    if investor.id == invoice_id:
+                        investor.upgrade_investor()
+                        investor.save()
+                        return HttpResponse('*OK*')
+                    else:
+                        return HttpResponse('Wrong id')
+                else:
+                    return HttpResponse('Confirmation and amount not enough')
+            else:
+                return HttpResponse('No values')
+        except Investor.DoesNotExist:
+            return HttpResponse('Wrong Callback url')
+
+
+def verify_payment_test(request):
     if request.method == 'GET':
         invoice_id = request.GET['invoice_id']
         transaction_hash = request.GET['transaction_hash']
@@ -246,7 +270,11 @@ def verify_payment(request):
                     investor.save()
                     return HttpResponse('*OK*')
                 except Investor.DoesNotExist:
-                    return HttpResponse('*OK*')
+                    return HttpResponse('Invoice id does not exist')
+            else:
+                return HttpResponse('Confirmation and amount not enough')
+        else:
+            return HttpResponse('No values')
 
 
 def withdraw(request):
@@ -383,15 +411,23 @@ def pay_investor(address, amount):
 def dashboard(request):
     if request.method == 'GET' and request.user.is_authenticated:
         investor_ = Investor.objects.get(id=request.user.id)
-        referer = Investor.objects.get(id=investor_.referer_id)
-        user_data = {'id': investor_.id, 'level': investor_.level_details(), 'username': investor_.username,
-                     'email': investor_.email,
-                     'balance': investor_.balance, 'percentage': investor_.percentage(),
-                     'downliners': investor_.direct_downliners(),
-                     'u_username': referer.username, 'u_level': referer.level_details(),
-                     'u_percentage': referer.percentage(), 'u_email': referer.email,
-                     'deposit_address': investor_.deposit_address
-                     }
+        try:
+            referer = Investor.objects.get(id=investor_.referer_id)
+            user_data = {'id': investor_.id, 'level': investor_.level_details(), 'username': investor_.username,
+                         'email': investor_.email,
+                         'balance': investor_.balance, 'percentage': investor_.percentage(),
+                         'downliners': investor_.direct_downliners(),
+                         'u_username': referer.username, 'u_level': referer.level_details(),
+                         'u_percentage': referer.percentage(), 'u_email': referer.email,
+                         'deposit_address': investor_.deposit_address
+                         }
+        except Investor.DoesNotExist:
+            user_data = {'id': investor_.id, 'level': investor_.level_details(), 'username': investor_.username,
+                         'email': investor_.email,
+                         'balance': investor_.balance, 'percentage': investor_.percentage(),
+                         'downliners': investor_.direct_downliners(),
+                         'deposit_address': investor_.deposit_address
+                         }
         return render(request, 'wallet/dashboard.html', user_data)
     else:
         return redirect('/')
@@ -474,8 +510,9 @@ def activate(request, uidb64, token):
                 sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                 response = sg.send(message_)
                 user.save()
-                request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
-                                             'verification '
+                request.session['message'] = 'Your pass phrase is ' + str(
+                    user.pass_phrase) + 'Check your email for more ' \
+                                        'details '
                 request.session['status'] = 'info'
                 return redirect('login')
             except Exception as e:
@@ -494,3 +531,7 @@ def activate(request, uidb64, token):
                 return redirect('/')
     except Investor.DoesNotExist:
         return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
+
+
+def test_me(request):
+    return render(request, 'wallet/test.html')
