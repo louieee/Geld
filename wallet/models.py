@@ -311,3 +311,5 @@ class WithdrawalRequest(models.Model):
 
     def withdrawal_fee(self):
         return self.amount * Decimal(2 / 100)
+    def total_amount(self):
+        return self.amount + self.withdrawal_fee()

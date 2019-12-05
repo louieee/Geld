@@ -329,7 +329,7 @@ def withdraw(request):
                 if amount and address:
                     fee = amount * decimal.Decimal(2 / 100)
                     total_amount = amount + fee
-                    if investor.balance > total_amount:
+                    if investor.balance > total_amount and amount > 0.001:
                         withdrawal_request = WithdrawalRequest()
                         withdrawal_request.investor = investor
                         withdrawal_request.amount = amount
@@ -379,6 +379,9 @@ def service_withdrawal(id_):
     if pay_investor(withdrawal.address, withdrawal.amount) is True:
         withdrawal.serviced = True
         withdrawal.save()
+        investor = Investor.objects.get(id=withdrawal.investor_id)
+        investor.balance = investor.balance - withdrawal.total_amount()
+        investor.save()
         message = Mail(from_email=settings.EMAIL,
                        to_emails=withdrawal.investor.email, subject='Successful Withdrawal',
                        plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
