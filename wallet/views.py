@@ -73,6 +73,10 @@ def signup(request):
                             except IndexError:
                                 pass
                         new_investor.is_active = False
+                        new_investor.pass_phrase = get_phrase()
+                        new_investor.save()
+                        invest(new_investor)
+
                         current_site = get_current_site(request)
                         mail_subject = 'Activate your Geld account.'
                         message = render_to_string('registration/activate_email.html', {
@@ -496,14 +500,31 @@ def activate(request, uidb64, token):
         print('Username: ' + str(user.username))
         if account_activation_token.check_token(user, token):
             user.is_active = True
-            user.pass_phrase = get_phrase()
             user.save()
-            invest(user)
-            user.save()
-            request.session['message'] = 'Your pass phrase is ' + str(
-                user.pass_phrase) + 'Please save it somewhere.It is important'
-            request.session['status'] = 'info'
-            return redirect('login')
+            current_site = get_current_site(request)
+            mail_subject = 'Your Geld Account Details.'
+            message = render_to_string('registration/activate_email.html', {
+                'user': user.username,
+                'passphrase': user.pass_phrase,
+                'Wallet_address': user.deposit_address
+            })
+            message_ = Mail(from_email=settings.EMAIL,
+                            to_emails=user.email,
+                            subject=mail_subject, html_content=message)
+            try:
+                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                response = sg.send(message_)
+                user.save()
+                request.session['message'] = 'Your pass phrase is ' + str(
+                    user.pass_phrase) + 'Check your email for more ' \
+                                        'details '
+                request.session['status'] = 'info'
+                return redirect('login')
+            except Exception as e:
+                print(e.__str__())
+                request.session['message'] = 'Connection Failed'
+                request.session['status'] = 'danger'
+                return redirect('home')
 
         else:
             if user.is_active is False:

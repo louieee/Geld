@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c25c0c85-1916-48fa-b1f7-1013e1df336a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +77,7 @@
           <entry key="gitignore" value="2" />
           <entry key="html" value="49" />
           <entry key="js" value="7" />
-          <entry key="py" value="67" />
+          <entry key="py" value="68" />
           <entry key="txt" value="4" />
           <entry key="xhtml" value="3" />
         </counts>
@@ -87,7 +88,7 @@
           <entry key="HTML" value="49" />
           <entry key="JavaScript" value="7" />
           <entry key="PLAIN_TEXT" value="8" />
-          <entry key="Python" value="67" />
+          <entry key="Python" value="68" />
           <entry key="XHTML" value="3" />
         </counts>
       </usages-collector>
@@ -99,7 +100,7 @@
           <entry key="gitignore" value="23" />
           <entry key="html" value="7264" />
           <entry key="js" value="487" />
-          <entry key="py" value="39551" />
+          <entry key="py" value="39644" />
           <entry key="txt" value="63" />
         </counts>
       </usages-collector>
@@ -109,7 +110,7 @@
           <entry key="HTML" value="7264" />
           <entry key="JavaScript" value="487" />
           <entry key="PLAIN_TEXT" value="90" />
-          <entry key="Python" value="43920" />
+          <entry key="Python" value="44013" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -117,9 +118,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Geld/static/js/index.js">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wallet/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="502" column="23" lean-forward="true" selection-start-line="502" selection-start-column="23" selection-end-line="502" selection-end-column="23" />
+              <folding>
+                <marker date="1575596304013" expanded="true" signature="1052:1055" ph="..." />
+                <marker date="1575596304013" expanded="true" signature="26470:26475" ph="..." />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -161,7 +170,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Geld/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
@@ -500,6 +509,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18078668" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -516,7 +526,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49924356" weight="0.32879046" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50075644" side_tool="true" weight="0.32879046" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" visible="true" weight="0.72572404" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" weight="0.72572404" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49848714" weight="0.3781942" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -768,22 +778,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="239">
           <caret line="23" column="20" lean-forward="true" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#66#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/urllib/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="405" column="13" selection-start-line="405" selection-start-column="12" selection-end-line="405" selection-end-column="13" />
-          <folding>
-            <marker date="1575546734923" expanded="true" signature="1052:1055" ph="..." />
-            <marker date="1575546734923" expanded="true" signature="26385:26390" ph="..." />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Geld/static/js/index.js">
       <provider selected="true" editor-type-id="text-editor" />
@@ -859,6 +861,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="502" column="23" lean-forward="true" selection-start-line="502" selection-start-column="23" selection-end-line="502" selection-end-column="23" />
+          <folding>
+            <marker date="1575596304013" expanded="true" signature="1052:1055" ph="..." />
+            <marker date="1575596304013" expanded="true" signature="26470:26475" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
