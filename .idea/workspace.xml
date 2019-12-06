@@ -31,7 +31,7 @@
     <session id="1649821634">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="32" />
+          <entry key="project.closed" value="34" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.109" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -51,6 +51,7 @@
           <entry key="project.open.time.202" value="1" />
           <entry key="project.open.time.217" value="1" />
           <entry key="project.open.time.238" value="1" />
+          <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.294" value="1" />
           <entry key="project.open.time.309" value="1" />
@@ -61,11 +62,11 @@
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.65" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="4" />
+          <entry key="project.open.time.8" value="5" />
           <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.90" value="1" />
           <entry key="project.open.time.96" value="1" />
-          <entry key="project.opened" value="39" />
+          <entry key="project.opened" value="41" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -98,7 +99,7 @@
           <entry key="gitignore" value="23" />
           <entry key="html" value="7264" />
           <entry key="js" value="487" />
-          <entry key="py" value="39371" />
+          <entry key="py" value="39551" />
           <entry key="txt" value="63" />
         </counts>
       </usages-collector>
@@ -108,7 +109,7 @@
           <entry key="HTML" value="7264" />
           <entry key="JavaScript" value="487" />
           <entry key="PLAIN_TEXT" value="90" />
-          <entry key="Python" value="43740" />
+          <entry key="Python" value="43920" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -119,11 +120,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="330" column="28" selection-start-line="330" selection-start-column="28" selection-end-line="330" selection-end-column="28" />
+            <state relative-caret-position="37">
+              <caret line="405" column="13" selection-start-line="405" selection-start-column="12" selection-end-line="405" selection-end-column="13" />
               <folding>
-                <marker date="1575417149282" expanded="true" signature="1052:1055" ph="..." />
-                <marker date="1575417149282" expanded="true" signature="26203:26208" ph="..." />
+                <marker date="1575546734923" expanded="true" signature="1052:1055" ph="..." />
+                <marker date="1575546734923" expanded="true" signature="26385:26390" ph="..." />
               </folding>
             </state>
           </provider>
@@ -164,7 +165,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
+            <state relative-caret-position="210">
               <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -194,14 +195,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3450">
-              <caret line="128" column="35" selection-start-line="128" selection-start-column="35" selection-end-line="128" selection-end-column="35" />
+            <state relative-caret-position="1110">
+              <caret line="314" column="39" selection-start-line="314" selection-start-column="39" selection-end-line="314" selection-end-column="39" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1575453905554" expanded="true" signature="1477:1720" ph="..." />
-                <marker date="1575453905554" expanded="true" signature="1747:1856" ph="..." />
-                <marker date="1575453905554" expanded="true" signature="1996:2382" ph="..." />
-                <marker date="1575453905554" expanded="true" signature="11206:11215" ph="..." />
+                <element signature="e#756#12358#0" />
+                <marker date="1575546734758" expanded="true" signature="1477:1720" ph="..." />
+                <marker date="1575546734758" expanded="true" signature="1747:1856" ph="..." />
+                <marker date="1575546734758" expanded="true" signature="1996:2382" ph="..." />
+                <marker date="1575546734758" expanded="true" signature="11206:11215" ph="..." />
               </folding>
             </state>
           </provider>
@@ -334,9 +336,9 @@
         <option value="$PROJECT_DIR$/templates/registration/password_reset_form.html" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/login.html" />
-        <option value="$PROJECT_DIR$/wallet/views.py" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" />
         <option value="$PROJECT_DIR$/wallet/models.py" />
+        <option value="$PROJECT_DIR$/wallet/views.py" />
       </list>
     </option>
   </component>
@@ -502,9 +504,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1762481" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18078668" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="Repositories" order="3" show_stripe_button="false" weight="0.32980332" />
@@ -519,7 +520,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49924356" weight="0.32879046" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50075644" side_tool="true" weight="0.32879046" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" weight="0.72572404" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" visible="true" weight="0.72572404" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49848714" weight="0.3781942" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -732,9 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
           <caret line="77" column="18" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="18" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -749,9 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="59">
           <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
-          <folding>
-            <element signature="e#628#669#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -769,9 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -787,14 +779,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="239">
           <caret line="23" column="20" lean-forward="true" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#66#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/urllib/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="405" column="13" selection-start-line="405" selection-start-column="12" selection-end-line="405" selection-end-column="13" />
+          <folding>
+            <marker date="1575546734923" expanded="true" signature="1052:1055" ph="..." />
+            <marker date="1575546734923" expanded="true" signature="26385:26390" ph="..." />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Geld/static/js/index.js">
       <provider selected="true" editor-type-id="text-editor" />
@@ -820,6 +820,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/registration/password_reset_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -836,14 +846,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3450">
-          <caret line="128" column="35" selection-start-line="128" selection-start-column="35" selection-end-line="128" selection-end-column="35" />
+        <state relative-caret-position="1110">
+          <caret line="314" column="39" selection-start-line="314" selection-start-column="39" selection-end-line="314" selection-end-column="39" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1575453905554" expanded="true" signature="1477:1720" ph="..." />
-            <marker date="1575453905554" expanded="true" signature="1747:1856" ph="..." />
-            <marker date="1575453905554" expanded="true" signature="1996:2382" ph="..." />
-            <marker date="1575453905554" expanded="true" signature="11206:11215" ph="..." />
+            <element signature="e#756#12358#0" />
+            <marker date="1575546734758" expanded="true" signature="1477:1720" ph="..." />
+            <marker date="1575546734758" expanded="true" signature="1747:1856" ph="..." />
+            <marker date="1575546734758" expanded="true" signature="1996:2382" ph="..." />
+            <marker date="1575546734758" expanded="true" signature="11206:11215" ph="..." />
           </folding>
         </state>
       </provider>
@@ -852,27 +863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
           <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="330" column="28" selection-start-line="330" selection-start-column="28" selection-end-line="330" selection-end-column="28" />
-          <folding>
-            <marker date="1575417149282" expanded="true" signature="1052:1055" ph="..." />
-            <marker date="1575417149282" expanded="true" signature="26203:26208" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
