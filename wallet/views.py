@@ -4,6 +4,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.urls import reverse
 
 from wallet.extra import account_activation_token, get_phrase
 from .models import Investor, WithdrawalRequest
@@ -16,10 +17,11 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 
-def generate_address(call_back_url):
+def generate_address(request, id_):
+    url = get_current_site(request) + reverse('verify', args=[id_])
     gen = requests.request('GET',
                            'https://api.blockchain.info/v2/receive?xpub=' + settings.BLOCKCHAIN_XPUB + '&callback='
-                           + call_back_url + '&key=' + settings.BLOCKCHAIN_API_KEY)
+                           + url + '&key=' + settings.BLOCKCHAIN_API_KEY)
     response = json.loads(gen.text).get('address')
     if response is None:
         return None
@@ -225,7 +227,7 @@ def invest(request):
     if request.method == 'POST':
         investor = Investor.objects.get(id=request.user.id)
         if investor.deposit_address is None:
-            address = generate_address(investor.get_call_back(request))
+            address = generate_address(request, investor.id)
             if address is not None:
                 investor.deposit_address = address
                 investor.save()
@@ -237,7 +239,7 @@ def invest(request):
 def verify_payment(request, id_):
     if request.method == 'GET':
         try:
-            investor = Investor.objects.get(callback_id=id_, level=0)
+            investor = Investor.objects.get(id=id_, level=0)
             invoice_id = request.GET['invoice_id']
             transaction_hash = request.GET['transaction_hash']
             value_in_satoshi = request.GET['value']

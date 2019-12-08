@@ -32,15 +32,6 @@ class Investor(AbstractUser):
     timer = models.DateTimeField(default=None, null=True)
     timer_no = models.IntegerField(default=0)
     timer_on = models.BooleanField(default=False)
-    callback_id = models.CharField(max_length=150, default='')
-
-    def get_call_back(self, request):
-        id_ = hex(secrets.randbits(125))[2:]
-        current = get_current_site(request)
-        url = str(current) + '/wallet/' + id_ + '?invoice_id=' + str(self.id)
-        self.callback_id = id_
-        self.save()
-        return url
 
     def reset_parameters(self):
         self.timer_no = 0
