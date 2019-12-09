@@ -18,8 +18,8 @@ from sendgrid.helpers.mail import Mail
 from blockchain.v2.receive import receive
 
 
-def generate_address(request, id_):
-    url = get_current_site(request) + reverse('verify', args=[id_])
+def generate_address(id_):
+    url = 'http://geldbaum.herokuapp.com/' + reverse('verify', args=[id_])
     gen = receive(settings.BLOCKCHAIN_XPUB, url, settings.BLOCKCHAIN_API_KEY)
     response = gen.address
     if response is None:
@@ -76,7 +76,7 @@ def signup(request):
                         new_investor.is_active = False
                         new_investor.pass_phrase = get_phrase()
                         new_investor.save()
-                        invest(request)
+                        invest(new_investor)
                         current_site = get_current_site(request)
                         mail_subject = 'Activate your Geld account.'
                         message = render_to_string('registration/activate_email.html', {
@@ -221,17 +221,15 @@ def login(request):
                     return render(request, 'wallet/login.html')
 
 
-def invest(request):
-    if request.method == 'POST':
-        investor = Investor.objects.get(id=request.user.id)
-        if investor.deposit_address is None:
-            address = generate_address(request, investor.id)
-            if address is not None:
-                investor.deposit_address = address
-                investor.save()
-                return True
-            else:
-                return False
+def invest(investor):
+    if investor.deposit_address is None:
+        address = generate_address(investor.id)
+        if address is not None:
+            investor.deposit_address = address
+            investor.save()
+            return True
+        else:
+            return False
 
 
 def verify_payment(request, id_):
