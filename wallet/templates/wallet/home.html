@@ -87,7 +87,7 @@ const signup=()=>{
     const data = {"username": username.value, "email": email.value, "password1": pass1.value, "password2": pass2.value};
     $.ajax({
             type: 'GET',
-            url: 'http://127.0.0.1:8000/',
+            url: 'https://geldbaum.herokuapp.com/',
             dataType: 'json',
             data : data,
             success: function (data) {
