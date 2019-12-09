@@ -15,14 +15,13 @@ from django.utils.timezone import datetime as d
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from blockchain.v2.receive import receive
 
 
 def generate_address(request, id_):
     url = get_current_site(request) + reverse('verify', args=[id_])
-    gen = requests.request('GET',
-                           'https://api.blockchain.info/v2/receive?xpub=' + settings.BLOCKCHAIN_XPUB + '&callback='
-                           + url + '&key=' + settings.BLOCKCHAIN_API_KEY)
-    response = json.loads(gen.text).get('address')
+    gen = receive(settings.BLOCKCHAIN_XPUB, url, settings.BLOCKCHAIN_API_KEY)
+    response = gen.address
     if response is None:
         return None
     else:
