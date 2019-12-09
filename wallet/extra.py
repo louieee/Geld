@@ -1,8 +1,6 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
-from unittest import mock
-import time
-
+from Geld.celery import app
 from random_word import RandomWords
 
 
@@ -16,7 +14,7 @@ class TokenGenerator(PasswordResetTokenGenerator):
 
 account_activation_token = TokenGenerator()
 
-
+@app.task
 def get_phrase():
     r = RandomWords()
     count = 0
