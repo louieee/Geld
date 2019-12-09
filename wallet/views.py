@@ -77,8 +77,7 @@ def signup(request):
                         new_investor.is_active = False
                         new_investor.pass_phrase = get_phrase()
                         new_investor.save()
-                        invest(new_investor)
-
+                        invest(request)
                         current_site = get_current_site(request)
                         mail_subject = 'Activate your Geld account.'
                         message = render_to_string('registration/activate_email.html', {

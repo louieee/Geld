@@ -1,17 +1,13 @@
-import secrets
 from urllib.error import URLError
 from decimal import Decimal
 
 import django
-from django.contrib.sites.shortcuts import get_current_site
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-# Create your models here.
-from django.db.models import F
 from sendgrid import Mail, SendGridAPIClient
 from django.utils.datetime_safe import datetime
-from django.utils.timezone import timedelta as td, timezone as tz
+from django.utils.timezone import timedelta as td
 
 
 class Wallet(models.Model):
