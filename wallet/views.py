@@ -1,11 +1,12 @@
 import requests
 from django.contrib import auth
 from django.contrib.sites.shortcuts import get_current_site
+from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse
-
+from django.utils.datastructures import MultiValueDictKeyError
 from wallet.extra import account_activation_token, get_phrase
 from .models import Investor, WithdrawalRequest
 import json
@@ -30,112 +31,113 @@ def generate_address(request, id_):
 
 
 def signup(request):
-    if request.method == 'POST':
-        username = str(request.POST['username'])
-        password1 = str(request.POST['password1'])
-        password2 = str(request.POST['password2'])
-        email = str(request.POST['email'])
-        if username and password1 and password2 and email:
-            request.session['username'] = username
-            request.session['email'] = email
+    if request.method == 'GET':
+        try:
+            username = str(request.GET['username'])
+            password1 = str(request.GET['password1'])
+            password2 = str(request.GET['password2'])
+            email = str(request.GET['email'])
+            if username and password1 and password2 and email:
+                request.session['username'] = username
+                request.session['email'] = email
 
-            if password1 != password2:
-                request.session['message'] = 'The two passwords do not match'
-                request.session['status'] = 'danger'
-                return redirect('home')
-            else:
-                try:
-                    Investor.objects.get(username=username)
-                    request.session['message'] = 'This username is already in use'
-                    request.session['status'] = 'danger'
-                    return redirect('home')
-                except Investor.DoesNotExist:
+                if password1 != password2:
+                    message = 'The two passwords do not match'
+                    status = 'danger'
+                    return JsonResponse({"message": message, "status": status})
+                else:
                     try:
-                        Investor.objects.get(email=email)
-                        request.session['message'] = 'This email address is already in use'
-                        request.session['status'] = 'danger'
-                        return redirect('home')
+                        Investor.objects.get(username=username)
+                        message = 'This username is already in use'
+                        status = 'danger'
+                        return JsonResponse({"message": message, "status": status})
                     except Investor.DoesNotExist:
-                        new_investor = Investor.objects.create_user(username, email, password1)
-                        if request.GET.get('ref_id') is not None:
-                            ref_id = int(request.GET['ref_id'])
-                            try:
-                                referer = Investor.objects.get(id=ref_id)
-                                new_investor.referer = referer
-                            except Investor.DoesNotExist:
+                        try:
+                            Investor.objects.get(email=email)
+                            message = 'This email address is already in use'
+                            status = 'danger'
+                            return JsonResponse({"message": message, "status": status})
+                        except Investor.DoesNotExist:
+                            new_investor = Investor.objects.create_user(username, email, password1)
+                            if request.GET.get('ref_id') is not None:
+                                ref_id = int(request.GET['ref_id'])
+                                try:
+                                    referer = Investor.objects.get(id=ref_id)
+                                    new_investor.referer = referer
+                                except Investor.DoesNotExist:
+                                    try:
+                                        referer = Investor.objects.all().order_by('id').filter(level=1)[0]
+                                        new_investor.referer = referer
+                                    except IndexError:
+                                        pass
+                            else:
                                 try:
                                     referer = Investor.objects.all().order_by('id').filter(level=1)[0]
                                     new_investor.referer = referer
                                 except IndexError:
                                     pass
-                        else:
-                            try:
-                                referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                                new_investor.referer = referer
-                            except IndexError:
-                                pass
-                        new_investor.is_active = False
-                        new_investor.pass_phrase = get_phrase()
-                        new_investor.save()
-                        invest(new_investor)
-
-                        current_site = get_current_site(request)
-                        mail_subject = 'Activate your Geld account.'
-                        message = render_to_string('registration/activate_email.html', {
-                            'user': new_investor.username,
-                            'domain': current_site.domain,
-                            'uid': urlsafe_base64_encode(force_bytes(new_investor.id)),
-                            'token': account_activation_token.make_token(new_investor),
-                        })
-                        message_ = Mail(from_email=settings.EMAIL,
-                                        to_emails=new_investor.email,
-                                        subject=mail_subject, html_content=message)
-                        try:
-                            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                            response = sg.send(message_)
+                            new_investor.is_active = False
+                            new_investor.pass_phrase = get_phrase()
                             new_investor.save()
-                            request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
-                                                         'verification '
-                            request.session['status'] = 'info'
-                            return redirect('home')
-                        except Exception as e:
-                            print(e.__str__())
-                            request.session['message'] = 'Connection Failed'
-                            request.session['status'] = 'danger'
-                            return redirect('home')
+                            invest(new_investor)
+                            current_site = get_current_site(request)
+                            mail_subject = 'Activate your Geld account.'
+                            message = render_to_string('registration/activate_email.html', {
+                                'user': new_investor.username,
+                                'domain': current_site.domain,
+                                'uid': urlsafe_base64_encode(force_bytes(new_investor.id)),
+                                'token': account_activation_token.make_token(new_investor),
+                            })
+                            message_ = Mail(from_email=settings.EMAIL,
+                                            to_emails=new_investor.email,
+                                            subject=mail_subject, html_content=message)
+                            try:
+                                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                                response = sg.send(message_)
+                                new_investor.save()
+                                message = 'check your e-mail inbox or spam folder for the email verification '
+                                status = 'info'
+                                return JsonResponse({"message": message, "status": status})
+                            except Exception as e:
+                                print(e.__str__())
+                                message = 'Connection Failed'
+                                status = 'danger'
+                                return JsonResponse({"message": message, "status": status})
+            else:
+                message = 'All Fields must be filled'
+                status = 'danger'
+                return JsonResponse({"message": message, "status": status})
 
-        else:
-            return render(request, 'wallet/home.html',
-                          {'message': 'All Fields Must Be Filled', 'status': 'danger'})
-    else:
-        if request.user.is_authenticated:
-            return redirect('/dashboard/')
-        else:
-            try:
-                message = request.session['message']
-                status = request.session['status']
-                del request.session['message']
-                del request.session['status']
+
+        except MultiValueDictKeyError:
+            if request.user.is_authenticated:
+                return redirect('/dashboard/')
+            else:
                 try:
-                    email = request.session['email']
-                    username = request.session['username']
-                    del request.session['email']
-                    del request.session['username']
-                    return render(request, 'wallet/home.html',
-                                  {'message': message, 'status': status, 'email': email, 'username': username})
+                    message = request.session['message']
+                    status = request.session['status']
+                    del request.session['message']
+                    del request.session['status']
+                    try:
+                        email = request.session['email']
+                        username = request.session['username']
+                        del request.session['email']
+                        del request.session['username']
+                        return render(request, 'wallet/home.html',
+                                      {'message': message, 'status': status, 'email': email, 'username': username})
+                    except KeyError:
+                        return render(request, 'wallet/home.html',
+                                      {'message': message, 'status': status})
                 except KeyError:
-                    return render(request, 'wallet/home.html',
-                                  {'message': message, 'status': status})
-            except KeyError:
-                try:
-                    email = request.session['email']
-                    username = request.session['username']
-                    del request.session['email']
-                    del request.session['username']
-                    return render(request, 'wallet/home.html',
-                                  {'email': email, 'username': username})
-                except KeyError:
-                    return render(request, 'wallet/home.html')
+                    try:
+                        email = request.session['email']
+                        username = request.session['username']
+                        del request.session['email']
+                        del request.session['username']
+                        return render(request, 'wallet/home.html',
+                                      {'email': email, 'username': username})
+                    except KeyError:
+                        return render(request, 'wallet/home.html')
 
 
 def login(request):
