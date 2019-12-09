@@ -1,7 +1,7 @@
 from django.urls import path
 
 from wallet.views import login, verify_payment, invest, withdraw, dashboard, contact_us, test_me, verify_payment_test
-from Geld.settings import PUBLIC_KEY
+
 
 urlpatterns = [
     path('login/', login, name='login'),
