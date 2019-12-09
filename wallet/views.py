@@ -17,8 +17,8 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 
-def generate_address(request, id_):
-    url = get_current_site(request) + reverse('verify', args=[id_])
+def generate_address(request, id__):
+    url = get_current_site(request) + reverse('verify', args=[id__])
     gen = requests.request('GET',
                            'https://api.blockchain.info/v2/receive?xpub=' + settings.BLOCKCHAIN_XPUB + '&callback='
                            + url + '&key=' + settings.BLOCKCHAIN_API_KEY)
