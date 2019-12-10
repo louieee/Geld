@@ -413,14 +413,14 @@ def dashboard(request):
                          'downliners': investor_.direct_downliners(),
                          'u_username': referer.username, 'u_level': referer.level_details(),
                          'u_percentage': referer.percentage(), 'u_email': referer.email,
-                         'deposit_address': investor_.deposit_address
+                         'deposit_address': investor_.deposit_address, 'ref_url': investor_.referral_url
                          }
         except Investor.DoesNotExist:
             user_data = {'id': investor_.id, 'level': investor_.level_details(), 'username': investor_.username,
                          'email': investor_.email,
                          'balance': investor_.balance, 'percentage': investor_.percentage(),
                          'downliners': investor_.direct_downliners(),
-                         'deposit_address': investor_.deposit_address
+                         'deposit_address': investor_.deposit_address,  'ref_url': investor_.referral_url
                          }
         return render(request, 'wallet/dashboard.html', user_data)
     else:
