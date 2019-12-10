@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="" />
+    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +101,7 @@
           <entry key="gitignore" value="23" />
           <entry key="html" value="7322" />
           <entry key="js" value="487" />
-          <entry key="py" value="40960" />
+          <entry key="py" value="41055" />
           <entry key="txt" value="64" />
         </counts>
       </usages-collector>
@@ -109,7 +111,7 @@
           <entry key="HTML" value="7322" />
           <entry key="JavaScript" value="487" />
           <entry key="PLAIN_TEXT" value="91" />
-          <entry key="Python" value="45470" />
+          <entry key="Python" value="45565" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -126,11 +128,11 @@
         <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="171" column="41" lean-forward="true" selection-start-line="171" selection-start-column="41" selection-end-line="171" selection-end-column="41" />
+              <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#1149#7202#0" />
-                <marker date="1576005851956" expanded="true" signature="24057:24058" ph="..." />
+                <marker date="1576007294606" expanded="true" signature="23352:23353" ph="..." />
               </folding>
             </state>
           </provider>
@@ -463,7 +465,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1860817" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -480,7 +481,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49924356" weight="0.32879046" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50075644" side_tool="true" weight="0.32879046" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" weight="0.72572404" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49319214" visible="true" weight="0.72572404" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49848714" weight="0.3781942" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -806,11 +807,11 @@
     <entry file="file://$PROJECT_DIR$/wallet/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="171" column="41" lean-forward="true" selection-start-line="171" selection-start-column="41" selection-end-line="171" selection-end-column="41" />
+          <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#1149#7202#0" />
-            <marker date="1576005851956" expanded="true" signature="24057:24058" ph="..." />
+            <marker date="1576007294606" expanded="true" signature="23352:23353" ph="..." />
           </folding>
         </state>
       </provider>

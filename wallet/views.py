@@ -167,19 +167,19 @@ def login(request):
                 else:
                     investor = auth.authenticate(username=username, password=password)
                     if investor is not None:
-                        if investor.pass_phrase == phrase:
+                        if inv_.pass_phrase == phrase:
                             auth.login(request, investor)
-                            reset_parameters(investor)
+                            reset_parameters(inv_)
                             return redirect('/dashboard/')
                         else:
-                            activate_security(investor)
+                            activate_security(inv_)
                             request.session['message'] = 'Wrong Passphrase'
                             request.session['status'] = 'danger'
                             request.session['username'] = username
                             request.session['passphrase'] = phrase
                             return redirect('/login')
                     else:
-                        activate_security(investor)
+                        activate_security(inv_)
                         request.session['message'] = 'Incorrect Password'
                         request.session['status'] = 'danger'
                         request.session['username'] = username
