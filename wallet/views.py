@@ -158,7 +158,7 @@ def login(request):
                     request.session['message'] = 'Your Account has been deactivated. '
                     request.session['status'] = 'info'
                     return redirect('home')
-                elif inv_.timer_on:
+                if inv_.timer_on:
                     request.session['message'] = 'You can login after ' + \
                                                  str(int((
                                                                  inv_.timer.timestamp() - d.now().timestamp()) / 60) - 60) + ' minutes'
