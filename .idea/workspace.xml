@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Geld/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Geld/urls.py" afterDir="false" />
-    </list>
+    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +99,7 @@
           <entry key="gitignore" value="23" />
           <entry key="html" value="7322" />
           <entry key="js" value="487" />
-          <entry key="py" value="40671" />
+          <entry key="py" value="40676" />
           <entry key="txt" value="64" />
         </counts>
       </usages-collector>
@@ -112,7 +109,7 @@
           <entry key="HTML" value="7322" />
           <entry key="JavaScript" value="487" />
           <entry key="PLAIN_TEXT" value="91" />
-          <entry key="Python" value="45181" />
+          <entry key="Python" value="45186" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -137,16 +134,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Geld/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
+            <state relative-caret-position="60">
+              <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Geld/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="83">
@@ -338,10 +335,10 @@
         <option value="$PROJECT_DIR$/wallet/extra.py" />
         <option value="$PROJECT_DIR$/wallet/models.py" />
         <option value="$PROJECT_DIR$/wallet/urls.py" />
-        <option value="$PROJECT_DIR$/Geld/settings.py" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" />
         <option value="$PROJECT_DIR$/wallet/views.py" />
         <option value="$PROJECT_DIR$/Geld/urls.py" />
+        <option value="$PROJECT_DIR$/Geld/settings.py" />
       </list>
     </option>
   </component>
@@ -351,7 +348,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="749" />
@@ -762,13 +759,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Geld/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -818,6 +808,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="83">
           <caret line="25" column="36" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Geld/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
         </state>
       </provider>
     </entry>
