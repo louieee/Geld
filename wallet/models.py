@@ -1,6 +1,6 @@
 from urllib.error import URLError
 from decimal import Decimal
-
+from Geld.celery import app
 import django
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -80,6 +80,7 @@ class Investor(AbstractUser):
     def direct_downliners(self):
         return Investor.objects.all().filter(referer_id=self.id)
 
+    @app.task
     def upgrade_investor(self):
 
         def level1():
@@ -298,5 +299,6 @@ class WithdrawalRequest(models.Model):
 
     def withdrawal_fee(self):
         return self.amount * Decimal(2 / 100)
+
     def total_amount(self):
         return self.amount + self.withdrawal_fee()

@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse
-
+from Geld.celery import app
 from wallet.extra import account_activation_token, get_phrase
 from .models import Investor, WithdrawalRequest
 import json
@@ -17,6 +17,10 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from blockchain.v2.receive import receive
 
+@app.task
+def send_message(message):
+    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+    return sg.send(message)
 
 def generate_address(id_):
     url = 'http://geldbaum.herokuapp.com/' + reverse('verify', args=[id_])
@@ -89,8 +93,7 @@ def signup(request):
                                         to_emails=new_investor.email,
                                         subject=mail_subject, html_content=message)
                         try:
-                            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                            response = sg.send(message_)
+                            send_message(message_)
                             new_investor.save()
                             request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
                                                          'verification '
@@ -220,7 +223,7 @@ def login(request):
                 except KeyError:
                     return render(request, 'wallet/login.html')
 
-
+@app.task
 def invest(investor):
     if investor.deposit_address is None:
         address = generate_address(investor.id)
@@ -344,8 +347,7 @@ def withdraw(request):
                                                                                         'just requested to withdraw '
                                                           + str(withdrawal_request.amount) +
                                                           'BTC to this address: ' + withdrawal_request.address)
-                        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                        response = sg.send(message)
+                        send_message(message)
                         request.session['message'] = 'Your Withdrawal request has been sent Successfully'
                         request.session['status'] = 'success'
                         return redirect('/withdraw/')
@@ -389,8 +391,7 @@ def service_withdrawal(id_):
                        plain_text_content='Dear ' + withdrawal.investor.username + ', ' + withdrawal.amount +
                                           'BTC has been paid to the address you specified : ' +
                                           withdrawal.address + ', Thank you for working with us')
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sg.send(message)
+        send_message(message)
         return True
     else:
         return False
@@ -478,8 +479,7 @@ def contact_us(request):
         message = Mail(to_emails=settings.EMAIL,
                        from_email=request.user.email, subject=subject,
                        plain_text_content=body)
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sg.send(message)
+        response = send_message(message)
         if response._status_code == 202:
             request.session['message'] = 'We have received your message. We will get back to you'
             request.session['status'] = 'success'
@@ -510,8 +510,7 @@ def activate(request, uidb64, token):
                             to_emails=user.email,
                             subject=mail_subject, html_content=message)
             try:
-                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                response = sg.send(message_)
+                send_message(message_)
                 user.save()
                 request.session['message'] = 'Your pass phrase is ' + str(
                     user.pass_phrase) + 'Check your email for more ' \
