@@ -6,15 +6,12 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse
 from wallet.extra import account_activation_token, get_phrase
-from .models import Investor, WithdrawalRequest
-import json
 from django.shortcuts import HttpResponse, render, redirect
 import decimal
 from django.utils.timezone import datetime as d
-from django.conf import settings
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 from blockchain.v2.receive import receive
+from blockchain.wallet import Wallet
+from .investor import *
 
 
 def send_message(message):
@@ -158,7 +155,7 @@ def login(request):
             investor = auth.authenticate(username=username, password=password)
 
             if investor is not None:
-                investor.check_timer()
+                check_timer(investor)
                 if not investor.is_active:
                     request.session['message'] = 'Your Account has been deactivated. '
                     request.session['status'] = 'info'
@@ -172,10 +169,10 @@ def login(request):
                 else:
                     if investor.pass_phrase == phrase:
                         auth.login(request, investor)
-                        investor.reset_parameters()
+                        reset_parameters(investor)
                         return redirect('/dashboard/')
                     else:
-                        investor.activate_security()
+                        activate_security(investor)
                         request.session['message'] = 'Wrong Passphrase'
                         request.session['status'] = 'danger'
                         request.session['username'] = username
@@ -184,7 +181,7 @@ def login(request):
             else:
                 try:
                     inv = Investor.objects.get(username=username)
-                    inv.activate_security()
+                    activate_security(inv)
                     request.session['message'] = 'Incorrect Password'
                     request.session['status'] = 'danger'
                     request.session['username'] = username
@@ -256,7 +253,7 @@ def verify_payment(request, id_):
                 value_in_btc = float(value_in_satoshi) / 100000000
                 if int(confirmation) >= 4 and value_in_btc >= 0.001:
                     if investor.id == invoice_id:
-                        investor.upgrade_investor()
+                        upgrade_investor(investor)
                         investor.save()
                         return HttpResponse('*OK*')
                     else:
@@ -387,11 +384,10 @@ def service_withdrawal(id_):
 
 def pay_investor(address, amount):
     try:
-        pay = requests.request('GET',
-                               'http://localhost:3000/merchant/' + settings.BLOCKCHAIN_GUID + '/payment?password='
-                               + settings.BLOCKCHAIN_PASSWORD + '&to=' + address + '&amount=' + str(
-                                   (amount / 100000000)))
-        response = json.loads(pay.text).get('message').split(' ')
+        pay = Wallet(settings.BLOCKCHAIN_GUID,settings.BLOCKCHAIN_PASSWORD, 'http://geldbaum.herokuapp.com').send(
+            address, amount)
+
+        response = str(pay.message).split(' ')
         if response[0] == 'Sent' and (response[1] == amount) and (response[4] == address):
             return True
         else:
