@@ -40,7 +40,7 @@ class Investor(AbstractUser):
         self.save()
 
     def activate_security(self):
-        if self.login_retries == 3 and self.timer_no < 6 and self.timer_no == 0:
+        if self.login_retries == 3 and (self.timer_no < 6 or self.timer_no == 0):
             self.increment_timer()
         elif self.login_retries < 3 and self.timer_no == 0:
             self.increment_login_retries()
