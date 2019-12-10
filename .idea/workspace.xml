@@ -71,7 +71,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="Procfile" value="3" />
+          <entry key="Procfile" value="5" />
           <entry key="css" value="8" />
           <entry key="gitignore" value="2" />
           <entry key="html" value="52" />
@@ -86,7 +86,7 @@
           <entry key="CSS" value="8" />
           <entry key="HTML" value="52" />
           <entry key="JavaScript" value="7" />
-          <entry key="PLAIN_TEXT" value="9" />
+          <entry key="PLAIN_TEXT" value="11" />
           <entry key="Python" value="70" />
           <entry key="XHTML" value="3" />
         </counts>
@@ -99,8 +99,8 @@
           <entry key="gitignore" value="23" />
           <entry key="html" value="7266" />
           <entry key="js" value="487" />
-          <entry key="py" value="40014" />
-          <entry key="txt" value="63" />
+          <entry key="py" value="40015" />
+          <entry key="txt" value="64" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -108,8 +108,8 @@
           <entry key="CSS" value="27" />
           <entry key="HTML" value="7266" />
           <entry key="JavaScript" value="487" />
-          <entry key="PLAIN_TEXT" value="90" />
-          <entry key="Python" value="44524" />
+          <entry key="PLAIN_TEXT" value="91" />
+          <entry key="Python" value="44525" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -125,20 +125,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="vcs://wallet/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
-              <folding>
-                <element signature="e#0#33#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="15" lean-forward="true" selection-start-column="15" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -147,7 +135,7 @@
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="36" selection-start-column="36" selection-end-column="36" />
+              <caret column="36" lean-forward="true" selection-start-column="36" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -155,20 +143,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wallet/extra.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
+            <state relative-caret-position="359">
               <caret line="29" selection-start-line="29" selection-end-line="29" />
-              <folding>
-                <element signature="e#0#66#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Geld/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
+            <state relative-caret-position="60">
+              <caret line="143" column="26" lean-forward="true" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -176,17 +161,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="vcs://Procfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="21" selection-start-column="21" selection-end-column="21" />
+            <state relative-caret-position="112">
+              <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -265,6 +241,7 @@
       <find>investment_count</find>
       <find>random</find>
       <find>print</find>
+      <find>app.task</find>
     </findStrings>
     <replaceStrings>
       <replace>user__username</replace>
@@ -283,6 +260,7 @@
       <replace>KeyError</replace>
       <replace>session</replace>
       <replace>pass</replace>
+      <replace>investor</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -300,7 +278,6 @@
         <option value="$PROJECT_DIR$/account/password_reset_email.html" />
         <option value="$PROJECT_DIR$/account/models.py" />
         <option value="$PROJECT_DIR$/account/views.py" />
-        <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/wallet/admin.py" />
         <option value="$PROJECT_DIR$/wallet/serializer.py" />
         <option value="$PROJECT_DIR$/wallet/viewset.py" />
@@ -330,7 +307,6 @@
         <option value="$PROJECT_DIR$/static/js/custom.js" />
         <option value="$PROJECT_DIR$/Geld/static/js/custom.js" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/contact_us.html" />
-        <option value="$PROJECT_DIR$/Geld/settings.py" />
         <option value="$PROJECT_DIR$/Geld/urls.py" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/test.html" />
         <option value="$PROJECT_DIR$/Geld/static/css/index.css" />
@@ -344,6 +320,8 @@
         <option value="$PROJECT_DIR$/wallet/urls.py" />
         <option value="$PROJECT_DIR$/wallet/templates/wallet/home.html" />
         <option value="$PROJECT_DIR$/wallet/models.py" />
+        <option value="$PROJECT_DIR$/Procfile" />
+        <option value="$PROJECT_DIR$/Geld/settings.py" />
         <option value="$PROJECT_DIR$/wallet/views.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
@@ -372,6 +350,11 @@
           <expand>
             <path>
               <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geld" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geld" type="462c0819:PsiDirectoryNode" />
               <item name="Geld" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -467,7 +450,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.18305598" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18305598" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="Repositories" order="3" weight="0.32980332" />
@@ -688,13 +671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Procfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="36" selection-start-column="36" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wallet/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -713,16 +689,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Geld/static/css/index.css" />
-    <entry file="file://$PROJECT_DIR$/wallet/extra.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#0#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/urllib/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -774,16 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallet/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wallet/templates/wallet/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -801,13 +757,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Geld/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -817,15 +766,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="75" column="12" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+        <state>
+          <caret column="15" lean-forward="true" selection-start-column="15" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/extra.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        <state relative-caret-position="112">
+          <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallet/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="36" lean-forward="true" selection-start-column="36" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Geld/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="143" column="26" lean-forward="true" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
         </state>
       </provider>
     </entry>
