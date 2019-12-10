@@ -23,9 +23,9 @@ def increment_login_retries(investor):
 
 def activate_security(investor):
     if investor.login_retries == 3 and (investor.timer_no < 6 or investor.timer_no == 0):
-        investor.increment_timer()
+        increment_timer(investor)
     elif investor.login_retries < 3 and investor.timer_no == 0:
-        investor.increment_login_retries()
+        increment_login_retries(investor)
     elif investor.timer_no == 6 and investor.login_retries == 3:
         investor.login_retries = 0
         investor.timer_no = 0
@@ -50,7 +50,7 @@ def set_timer(investor, number):
 
 def increment_timer(investor):
     investor.timer_no = investor.timer_no + 1
-    investor.set_timer(int(investor.timer_no * 10))
+    set_timer(investor,int(investor.timer_no * 10))
 
 
 def upgrade_investor(investor):
