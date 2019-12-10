@@ -19,11 +19,10 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 from django.contrib import admin
 from django.urls import path
 from Geld import settings
-from wallet.views import admin_withdrawal, signup, activate, fake_activate
+from wallet.views import admin_withdrawal, signup, activate
 
 
 urlpatterns = [
-    url(r'^monkeysex/', admin.site.urls),
     path('admin/withdrawals', admin_withdrawal, name='admin_withdrawal'),
     path('', include('wallet.urls')),
     path('', signup, name='home'),
@@ -35,5 +34,4 @@ urlpatterns = [
     path('password/reset/complete', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         activate, name='activate'),
-    path('mmm/<int:id_>/', fake_activate)
 ]

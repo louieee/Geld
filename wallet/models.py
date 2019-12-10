@@ -26,6 +26,7 @@ class Investor(AbstractUser):
     pass_phrase = models.CharField(max_length=255, default='')
     timer = models.DateTimeField(default=None, null=True)
     timer_no = models.IntegerField(default=0)
+    referral_url = models.CharField(max_length=150, default='')
     timer_on = models.BooleanField(default=False)
 
     def reset_parameters(self):

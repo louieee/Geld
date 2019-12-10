@@ -60,8 +60,9 @@ def signup(request):
                         return redirect('home')
                     except Investor.DoesNotExist:
                         new_investor = Investor.objects.create_user(username, email, password1)
-                        if request.GET.get('ref_id') is not None:
-                            ref_id = int(request.GET['ref_id'])
+                        if request.session['ref_id'] is not None:
+                            ref_id = 1000 - int(request.session['ref_id'])
+                            del request.session['ref_id']
                             try:
                                 referer = Investor.objects.get(id=ref_id)
                                 new_investor.referer = referer
@@ -93,7 +94,11 @@ def signup(request):
                                         to_emails=new_investor.email,
                                         subject=mail_subject, html_content=message)
                         try:
+                            current_site = get_current_site(request)
                             send_message(message_)
+                            new_investor.save()
+                            new_investor.referral_url = current_site.domain + '/?ref_id=' + (
+                                        1000 + int(new_investor.id))
                             new_investor.save()
                             request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
                                                          'verification '
@@ -109,6 +114,10 @@ def signup(request):
             return render(request, 'wallet/home.html',
                           {'message': 'All Fields Must Be Filled', 'status': 'danger'})
     else:
+        if request.GET.get('ref_id'):
+            request.session['ref_id'] = int(request.GET.get('ref_id'))
+            return redirect('/')
+
         if request.user.is_authenticated:
             return redirect('/dashboard/')
         else:
@@ -259,27 +268,6 @@ def verify_payment(request, id_):
         except Investor.DoesNotExist:
             return HttpResponse('Wrong Callback url')
 
-
-def verify_payment_test(request):
-    if request.method == 'GET':
-        invoice_id = request.GET['invoice_id']
-        transaction_hash = request.GET['transaction_hash']
-        value_in_satoshi = request.GET['value']
-        confirmation = request.GET['confirmations']
-        if invoice_id and transaction_hash and value_in_satoshi and confirmation:
-            value_in_btc = float(value_in_satoshi) / 100000000
-            if int(confirmation) >= 4 and value_in_btc >= 0.001:
-                try:
-                    investor = Investor.objects.get(id=invoice_id, level=0)
-                    investor.upgrade_investor()
-                    investor.save()
-                    return HttpResponse('*OK*')
-                except Investor.DoesNotExist:
-                    return HttpResponse('Invoice id does not exist')
-            else:
-                return HttpResponse('Confirmation and amount not enough')
-        else:
-            return HttpResponse('No values')
 
 
 def withdraw(request):
@@ -490,30 +478,6 @@ def contact_us(request):
             redirect('/contact')
 
 
-def fake_activate(request, id_):
-    if request.method == 'GET':
-        user = Investor.objects.get(id=int(id_))
-        user.is_active = True
-        user.save()
-        mail_subject = 'Your Geld Account Details.'
-        message = "Dear"+ user.username+', Your passphrase is '+user.pass_phrase
-
-        message_ = Mail(from_email=settings.EMAIL,
-                        to_emails=user.email,
-                        subject=mail_subject, plain_text_content=message)
-        try:
-            send_message(message_)
-            user.save()
-            request.session['message'] = 'Your pass phrase is ' + str(
-                user.pass_phrase) + 'Please kindly save it somewhere'
-            request.session['status'] = 'info'
-            return redirect('login')
-        except Exception as e:
-            request.session['message'] = 'Your pass phrase is ' + str(
-                user.pass_phrase) + '. Please kindly save it somewhere.'
-            request.session['status'] = 'info'
-            return redirect('login')
-
 
 def activate(request, uidb64, token):
     try:
@@ -537,8 +501,8 @@ def activate(request, uidb64, token):
             try:
                 send_message(message_)
                 user.save()
-                request.session['message'] = 'Your pass phrase is ' + str(
-                    user.pass_phrase) + 'Please kindly save it somewhere'
+                request.session['message'] = 'Your pass phrase is "' + str(
+                    user.pass_phrase) + '". Please kindly save it somewhere'
                 request.session['status'] = 'info'
                 return redirect('login')
             except Exception as e:
@@ -554,13 +518,11 @@ def activate(request, uidb64, token):
                               {'message': 'Your Email was invalid, Therefore Your Account Has '
                                           'been deleted', 'status': 'danger'})
             else:
-                request.session['message'] = 'Your pass phrase is ' + str(
-                    user.pass_phrase) + '. Please kindly save it somewhere.'
+                request.session['message'] = 'Your pass phrase is "' + str(
+                    user.pass_phrase) + '". Please kindly save it somewhere.'
                 request.session['status'] = 'info'
                 return redirect('login')
     except Investor.DoesNotExist:
         return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
 
 
-def test_me(request):
-    return render(request, 'wallet/test.html')
