@@ -5,7 +5,6 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse
-from Geld.celery import app
 from wallet.extra import account_activation_token, get_phrase
 from .models import Investor, WithdrawalRequest
 import json
@@ -17,7 +16,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from blockchain.v2.receive import receive
 
-@app.task
+
 def send_message(message):
     sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     return sg.send(message)

@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import redis
 
-r = redis.from_url(os.environ.get("REDIS_URL"))
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -151,9 +151,5 @@ BLOCKCHAIN_API_KEY = '5141a55b-d1eb-497a-b277-c07a2f9873c9'
 BLOCKCHAIN_GUID = 'bd6b8788-2cf0-468b-9109-b443f70c796d'
 BLOCKCHAIN_XPUB = 'xpub6BnYXhB7SHxRGqAd1mCvgeghcQW1BHGVKM6KDCnRqNYUVuMDWCDHayYLmtyuRPbYeDmZbockEWzDLSLab7W84BknKQVt4fCfa1cr6ipf1t9'
 BLOCKCHAIN_PASSWORD = 'MONKEYSex'
-
-BROKER_URL = r
-BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = r
 
 
