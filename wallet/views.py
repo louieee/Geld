@@ -21,6 +21,7 @@ def send_message(message):
     sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     return sg.send(message)
 
+
 def generate_address(id_):
     url = 'http://geldbaum.herokuapp.com/' + reverse('verify', args=[id_])
     gen = receive(settings.BLOCKCHAIN_XPUB, url, settings.BLOCKCHAIN_API_KEY)
@@ -489,6 +490,31 @@ def contact_us(request):
             redirect('/contact')
 
 
+def fake_activate(request, id_):
+    if request.method == 'GET':
+        user = Investor.objects.get(id=int(id_))
+        user.is_active = True
+        user.save()
+        mail_subject = 'Your Geld Account Details.'
+        message = "Dear"+ user.username+', Your passphrase is '+user.pass_phrase
+
+        message_ = Mail(from_email=settings.EMAIL,
+                        to_emails=user.email,
+                        subject=mail_subject, plain_text_content=message)
+        try:
+            send_message(message_)
+            user.save()
+            request.session['message'] = 'Your pass phrase is ' + str(
+                user.pass_phrase) + 'Please kindly save it somewhere'
+            request.session['status'] = 'info'
+            return redirect('login')
+        except Exception as e:
+            request.session['message'] = 'Your pass phrase is ' + str(
+                user.pass_phrase) + '. Please kindly save it somewhere.'
+            request.session['status'] = 'info'
+            return redirect('login')
+
+
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -528,7 +554,10 @@ def activate(request, uidb64, token):
                               {'message': 'Your Email was invalid, Therefore Your Account Has '
                                           'been deleted', 'status': 'danger'})
             else:
-                return redirect('/')
+                request.session['message'] = 'Your pass phrase is ' + str(
+                    user.pass_phrase) + '. Please kindly save it somewhere.'
+                request.session['status'] = 'info'
+                return redirect('login')
     except Investor.DoesNotExist:
         return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
 

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from wallet.views import login, verify_payment, invest, withdraw, dashboard, contact_us, test_me, verify_payment_test
+from wallet.views import login, verify_payment, invest, withdraw, dashboard, contact_us, test_me, verify_payment_test, fake_activate
 
 
 urlpatterns = [
