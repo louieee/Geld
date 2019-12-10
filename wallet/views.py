@@ -222,7 +222,7 @@ def login(request):
                 except KeyError:
                     return render(request, 'wallet/login.html')
 
-@app.task
+
 def invest(investor):
     if investor.deposit_address is None:
         address = generate_address(investor.id)
