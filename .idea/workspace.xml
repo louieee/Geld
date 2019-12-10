@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/wallet/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +99,7 @@
           <entry key="gitignore" value="23" />
           <entry key="html" value="7322" />
           <entry key="js" value="487" />
-          <entry key="py" value="41055" />
+          <entry key="py" value="41063" />
           <entry key="txt" value="64" />
         </counts>
       </usages-collector>
@@ -111,7 +109,7 @@
           <entry key="HTML" value="7322" />
           <entry key="JavaScript" value="487" />
           <entry key="PLAIN_TEXT" value="91" />
-          <entry key="Python" value="45565" />
+          <entry key="Python" value="45573" />
           <entry key="RegExp" value="1" />
         </counts>
       </usages-collector>
@@ -127,12 +125,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wallet/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
+            <state relative-caret-position="37">
+              <caret line="166" column="21" lean-forward="true" selection-start-line="166" selection-start-column="21" selection-end-line="166" selection-end-column="21" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#1149#7202#0" />
-                <marker date="1576007294606" expanded="true" signature="23352:23353" ph="..." />
+                <marker date="1576007770948" expanded="true" signature="23334:23335" ph="..." />
               </folding>
             </state>
           </provider>
@@ -806,12 +804,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wallet/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
+        <state relative-caret-position="37">
+          <caret line="166" column="21" lean-forward="true" selection-start-line="166" selection-start-column="21" selection-end-line="166" selection-end-column="21" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#1149#7202#0" />
-            <marker date="1576007294606" expanded="true" signature="23352:23353" ph="..." />
+            <marker date="1576007770948" expanded="true" signature="23334:23335" ph="..." />
           </folding>
         </state>
       </provider>
