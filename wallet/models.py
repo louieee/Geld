@@ -48,6 +48,7 @@ class Investor(AbstractUser):
             self.login_retries = 0
             self.timer_no = 0
             self.is_active = False
+            self.save()
 
     def check_timer(self):
         try:
