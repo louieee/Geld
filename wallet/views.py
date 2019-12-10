@@ -158,33 +158,34 @@ def login(request):
                     request.session['message'] = 'Your Account has been deactivated. '
                     request.session['status'] = 'info'
                     return redirect('home')
-                if inv_.timer_on is True:
-                    request.session['message'] = 'You can login after ' + \
+                else:
+                    if inv_.timer_on is True:
+                        request.session['message'] = 'You can login after ' + \
                                                  str(int((
                                                                  inv_.timer.timestamp() - d.now().timestamp()) / 60) - 60) + ' minutes'
-                    request.session['status'] = 'info'
-                    return redirect('/login')
-                else:
-                    investor = auth.authenticate(username=username, password=password)
-                    if investor is not None:
-                        if inv_.pass_phrase == phrase:
-                            auth.login(request, investor)
-                            reset_parameters(inv_)
-                            return redirect('/dashboard/')
+                        request.session['status'] = 'info'
+                        return redirect('/login')
+                    else:
+                        investor = auth.authenticate(username=username, password=password)
+                        if investor is not None:
+                            if inv_.pass_phrase == phrase:
+                                auth.login(request, investor)
+                                reset_parameters(inv_)
+                                return redirect('/dashboard/')
+                            else:
+                                activate_security(inv_)
+                                request.session['message'] = 'Wrong Passphrase'
+                                request.session['status'] = 'danger'
+                                request.session['username'] = username
+                                request.session['passphrase'] = phrase
+                                return redirect('/login')
                         else:
                             activate_security(inv_)
-                            request.session['message'] = 'Wrong Passphrase'
+                            request.session['message'] = 'Incorrect Password'
                             request.session['status'] = 'danger'
                             request.session['username'] = username
                             request.session['passphrase'] = phrase
                             return redirect('/login')
-                    else:
-                        activate_security(inv_)
-                        request.session['message'] = 'Incorrect Password'
-                        request.session['status'] = 'danger'
-                        request.session['username'] = username
-                        request.session['passphrase'] = phrase
-                        return redirect('/login')
             except Investor.DoesNotExist:
                 request.session['message'] = 'This User does not exist'
                 request.session['status'] = 'danger'
