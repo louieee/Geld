@@ -512,15 +512,14 @@ def activate(request, uidb64, token):
                 send_message(message_)
                 user.save()
                 request.session['message'] = 'Your pass phrase is ' + str(
-                    user.pass_phrase) + 'Check your email for more ' \
-                                        'details '
+                    user.pass_phrase) + 'Please kindly save it somewhere'
                 request.session['status'] = 'info'
                 return redirect('login')
             except Exception as e:
-                print(e.__str__())
-                request.session['message'] = 'Connection Failed'
-                request.session['status'] = 'danger'
-                return redirect('home')
+                request.session['message'] = 'Your pass phrase is ' + str(
+                    user.pass_phrase) + '. Please kindly save it somewhere.'
+                request.session['status'] = 'info'
+                return redirect('login')
 
         else:
             if user.is_active is False:
