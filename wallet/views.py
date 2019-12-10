@@ -181,12 +181,24 @@ def login(request):
             else:
                 try:
                     inv = Investor.objects.get(username=username)
-                    activate_security(inv)
-                    request.session['message'] = 'Incorrect Password'
-                    request.session['status'] = 'danger'
-                    request.session['username'] = username
-                    request.session['passphrase'] = phrase
-                    return redirect('/login')
+                    check_timer(inv)
+                    if not inv.is_active:
+                        request.session['message'] = 'Your Account has been deactivated. '
+                        request.session['status'] = 'info'
+                        return redirect('home')
+                    if inv.timer_on:
+                        request.session['message'] = 'You can login after ' + \
+                                                     str(int((
+                                                                     inv.timer.timestamp() - d.now().timestamp()) / 60) - 60) + ' minutes'
+                        request.session['status'] = 'info'
+                        return redirect('/login')
+                    else:
+                        activate_security(inv)
+                        request.session['message'] = 'Incorrect Password'
+                        request.session['status'] = 'danger'
+                        request.session['username'] = username
+                        request.session['passphrase'] = phrase
+                        return redirect('/login')
                 except Investor.DoesNotExist:
                     request.session['message'] = 'This User does not exist'
                     request.session['status'] = 'danger'
