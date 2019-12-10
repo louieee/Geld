@@ -23,6 +23,7 @@ from wallet.views import admin_withdrawal, signup, activate
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('admin/withdrawals', admin_withdrawal, name='admin_withdrawal'),
     path('', include('wallet.urls')),
     path('', signup, name='home'),
