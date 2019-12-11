@@ -150,43 +150,58 @@ def login(request):
         username = str(request.POST.get('username'))
         password = str(request.POST.get('password'))
         phrase = str(request.POST.get('phrase'))
+        print("Just collected login data")
         if username and password and phrase:
             try:
                 inv_ = Investor.objects.get(username=username)
+                print(inv_.username + "'s timer before is "+str(inv_.timer_on))
+                print(inv_.username + "'s login retries is " + str(inv_.login_retries))
+                print(inv_.username + "'s timer number   is " + str(inv_.timer_no))
                 check_timer(inv_)
+                print(inv_.username + "'s timer after is " + str(inv_.timer_on))
                 if not inv_.is_active:
+                    print(inv_.username + "is not active")
                     request.session['message'] = 'Your Account has been deactivated. '
                     request.session['status'] = 'info'
                     return redirect('home')
                 else:
+                    print(inv_.username + "is active")
                     if inv_.timer_on is True:
+                        print(inv_.username + " timer is on")
                         request.session['message'] = 'You can login after ' + \
                                                  str(int((
-                                                                 inv_.timer.timestamp() - d.now().timestamp()) / 60) - 60) + ' minutes'
+                                                                 inv_.timer.timestamp() - d.now().timestamp()) / 60)) + ' minutes'
                         request.session['status'] = 'info'
-                        return redirect('/login')
+                        return redirect('login')
                     else:
+                        print(inv_.username + " timer is off")
                         investor = auth.authenticate(username=username, password=password)
+                        print('authenticating '+inv_.username)
                         if investor is not None:
+                            print ('authentication success for '+inv_.username)
                             if inv_.pass_phrase == phrase:
+                                print('login success for '+inv_.username)
                                 auth.login(request, investor)
                                 reset_parameters(inv_)
-                                return redirect('/dashboard/')
+                                return redirect('dashboard')
                             else:
+                                print(inv_.username + ' got the passphrase wrong')
                                 activate_security(inv_)
                                 request.session['message'] = 'Wrong Passphrase'
                                 request.session['status'] = 'danger'
                                 request.session['username'] = username
                                 request.session['passphrase'] = phrase
-                                return redirect('/login')
+                                return redirect('login')
                         else:
+                            print(inv_.username + ' got the password wrong')
                             activate_security(inv_)
                             request.session['message'] = 'Incorrect Password'
                             request.session['status'] = 'danger'
                             request.session['username'] = username
                             request.session['passphrase'] = phrase
-                            return redirect('/login')
+                            return redirect('login')
             except Investor.DoesNotExist:
+                print(" This user doesnt exist")
                 request.session['message'] = 'This User does not exist'
                 request.session['status'] = 'danger'
                 request.session['username'] = username

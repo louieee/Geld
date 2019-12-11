@@ -10,6 +10,7 @@ from .models import Investor, WithdrawalRequest
 
 
 def reset_parameters(investor):
+    print(investor.username+"'s login details have been resetted")
     investor.timer_no = 0
     investor.timer = None
     investor.login_retries = 0
@@ -19,9 +20,11 @@ def reset_parameters(investor):
 def increment_login_retries(investor):
     investor.login_retries = investor.login_retries + 1
     investor.save()
+    print(investor.username + "'s login retries was increased to " + str(investor.login_retries))
 
 
 def activate_security(investor):
+    print('security activated')
     if investor.login_retries == 3 and (investor.timer_no < 6 or investor.timer_no == 0):
         increment_timer(investor)
     elif investor.login_retries < 3 and investor.timer_no == 0:
@@ -34,23 +37,30 @@ def activate_security(investor):
 
 
 def check_timer(investor):
+    print("check investor's timer")
     try:
-        if (int((investor.timer.timestamp() - datetime.now().timestamp()) / 60) - 60) <= 0:
+        if (int((investor.timer.timestamp() - datetime.now().timestamp()) / 60)) <= 0:
             investor.timer_on = False
             investor.save()
+            print (investor.username+"'s timer was set to off")
+        else:
+            print("nothing happened")
     except AttributeError:
         pass
+        print("nothing happened because of attribute error")
 
 
 def set_timer(investor, number):
     investor.timer = datetime.now() + td(minutes=int(number))
     investor.timer_on = True
     investor.save()
+    print(investor.username + "'s login timer was increased to " + str(investor.timer_no))
 
 
 def increment_timer(investor):
     investor.timer_no = investor.timer_no + 1
-    set_timer(investor,int(investor.timer_no * 10))
+    investor.save()
+    set_timer(investor, int(investor.timer_no * 10))
 
 
 def upgrade_investor(investor):
