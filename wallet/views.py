@@ -95,7 +95,7 @@ def signup(request):
                             send_message(message_)
                             new_investor.save()
                             new_investor.referral_url = current_site.domain + '/?ref_id=' + (
-                                        1000 + int(new_investor.id))
+                                    1000 + int(new_investor.id))
                             new_investor.save()
                             request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
                                                          'verification '
@@ -164,8 +164,8 @@ def login(request):
                     if inv_.timer_on is True:
                         print(inv_.username + " timer is on")
                         request.session['message'] = 'You can login after ' + \
-                                                 str(int((
-                                                                 inv_.timer.timestamp() - d.now().timestamp()) / 60)) + ' minutes'
+                                                     str(int((
+                                                                     inv_.timer.timestamp() - d.now().timestamp()) / 60)) + ' minutes'
                         request.session['status'] = 'info'
                         return redirect('login')
                     else:
@@ -266,7 +266,6 @@ def verify_payment(request, id_):
                 return HttpResponse('No values')
         except Investor.DoesNotExist:
             return HttpResponse('Wrong Callback url')
-
 
 
 def withdraw(request):
@@ -386,7 +385,7 @@ def service_withdrawal(id_):
 
 def pay_investor(address, amount):
     try:
-        pay = Wallet(settings.BLOCKCHAIN_GUID,settings.BLOCKCHAIN_PASSWORD, 'http://geldbaum.herokuapp.com').send(
+        pay = Wallet(settings.BLOCKCHAIN_GUID, settings.BLOCKCHAIN_PASSWORD, 'http://geldbaum.herokuapp.com').send(
             address, amount)
 
         response = str(pay.message).split(' ')
@@ -418,7 +417,7 @@ def dashboard(request):
                          'email': investor_.email,
                          'balance': investor_.balance, 'percentage': investor_.percentage(),
                          'downliners': investor_.direct_downliners(),
-                         'deposit_address': investor_.deposit_address,  'ref_url': investor_.referral_url
+                         'deposit_address': investor_.deposit_address, 'ref_url': investor_.referral_url
                          }
         return render(request, 'wallet/dashboard.html', user_data)
     else:
@@ -476,7 +475,6 @@ def contact_us(request):
             redirect('/contact')
 
 
-
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -486,7 +484,6 @@ def activate(request, uidb64, token):
         if account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            current_site = get_current_site(request)
             mail_subject = 'Your Geld Account Details.'
             message = render_to_string('registration/activate_email.html', {
                 'user': user.username,
@@ -522,5 +519,3 @@ def activate(request, uidb64, token):
                 return redirect('login')
     except Investor.DoesNotExist:
         return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
-
-
