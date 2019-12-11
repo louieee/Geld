@@ -57,7 +57,7 @@ def signup(request):
                         return redirect('home')
                     except Investor.DoesNotExist:
                         new_investor = Investor.objects.create_user(username, email, password1)
-                        if request.session['ref_id'] is not None:
+                        try:
                             ref_id = 1000 - int(request.session['ref_id'])
                             del request.session['ref_id']
                             try:
@@ -69,7 +69,7 @@ def signup(request):
                                     new_investor.referer = referer
                                 except IndexError:
                                     pass
-                        else:
+                        except KeyError:
                             try:
                                 referer = Investor.objects.all().order_by('id').filter(level=1)[0]
                                 new_investor.referer = referer
