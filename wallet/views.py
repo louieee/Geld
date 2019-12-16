@@ -61,7 +61,7 @@ def signup(request):
 def home(request):
     if request.user.is_authenticated:
         investor = Investor.objects.get(id=request.user.id)
-        if investor.pass_number is None:
+        if investor.pass_number == '':
             return redirect('pass_number')
         else:
             return redirect('dashboard')
