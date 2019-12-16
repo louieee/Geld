@@ -1,6 +1,6 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
-from random_word import RandomWords
+
 
 
 class TokenGenerator(PasswordResetTokenGenerator):

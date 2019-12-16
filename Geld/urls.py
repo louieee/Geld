@@ -19,20 +19,14 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 from django.contrib import admin
 from django.urls import path
 from Geld import settings
-from wallet.views import admin_withdrawal, signup, activate
+from wallet.views import admin_withdrawal, signup
 
 
 urlpatterns = [
     path('e47e68a3dbfc10c3af', admin.site.urls),
     path('admin/withdrawals', admin_withdrawal, name='admin_withdrawal'),
+    path('accounts/', include('allauth.urls')),
     path('', include('wallet.urls')),
-    path('', signup, name='home'),
+    path('',signup, name='home'),
     path('logout', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
-    path('password/reset', PasswordResetView.as_view(), name='password_reset'),
-    url(r'^password/reset/done/$', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password/reset/complete', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        activate, name='activate'),
 ]

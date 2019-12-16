@@ -17,12 +17,9 @@ class Investor(AbstractUser):
     deposit_address = models.CharField(max_length=50, default=None, null=True)
     investment_count = models.IntegerField(default=0)
     referer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
-    login_retries = models.IntegerField(default=0)
-    pass_phrase = models.CharField(max_length=255, default='')
+    pass_number = models.CharField(max_length=4, default='')
     timer = models.DateTimeField(default=None, null=True)
-    timer_no = models.IntegerField(default=0)
     referral_url = models.CharField(max_length=150, default='')
-    timer_on = models.BooleanField(default=False)
 
     def pending_withdrawals(self):
         return WithdrawalRequest.objects.all().order_by('-date_of_request').filter(investor_id=self.id).filter \

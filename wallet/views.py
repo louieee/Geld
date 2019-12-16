@@ -1,16 +1,10 @@
-import requests
-from django.contrib import auth
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.urls import reverse
-from wallet.extra import account_activation_token, get_phrase
-from django.shortcuts import HttpResponse, render, redirect
 import decimal
-from django.utils.timezone import datetime as d
+import requests
 from blockchain.v2.receive import receive
 from blockchain.wallet import Wallet
+from django.shortcuts import HttpResponse, render, redirect
+from django.urls import reverse
+from django.utils.timezone import datetime as d
 from .investor import *
 
 
@@ -30,206 +24,85 @@ def generate_address(id_):
 
 
 def signup(request):
-    if request.method == 'POST':
-        username = str(request.POST['username'])
-        password1 = str(request.POST['password1'])
-        password2 = str(request.POST['password2'])
-        email = str(request.POST['email'])
-        if username and password1 and password2 and email:
-            request.session['username'] = username
-            request.session['email'] = email
+    if request.GET.get('ref_id'):
+        request.session['ref_id'] = int(request.GET.get('ref_id'))
+        return redirect('/')
 
-            if password1 != password2:
-                request.session['message'] = 'The two passwords do not match'
-                request.session['status'] = 'danger'
-                return redirect('home')
-            else:
-                try:
-                    Investor.objects.get(username=username)
-                    request.session['message'] = 'This username is already in use'
-                    request.session['status'] = 'danger'
-                    return redirect('home')
-                except Investor.DoesNotExist:
-                    try:
-                        Investor.objects.get(email=email)
-                        request.session['message'] = 'This email address is already in use'
-                        request.session['status'] = 'danger'
-                        return redirect('home')
-                    except Investor.DoesNotExist:
-                        new_investor = Investor.objects.create_user(username, email, password1)
-                        try:
-                            ref_id = 1000 - int(request.session['ref_id'])
-                            del request.session['ref_id']
-                            try:
-                                referer = Investor.objects.get(id=ref_id)
-                                new_investor.referer = referer
-                            except Investor.DoesNotExist:
-                                try:
-                                    referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                                    new_investor.referer = referer
-                                except IndexError:
-                                    pass
-                        except KeyError:
-                            try:
-                                referer = Investor.objects.all().order_by('id').filter(level=1)[0]
-                                new_investor.referer = referer
-                            except IndexError:
-                                pass
-                        new_investor.is_active = False
-                        new_investor.pass_phrase = get_phrase()
-                        new_investor.save()
-                        invest(new_investor)
-                        current_site = get_current_site(request)
-                        mail_subject = 'Activate your Geld account.'
-                        message = render_to_string('registration/activate_email.html', {
-                            'user': new_investor.username,
-                            'domain': current_site.domain,
-                            'uid': urlsafe_base64_encode(force_bytes(new_investor.id)),
-                            'token': account_activation_token.make_token(new_investor),
-                        })
-                        message_ = Mail(from_email=settings.EMAIL,
-                                        to_emails=new_investor.email,
-                                        subject=mail_subject, html_content=message)
-                        try:
-                            current_site = get_current_site(request)
-                            send_message(message_)
-                            new_investor.save()
-                            new_investor.referral_url = current_site.domain + '/?ref_id=' + (
-                                    1000 + int(new_investor.id))
-                            new_investor.save()
-                            request.session['message'] = 'check your e-mail inbox or spam folder for the email ' \
-                                                         'verification '
-                            request.session['status'] = 'info'
-                            return redirect('home')
-                        except Exception as e:
-                            print(e.__str__())
-                            request.session['message'] = 'Connection Failed'
-                            request.session['status'] = 'danger'
-                            return redirect('home')
-
-        else:
-            return render(request, 'wallet/home.html',
-                          {'message': 'All Fields Must Be Filled', 'status': 'danger'})
+    if request.user.is_authenticated:
+        return redirect('/dashboard/')
     else:
-        if request.GET.get('ref_id'):
-            request.session['ref_id'] = int(request.GET.get('ref_id'))
-            return redirect('/')
-
-        if request.user.is_authenticated:
-            return redirect('/dashboard/')
-        else:
+        try:
+            message = request.session['message']
+            status = request.session['status']
+            del request.session['message']
+            del request.session['status']
             try:
-                message = request.session['message']
-                status = request.session['status']
-                del request.session['message']
-                del request.session['status']
-                try:
-                    email = request.session['email']
-                    username = request.session['username']
-                    del request.session['email']
-                    del request.session['username']
-                    return render(request, 'wallet/home.html',
-                                  {'message': message, 'status': status, 'email': email, 'username': username})
-                except KeyError:
-                    return render(request, 'wallet/home.html',
-                                  {'message': message, 'status': status})
+                email = request.session['email']
+                username = request.session['username']
+                del request.session['email']
+                del request.session['username']
+                return render(request, 'wallet/home.html',
+                              {'message': message, 'status': status, 'email': email, 'username': username})
             except KeyError:
-                try:
-                    email = request.session['email']
-                    username = request.session['username']
-                    del request.session['email']
-                    del request.session['username']
-                    return render(request, 'wallet/home.html',
-                                  {'email': email, 'username': username})
-                except KeyError:
-                    return render(request, 'wallet/home.html')
+                return render(request, 'wallet/home.html',
+                              {'message': message, 'status': status})
+        except KeyError:
+            try:
+                email = request.session['email']
+                username = request.session['username']
+                del request.session['email']
+                del request.session['username']
+                return render(request, 'wallet/home.html',
+                              {'email': email, 'username': username})
+            except KeyError:
+                return render(request, 'wallet/home.html')
+
+
+def home(request):
+    if request.user.is_authenticated:
+        investor = Investor.objects.get(id=request.user.id)
+        if investor.pass_number is None:
+            return redirect('pass_number')
+        else:
+            return redirect('dashboard')
+    else:
+        return redirect('home')
+
+
+def pass_number(request):
+    if request.method == 'GET':
+        try:
+            message = request.session['message']
+            status = request.session['status']
+            del request.session['message']
+            del request.session['status']
+            return render(request, 'wallet/pass.html', {'message': message, 'status': status})
+        except KeyError:
+            return render(request, 'wallet/pass.html')
+    elif request.method == 'POST':
+        digits = request.POST.get('digits')
+        if digits:
+            investor = Investor.objects.get(id=request.user.id)
+            investor.pass_number = str(digits)
+            investor.deposit_address = generate_address(investor.id)
+            investor.save()
+            try:
+                investor.referer_id = 1000 - request.session['ref_id']
+                investor.save()
+                del request.session['ref_id']
+            except KeyError:
+                pass
+            request.session['message'] = 'Sign Up Successful !'
+            request.session['status'] = 'success'
+            return redirect('dashboard')
+        else:
+            request.session['message'] = 'No Digit Found !'
+            request.session['status'] = 'danger'
+            return redirect('pass_number')
 
 
 def login(request):
-    if request.method == 'POST':
-        username = str(request.POST.get('username'))
-        password = str(request.POST.get('password'))
-        phrase = str(request.POST.get('phrase'))
-        if username and password and phrase:
-            try:
-                inv_ = Investor.objects.get(username=username)
-                check_timer(inv_)
-                if not inv_.is_active:
-                    print(inv_.username + "is not active")
-                    request.session['message'] = 'Your Account has been deactivated. '
-                    request.session['status'] = 'info'
-                    return redirect('home')
-                else:
-                    print(inv_.username + "is active")
-                    if inv_.timer_on is True:
-                        print(inv_.username + " timer is on")
-                        request.session['message'] = 'You can login after ' + \
-                                                     str(int((
-                                                                     inv_.timer.timestamp() - d.now().timestamp()) / 60)) + ' minutes'
-                        request.session['status'] = 'info'
-                        return redirect('login')
-                    else:
-                        investor = auth.authenticate(username=username, password=password)
-                        if investor is not None:
-                            if inv_.pass_phrase == phrase:
-                                auth.login(request, investor)
-                                reset_parameters(inv_)
-                                return redirect('dashboard')
-                            else:
-                                activate_security(inv_)
-                                request.session['message'] = 'Wrong Passphrase'
-                                request.session['status'] = 'danger'
-                                request.session['username'] = username
-                                request.session['passphrase'] = phrase
-                                return redirect('login')
-                        else:
-                            activate_security(inv_)
-                            request.session['message'] = 'Incorrect Password'
-                            request.session['status'] = 'danger'
-                            request.session['username'] = username
-                            request.session['passphrase'] = phrase
-                            return redirect('login')
-            except Investor.DoesNotExist:
-                request.session['message'] = 'This User does not exist'
-                request.session['status'] = 'danger'
-                request.session['username'] = username
-                request.session['passphrase'] = phrase
-                return redirect('/login')
-        else:
-            request.session['message'] = 'All fields must be filled'
-            request.session['status'] = 'danger'
-            request.session['username'] = username
-            request.session['passphrase'] = phrase
-            return redirect('login')
-    else:
-        if request.user.is_authenticated:
-            return redirect('/dashboard/')
-        else:
-            try:
-                message = request.session['message']
-                status = request.session['status']
-                del request.session['message']
-                del request.session['status']
-                try:
-                    passphrase = request.session['passphrase']
-                    username = request.session['username']
-                    del request.session['passphrase']
-                    del request.session['username']
-                    return render(request, 'wallet/login.html',
-                                  {'message': message, 'status': status, 'phrase': passphrase, 'username': username})
-                except KeyError:
-                    return render(request, 'wallet/login.html',
-                                  {'message': message, 'status': status})
-            except KeyError:
-                try:
-                    passphrase = request.session['passphrase']
-                    username = request.session['username']
-                    del request.session['passphrase']
-                    del request.session['username']
-                    return render(request, 'wallet/login.html',
-                                  {'phrase': passphrase, 'username': username})
-                except KeyError:
-                    return render(request, 'wallet/login.html')
+    return render(request, 'wallet/login.html')
 
 
 def invest(investor):
@@ -278,14 +151,12 @@ def withdraw(request):
                 del request.session['message']
                 del request.session['status']
                 try:
-                    passphrase = request.session['passphrase']
                     amount = request.session['amount']
                     address = request.session['address']
-                    del request.session['passphrase']
                     del request.session['amount']
                     del request.session['address']
                     return render(request, 'wallet/withdrawal.html',
-                                  {'message': message, 'status': status, 'phrase': passphrase, 'amount': amount,
+                                  {'message': message, 'status': status, 'amount': amount,
                                    'address': address, 'pending': investor.pending_withdrawals(),
                                    'serviced': investor.withdrawals()})
                 except KeyError:
@@ -294,74 +165,64 @@ def withdraw(request):
                                    'serviced': investor.withdrawals()})
             except KeyError:
                 try:
-                    passphrase = request.session['passphrase']
                     amount = request.session['amount']
                     address = request.session['address']
-                    del request.session['passphrase']
                     del request.session['amount']
                     del request.session['address']
                     return render(request, 'wallet/withdrawal.html',
-                                  {'phrase': passphrase, 'amount': amount,
+                                  {'amount': amount,
                                    'address': address, 'pending': investor.pending_withdrawals(),
                                    'serviced': investor.withdrawals()})
                 except KeyError:
                     return render(request, 'wallet/withdrawal.html',
                                   {'pending': investor.pending_withdrawals(),
                                    'serviced': investor.withdrawals()})
+        else:
+            return redirect('home')
     elif request.method == 'POST':
         amount = decimal.Decimal(request.POST.get('amount'))
         address = str(request.POST['address'])
-        password = str(request.POST['password'])
-        passphrase = str(request.POST.get('phrase'))
-        if request.user.is_authenticated:
-            investor = Investor.objects.get(id=request.user.id)
-            user = auth.authenticate(username=investor.username, password=password)
-            if user is not None and user.pass_phrase == passphrase:
-                if amount and address:
-                    fee = amount * decimal.Decimal(2 / 100)
-                    total_amount = amount + fee
-                    if investor.balance > total_amount and amount > 0.001:
-                        withdrawal_request = WithdrawalRequest()
-                        withdrawal_request.investor = investor
-                        withdrawal_request.amount = amount
-                        withdrawal_request.address = address
-                        withdrawal_request.date_of_request = d.now()
-                        withdrawal_request.save()
-                        message = Mail(from_email=settings.EMAIL,
-                                       to_emails=investor.email, subject='Withdrawal request',
-                                       plain_text_content='Dear ' + investor.username + ', You '
-                                                                                        'just requested to withdraw '
-                                                          + str(withdrawal_request.amount) +
-                                                          'BTC to this address: ' + withdrawal_request.address)
-                        send_message(message)
-                        request.session['message'] = 'Your Withdrawal request has been sent Successfully'
-                        request.session['status'] = 'success'
-                        return redirect('/withdraw/')
-                    else:
-                        request.session['message'] = 'Your Balance is Insufficient'
-                        request.session['status'] = 'danger'
-                        request.session['amount'] = str(amount)
-                        request.session['address'] = address
-                        request.session['passphrase'] = passphrase
-
-                        return redirect('withdraw')
-
+        digits = str(request.POST['digits'])
+        investor = Investor.objects.get(id=request.user.id)
+        if investor.pass_number == digits:
+            if amount and address:
+                fee = amount * decimal.Decimal(2 / 100)
+                total_amount = amount + fee
+                if investor.balance > total_amount and amount > 0.001:
+                    withdrawal_request = WithdrawalRequest()
+                    withdrawal_request.investor = investor
+                    withdrawal_request.amount = amount
+                    withdrawal_request.address = address
+                    withdrawal_request.date_of_request = d.now()
+                    withdrawal_request.save()
+                    message = Mail(from_email=settings.EMAIL,
+                                   to_emails=investor.email, subject='Withdrawal request',
+                                   plain_text_content='Dear ' + investor.username + ', You '
+                                                                                    'just requested to withdraw '
+                                                      + str(withdrawal_request.amount) +
+                                                      'BTC to this address: ' + withdrawal_request.address)
+                    send_message(message)
+                    request.session['message'] = 'Your Withdrawal request has been sent Successfully'
+                    request.session['status'] = 'success'
+                    return redirect('/withdraw/')
                 else:
-                    request.session['message'] = 'All Fields Must Be Filled'
+                    request.session['message'] = 'Your Balance is Insufficient'
                     request.session['status'] = 'danger'
                     request.session['amount'] = str(amount)
                     request.session['address'] = address
-                    request.session['passphrase'] = passphrase
-
                     return redirect('withdraw')
+
             else:
-                request.session['message'] = 'Withdrawal Authentication Failed '
+                request.session['message'] = 'All Fields Must Be Filled'
                 request.session['status'] = 'danger'
-                return redirect('logout')
+                request.session['amount'] = str(amount)
+                request.session['address'] = address
+
+                return redirect('withdraw')
         else:
-            request.session['message'] = 'You Need to be Logged In'
-            request.session['status'] = 'info'
-            return redirect('login')
+            request.session['message'] = 'Withdrawal Authentication Failed '
+            request.session['status'] = 'danger'
+            return redirect('logout')
 
 
 def service_withdrawal(id_):
@@ -473,49 +334,3 @@ def contact_us(request):
             request.session['message'] = 'Your Message was not sent.'
             request.session['status'] = 'danger'
             redirect('/contact')
-
-
-def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        print('UID: ' + str(uid))
-        user = Investor.objects.get(id=int(uid))
-        print('Username: ' + str(user.username))
-        if account_activation_token.check_token(user, token):
-            user.is_active = True
-            user.save()
-            mail_subject = 'Your Geld Account Details.'
-            message = render_to_string('registration/activate_email.html', {
-                'user': user.username,
-                'passphrase': user.pass_phrase,
-                'Wallet_address': user.deposit_address
-            })
-            message_ = Mail(from_email=settings.EMAIL,
-                            to_emails=user.email,
-                            subject=mail_subject, html_content=message)
-            try:
-                send_message(message_)
-                user.save()
-                request.session['message'] = 'Your pass phrase is "' + str(
-                    user.pass_phrase) + '". Please kindly save it somewhere'
-                request.session['status'] = 'info'
-                return redirect('login')
-            except Exception as e:
-                request.session['message'] = 'Your pass phrase is ' + str(
-                    user.pass_phrase) + '. Please kindly save it somewhere.'
-                request.session['status'] = 'info'
-                return redirect('login')
-
-        else:
-            if user.is_active is False:
-                user.delete()
-                return render(request, 'wallet/home.html',
-                              {'message': 'Your Email was invalid, Therefore Your Account Has '
-                                          'been deleted', 'status': 'danger'})
-            else:
-                request.session['message'] = 'Your pass phrase is "' + str(
-                    user.pass_phrase) + '". Please kindly save it somewhere.'
-                request.session['status'] = 'info'
-                return redirect('login')
-    except Investor.DoesNotExist:
-        return render(request, 'wallet/home.html', {'message': 'User Does Not Exist', 'status': 'danger'})
