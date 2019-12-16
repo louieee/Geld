@@ -33,6 +33,7 @@
         <div class="row">
          <div class="col-lg-12 text-center">
              <form class="form form-group  p-3" action="{% url 'pass_number' %}" method="post">
+                 {% csrf_token%}
                  <p class="h5 mb-3">Please Type In Your Four Digit Pass Key</p>
                  <input class="h1 form-row form-control mb-3 text-center" name="digits" placeholder="_ _ _ _" type="text" pattern="[0-9]+" minlength="4" maxlength="4"/>
                  <input class="btn btn-info text-white" type="submit" value="Next" />
