@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="" />
+    <list default="true" id="d7aba5be-168c-45a6-81ba-7f26ed6eb166" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/admin_withdraw.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/admin_withdraw.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/pass.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/pass.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html" beforeDir="false" afterPath="$PROJECT_DIR$/wallet/templates/wallet/withdrawal.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +175,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1550061193721</updated>
-      <workItem from="1576346019726" duration="16793000" />
+      <workItem from="1576346019726" duration="18537000" />
     </task>
     <servers />
   </component>
