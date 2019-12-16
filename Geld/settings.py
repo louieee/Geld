@@ -138,7 +138,6 @@ USE_TZ = False
 
 AUTH_USER_MODEL = 'wallet.Investor'
 
-LOGOUT_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'Geld/static')]
@@ -169,4 +168,5 @@ BLOCKCHAIN_GUID = 'bd6b8788-2cf0-468b-9109-b443f70c796d'
 BLOCKCHAIN_XPUB = 'xpub6BnYXhB7SHxRGqAd1mCvgeghcQW1BHGVKM6KDCnRqNYUVuMDWCDHayYLmtyuRPbYeDmZbockEWzDLSLab7W84BknKQVt4fCfa1cr6ipf1t9'
 BLOCKCHAIN_PASSWORD = 'MONKEYSex'
 
-
+LOGIN_REDIRECT_URL = 'redirect'
+LOGOUT_REDIRECT_URL = 'home'

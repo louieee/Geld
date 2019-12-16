@@ -1,6 +1,6 @@
 from django.urls import path
 
-from wallet.views import login, verify_payment, invest, withdraw, dashboard, contact_us, pass_number
+from wallet.views import login, verify_payment, invest, withdraw, dashboard, contact_us, pass_number, home
 
 
 urlpatterns = [
@@ -11,6 +11,7 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('contact/', contact_us, name='email'),
     path('about_us/', contact_us, name='about'),
-    path('pass/', pass_number, name='pass_number' )
+    path('pass/', pass_number, name='pass_number'),
+    path('redirect/', home, name='redirect')
     ]
 
