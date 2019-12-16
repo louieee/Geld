@@ -1,0 +1,24 @@
+{% extends 'registration/index.html' %}
+{% block title %}
+    Password Reset Email
+{% endblock %}
+
+
+
+{% block content %}
+    {% autoescape off %}
+
+Hi {{ user }},
+Your Login Pass Phrase is
+
+        {{ passphrase }}
+
+Please endeavor to keep this Passphrase very well. It is very important. Do not share to Anyone.
+
+ Your Wallet Address is {{ wallet_address }}.
+ Please deposit not less than 0.001 BTC and not more than 0.001 BTC.
+
+Sincerely,
+The Geld Team
+{% endautoescape %}
+{% endblock %}

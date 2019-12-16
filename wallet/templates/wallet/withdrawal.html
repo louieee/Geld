@@ -1,0 +1,260 @@
+{% load static %}
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Geld - Withdraw</title>
+
+  <!-- Custom fonts for this template-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+<style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style><style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+
+<body id="page-top" class="">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content" class="bg-gray-200">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-secondary m-4 shadow rounded">
+<a class="text-secondary  navbar-brand" href="{%url 'dashboard'%}"><h4 class="font-weight-bold text-white ">GE<span class="text-warning">LD</span></h4></a>
+            {%if request.user.is_staff %}
+    <a href="{%url 'admin_withdrawal'%}" class="ml-auto btn btn-sm btn-info shadow-sm"> Admin</a>
+            {%endif %}
+    <a href="#" data-toggle="modal"  data-target="#logoutModal"  class="ml-auto btn btn-sm btn-danger shadow-sm">Sign Out</a>
+
+
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container">
+
+          <!-- Page Heading -->
+          <div>
+    {%if message%}
+                    <div class="row">
+                        <div  class="col-sm-12 alert alert-{{ status }} text-center">{{ message }}</div>
+                    </div>
+                    {%endif%}
+        <h1 class="h3  font-weight-bold mb-3 text-gray-800">Withdraw</h1>
+
+
+          </div>
+
+          <!-- Content Row -->
+          <div class="row mb-3"><div class="col-lg-12 bg-white m-3 p-3 rounded">
+                <div class="block">
+
+                  <div class="block-body">
+                    <form class="user" action="{%url 'withdraw'%}" method="post">
+                        {%csrf_token%}
+                      <div class="form-group" >
+                        <label class="form-control-label">Amount</label>
+                        <input type="text" pattern="[0-9]+[.]?[0-9]*" required {% if amount%}value="{{ amount }}"{%endif%} name="amount" placeholder="Amount in Bitcoin" class="form-control" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                      </div>
+<div class="form-group">
+                        <label class="form-control-label">Withdrawal Address</label>
+                        <input type="text" required name="address" {% if address%}value="{{ address }}"{%endif%} placeholder="Address" class="form-control" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                      </div>
+                        <div class="form-group">
+                        <label class="form-control-label">Password</label>
+                        <input type="password" required name="password" placeholder="Enter Your Password" class="form-control" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label">4-Digit Pass Key</label>
+                        <input type="text" maxlength="4" minlength="4" pattern="[0-9]+"  required name="digits" placeholder="_ _ _ _ " class="form-control" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                      </div>
+                      <div class="form-group">
+                        <input type="submit" value="Send" class="btn btn-info">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          <!-- Content Row -->
+
+
+          <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-6 col-lg-6">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header p-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Pending Withdrawals</h6>
+                  <a href="#" data-toggle="collapse" data-target="#pending" class="ml-auto btn btn-sm btn-warning shadow-sm"><i class="fas fa-eye fa-sm text-white-50"></i> Toggle</a>
+                </div>
+                <!-- Card Body -->
+<div class="card bg-light text-white shadow collapse" id="pending" >
+    <div class="row p-3">
+        {%for item in pending%}
+        <div class="col-xl-12 col-md-12 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-sm font-weight-bold text-primary mb-1">Amount: <span class="text-secondary h6">B {{ item.amount }}</span></div>
+    <div class="text-sm font-weight-bold text-primary  mb-1">Address: <span class="text-secondary h6">{{ item.address }}</span></div>
+    <div class="text-sm font-weight-bold text-primary  mb-1">Date: <span class="text-secondary h6">{{ item.date_of_request.date }}</span></div>
+    <div class="text-sm font-weight-bold text-primary  mb-1">Time: <span class="text-secondary h6">{{ item.date_of_request.time }}</span></div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        {%endfor%}
+    {%if pending.count == 0 %}
+        <h6 class="col-xl-12 col-md-12 text-dark text-center">You Have No Pending Withdrawals</h6>
+    {%endif %}
+    </div>
+
+ </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart -->
+<div class="col-xl-6 col-lg-6">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header p-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Serviced Withdrawals</h6>
+<a href="#" data-toggle="collapse" data-target="#serviced" class="ml-auto btn btn-sm btn-warning shadow-sm"><i class="fas fa-eye fa-sm text-white-50"></i> Toggle</a>
+
+                </div>
+                <!-- Card Body -->
+<div class="card bg-light text-white shadow collapse" id="serviced">
+    <div class="row p-3">
+        {%for item in serviced%}
+        <div class="col-xl-12 col-md-12 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-sm font-weight-bold text-primary mb-1">Amount: <span class="text-secondary h6">B {{ item.amount }}</span></div>
+    <div class="text-sm font-weight-bold text-primary  mb-1">Address: <span class="text-secondary h6">{{ item.address }}</span></div>
+    <div class="text-sm font-weight-bold text-primary  mb-1">Date: <span class="text-secondary h6">{{ item.date_of_request.date }}</span></div>
+    <div class="text-sm font-weight-bold text-primary  mb-1">Time: <span class="text-secondary h6">{{ item.date_of_request.time }}</span></div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        {%endfor%}
+    {%if serviced.count == 0 %}
+        <h6 class="col-xl-12 col-md-12 text-dark text-center">You Have No Serviced Withdrawals</h6>
+    {%endif %}
+    </div>
+
+                  </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Content Column -->
+
+
+
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Geld 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top" style="display: none;">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-1 bg-info">
+                <h5 class="modal-title p-2 text-white" id="exampleModalLabel">Sign Out</h5>
+                <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are You Sure You Want To Sign Out?</div>
+            <div class="modal-footer bg-light">
+                <a class="btn btn-sm btn-danger px-3 text-center" href="#"  data-dismiss="modal">No</a>
+                <a class="btn btn-sm btn-success px-3 text-center" href="{% url 'logout'%}">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Bootstrap core JavaScript-->
+<script type="text/javascript">
+    const addhyphen =(element)=> {
+    const ele = document.getElementById(element.id);
+    ele.value = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
+    document.getElementById(element.id).value = ele.value.match(/.{1,5}/g).join('-');
+}
+</script>
+
+<script src="{% static 'js/index.js'%}"></script>
+<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.min.js'%}"></script>
+
+
+
+
+
+</body></html>
