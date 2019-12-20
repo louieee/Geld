@@ -14,7 +14,7 @@ def send_message(message):
 
 
 def generate_address(id_):
-    url = 'http://geldbaum.tk/' + reverse('verify', args=[id_])
+    url = 'http://geldbaum.herokuapp.com/' + reverse('verify', args=[id_])
     gen = receive(settings.BLOCKCHAIN_XPUB, url, settings.BLOCKCHAIN_API_KEY)
     response = gen.address
     if response is None:
