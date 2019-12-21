@@ -24,38 +24,39 @@ def generate_address(id_):
 
 
 def signup(request):
-    if request.GET.get('ref_id'):
-        request.session['ref_id'] = int(request.GET.get('ref_id'))
-        return redirect('/')
-
-    if request.user.is_authenticated:
-        return redirect('/dashboard/')
-    else:
-        try:
-            message = request.session['message']
-            status = request.session['status']
-            del request.session['message']
-            del request.session['status']
-            try:
-                email = request.session['email']
-                username = request.session['username']
-                del request.session['email']
-                del request.session['username']
-                return render(request, 'wallet/home.html',
-                              {'message': message, 'status': status, 'email': email, 'username': username})
-            except KeyError:
-                return render(request, 'wallet/home.html',
-                              {'message': message, 'status': status})
-        except KeyError:
-            try:
-                email = request.session['email']
-                username = request.session['username']
-                del request.session['email']
-                del request.session['username']
-                return render(request, 'wallet/home.html',
-                              {'email': email, 'username': username})
-            except KeyError:
-                return render(request, 'wallet/home.html')
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return redirect('dashboard')
+        else:
+            if request.GET.get('ref_id'):
+                request.session['ref_id'] = int(request.GET.get('ref_id'))
+                return redirect('/')
+            else:
+                try:
+                    message = request.session['message']
+                    status = request.session['status']
+                    del request.session['message']
+                    del request.session['status']
+                    try:
+                        email = request.session['email']
+                        username = request.session['username']
+                        del request.session['email']
+                        del request.session['username']
+                        return render(request, 'wallet/home.html',
+                                      {'message': message, 'status': status, 'email': email, 'username': username})
+                    except KeyError:
+                        return render(request, 'wallet/home.html',
+                                      {'message': message, 'status': status})
+                except KeyError:
+                    try:
+                        email = request.session['email']
+                        username = request.session['username']
+                        del request.session['email']
+                        del request.session['username']
+                        return render(request, 'wallet/home.html',
+                                      {'email': email, 'username': username})
+                    except KeyError:
+                        return render(request, 'wallet/home.html')
 
 
 def home(request):
