@@ -86,7 +86,7 @@ def pass_number(request):
             investor.pass_number = str(digits)
             investor.deposit_address = generate_address(investor.id)
             investor.save()
-            investor.referral_url = 'http://www,geldbaum.tk/?ref_id='+str(1000+int(investor.id))
+            investor.referral_url = 'http://www.geldbaum.tk/?ref_id='+str(1000+int(investor.id))
             investor.save()
             try:
                 investor.referer_id = 1000 - request.session['ref_id']
