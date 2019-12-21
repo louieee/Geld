@@ -95,7 +95,10 @@ def pass_number(request):
             except KeyError:
                 try:
                     ref = Investor.objects.all().order_by('id').filter(level=1, investment_count__lt=2)[0]
-                    investor.referer = ref
+                    if ref.id == investor.id:
+                        investor.referer = None
+                    else:
+                        investor.referer = ref
                     investor.save()
                 except IndexError:
                     pass
