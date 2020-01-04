@@ -21,6 +21,7 @@ class Investor(AbstractUser):
     timer = models.DateTimeField(default=None, null=True)
     referral_url = models.CharField(max_length=150, default='')
 
+
     def pending_withdrawals(self):
         return WithdrawalRequest.objects.all().order_by('-date_of_request').filter(investor_id=self.id).filter \
             (serviced=False)

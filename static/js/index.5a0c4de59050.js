@@ -22,7 +22,7 @@ let user_id = '';
                     alert.setAttribute('class','m-3 alert alert-success text-center');
                     alert.innerText = data.message.toString();
                     $("#alert_bar").fadeOut(5000);
-                    window.open('login.html', '_self');
+                    window.open('home.html', '_self');
                 }else if (data.hasOwnProperty('error')){
                     alert.setAttribute('style', 'display: block;');
                     alert.setAttribute('class','m-3 alert alert-danger text-center');

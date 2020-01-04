@@ -113,7 +113,7 @@ def pass_number(request):
 
 
 def login(request):
-    return render(request, 'wallet/login.html')
+    return render(request, 'wallet/home.html')
 
 
 def invest(investor):
