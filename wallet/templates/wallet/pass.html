@@ -28,7 +28,7 @@
                  {% csrf_token%}
                  <p class="h5 mb-3 text-center">Please Type In Your Four Digit Pass Key</p>
                                     <br/>
-                 <input class="h1 form-row form-control mb-3 text-center" name="digits" placeholder="_ _ _ _" type="text" pattern="[0-9]+" minlength="4" maxlength="4"/>
+                 <input required class="h1 form-row form-control mb-3 text-center" name="digits" placeholder="_ _ _ _" type="text" pattern="[0-9]+" minlength="4" maxlength="4"/>
                  <br/><br/>
                  <input class="button circled scrolly" type="submit" value="Next" />
              </form>
